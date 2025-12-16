@@ -13,9 +13,13 @@ export default function HoverTooltip() {
     .join(', ')
 
   return (
-    <div className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-4 py-2 rounded-lg pointer-events-none z-50 backdrop-blur-sm">
-      <div className="text-sm font-semibold">{hoveredSignal.title}</div>
-      <div className="text-xs text-gray-300 mt-1">{industryNames}</div>
+    <div className="absolute top-20 left-1/2 transform -translate-x-1/2 glass rounded-2xl px-5 py-3 pointer-events-none z-50 shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50">
+      <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+        {hoveredSignal.title}
+      </div>
+      <div className="text-xs text-gray-600 dark:text-gray-400 mt-1.5">
+        {industryNames}
+      </div>
     </div>
   )
 }

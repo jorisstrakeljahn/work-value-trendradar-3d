@@ -22,14 +22,18 @@ export default function FiltersPanel() {
   }
 
   return (
-    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg max-w-xs">
+    <div className="absolute top-4 left-4 glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 max-w-xs overflow-hidden transition-all duration-300">
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="w-full flex items-center justify-between p-4 hover:bg-gray-50 rounded-t-lg transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/50 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-200"
       >
-        <h2 className="text-lg font-semibold">Filter</h2>
+        <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">
+          Filter
+        </h2>
         <svg
-          className={`w-4 h-4 transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+          className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${
+            isCollapsed ? '' : 'rotate-180'
+          }`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -43,29 +47,33 @@ export default function FiltersPanel() {
         </svg>
       </button>
       {!isCollapsed && (
-        <div className="p-4 space-y-2">
+        <div className="px-5 pb-5 space-y-4">
           <div>
-            <h3 className="text-sm font-medium mb-2">Branchen</h3>
-            <div className="space-y-1 max-h-64 overflow-y-auto">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Branchen
+            </h3>
+            <div className="space-y-2 max-h-64 overflow-y-auto">
               {industries.map(industry => {
                 const isSelected =
                   filters.industries?.includes(industry.id) ?? false
                 return (
                   <label
                     key={industry.id}
-                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded"
+                    className="flex items-center gap-3 cursor-pointer px-2 py-2 rounded-xl hover:bg-white/70 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-150"
                   >
                     <input
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => toggleIndustry(industry.id)}
-                      className="rounded"
+                      className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 transition-all"
                     />
                     <div
-                      className="w-4 h-4 rounded-full"
+                      className="w-3 h-3 rounded-full flex-shrink-0"
                       style={{ backgroundColor: industry.color }}
                     />
-                    <span className="text-sm">{industry.name}</span>
+                    <span className="text-sm text-gray-900 dark:text-gray-100">
+                      {industry.name}
+                    </span>
                   </label>
                 )
               })}
@@ -74,7 +82,7 @@ export default function FiltersPanel() {
           {filters.industries && filters.industries.length > 0 && (
             <button
               onClick={() => setFilters({ industries: [] })}
-              className="text-xs text-blue-600 hover:text-blue-800 mt-2"
+              className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors duration-150"
             >
               Alle zurücksetzen
             </button>

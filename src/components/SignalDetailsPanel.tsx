@@ -9,9 +9,13 @@ export default function SignalDetailsPanel() {
 
   if (!selectedSignal) {
     return (
-      <div className="absolute top-20 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
-        <h2 className="text-lg font-semibold mb-2">Signal Details</h2>
-        <p className="text-sm text-gray-600">Click on a point to see details</p>
+      <div className="absolute top-4 right-4 glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 max-w-sm p-6">
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+          Signal Details
+        </h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Click on a point to see details
+        </p>
       </div>
     )
   }
@@ -21,70 +25,111 @@ export default function SignalDetailsPanel() {
     .join(', ')
 
   return (
-    <div className="absolute top-20 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm max-h-[80vh] overflow-y-auto">
-      <h2 className="text-lg font-semibold mb-2">{selectedSignal.title}</h2>
-      <p className="text-sm text-gray-700 mb-3">{selectedSignal.summary}</p>
+    <div className="absolute top-4 right-4 glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 max-w-sm max-h-[85vh] overflow-y-auto">
+      <div className="p-6 space-y-5">
+        <div>
+          <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+            {selectedSignal.title}
+          </h2>
+          <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            {selectedSignal.summary}
+          </p>
+        </div>
 
-      <div className="space-y-2 text-sm">
-        <div>
-          <span className="font-semibold">Industries:</span> {industryNames}
-        </div>
-        <div>
-          <span className="font-semibold">Impact:</span>{' '}
-          {selectedSignal.xImpact}/100
-        </div>
-        <div>
-          <span className="font-semibold">Horizon:</span>{' '}
-          {selectedSignal.yHorizon}/100
-        </div>
-        <div>
-          <span className="font-semibold">Work Value Index:</span>{' '}
-          {(() => {
-            const workValueIndex = calculateWorkValueIndex(selectedSignal)
-            return workValueIndex > 0 ? '+' : ''
-          })()}
-          {calculateWorkValueIndex(selectedSignal).toFixed(1)}
-          <div className="text-xs text-gray-500 mt-1">
-            (aggregated from 4 sub-values)
+        <div className="space-y-3 text-sm">
+          <div className="flex items-start gap-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
+              Industries:
+            </span>
+            <span className="text-gray-900 dark:text-gray-100">{industryNames}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
+              Impact:
+            </span>
+            <span className="text-gray-900 dark:text-gray-100">
+              {selectedSignal.xImpact}/100
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
+              Horizon:
+            </span>
+            <span className="text-gray-900 dark:text-gray-100">
+              {selectedSignal.yHorizon}/100
+            </span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
+              Work Value:
+            </span>
+            <div>
+              <span className="text-gray-900 dark:text-gray-100">
+                {(() => {
+                  const workValueIndex = calculateWorkValueIndex(selectedSignal)
+                  return workValueIndex > 0 ? '+' : ''
+                })()}
+                {calculateWorkValueIndex(selectedSignal).toFixed(1)}
+              </span>
+              <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                (aggregated from 4 sub-values)
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
+              Confidence:
+            </span>
+            <span className="text-gray-900 dark:text-gray-100">
+              {selectedSignal.confidence}/5
+            </span>
           </div>
         </div>
-        <div>
-          <span className="font-semibold">Confidence:</span>{' '}
-          {selectedSignal.confidence}/5
-        </div>
 
-        <div className="mt-3 pt-3 border-t border-gray-300">
-          <span className="font-semibold">Value Dimensions:</span>
-          <div className="mt-1 space-y-1 text-xs">
-            <div>
-              Economic: {selectedSignal.valueDimensions.economic > 0 ? '+' : ''}
-              {selectedSignal.valueDimensions.economic}
+        <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
+          <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">
+            Value Dimensions
+          </h4>
+          <div className="space-y-2 text-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Economic:</span>
+              <span className="text-gray-900 dark:text-gray-100 font-medium">
+                {selectedSignal.valueDimensions.economic > 0 ? '+' : ''}
+                {selectedSignal.valueDimensions.economic}
+              </span>
             </div>
-            <div>
-              Social: {selectedSignal.valueDimensions.social > 0 ? '+' : ''}
-              {selectedSignal.valueDimensions.social}
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Social:</span>
+              <span className="text-gray-900 dark:text-gray-100 font-medium">
+                {selectedSignal.valueDimensions.social > 0 ? '+' : ''}
+                {selectedSignal.valueDimensions.social}
+              </span>
             </div>
-            <div>
-              Subjective:{' '}
-              {selectedSignal.valueDimensions.subjective > 0 ? '+' : ''}
-              {selectedSignal.valueDimensions.subjective}
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Subjective:</span>
+              <span className="text-gray-900 dark:text-gray-100 font-medium">
+                {selectedSignal.valueDimensions.subjective > 0 ? '+' : ''}
+                {selectedSignal.valueDimensions.subjective}
+              </span>
             </div>
-            <div>
-              Political:{' '}
-              {selectedSignal.valueDimensions.political > 0 ? '+' : ''}
-              {selectedSignal.valueDimensions.political}
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600 dark:text-gray-400">Political:</span>
+              <span className="text-gray-900 dark:text-gray-100 font-medium">
+                {selectedSignal.valueDimensions.political > 0 ? '+' : ''}
+                {selectedSignal.valueDimensions.political}
+              </span>
             </div>
           </div>
         </div>
 
         {selectedSignal.tags.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-gray-300">
-            <span className="font-semibold">Tags:</span>
-            <div className="flex flex-wrap gap-1 mt-1">
+          <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
+            <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">Tags</h4>
+            <div className="flex flex-wrap gap-2">
               {selectedSignal.tags.map(tag => (
                 <span
                   key={tag}
-                  className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs"
+                  className="px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium"
                 >
                   {tag}
                 </span>

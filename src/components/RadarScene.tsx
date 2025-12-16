@@ -122,7 +122,7 @@ export default function RadarScene() {
           distanceFactor={10}
           style={{ pointerEvents: 'none' }}
         >
-          <div className="text-gray-700 text-sm font-semibold">
+          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
             Impact / Relevanz
           </div>
         </Html>
@@ -136,7 +136,7 @@ export default function RadarScene() {
             distanceFactor={10}
             style={{ pointerEvents: 'none' }}
           >
-            <div className="text-gray-600 text-xs">{line.label}</div>
+            <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
           </Html>
         ))}
         {/* X-axis markers */}
@@ -170,7 +170,7 @@ export default function RadarScene() {
           distanceFactor={10}
           style={{ pointerEvents: 'none' }}
         >
-          <div className="text-gray-700 text-sm font-semibold">
+          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
             Zeithorizont / Reifegrad
           </div>
         </Html>
@@ -196,7 +196,7 @@ export default function RadarScene() {
               distanceFactor={10}
               style={{ pointerEvents: 'none' }}
             >
-              <div className="text-gray-600 text-xs">{line.label}</div>
+              <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
             </Html>
             {/* Y-axis markers */}
             <mesh position={[0, line.y, 0.05]}>
@@ -229,7 +229,7 @@ export default function RadarScene() {
           distanceFactor={10}
           style={{ pointerEvents: 'none' }}
         >
-          <div className="text-gray-700 text-sm font-semibold">
+          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
             Work-Value-Index
           </div>
         </Html>
@@ -250,7 +250,7 @@ export default function RadarScene() {
               distanceFactor={10}
               style={{ pointerEvents: 'none' }}
             >
-              <div className="text-gray-600 text-xs">{marker.label}</div>
+              <div className="text-gray-600 dark:text-gray-400 text-xs">{marker.label}</div>
             </Html>
           </group>
         ))}
