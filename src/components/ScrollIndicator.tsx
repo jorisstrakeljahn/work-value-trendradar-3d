@@ -38,7 +38,7 @@ export default function ScrollIndicator() {
   if (!isVisible) return null
 
   return (
-    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40">
+    <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-40">
       <button
         onClick={scrollToExplanation}
         className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200 group"

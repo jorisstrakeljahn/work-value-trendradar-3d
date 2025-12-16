@@ -11,25 +11,26 @@ export default function RadarSection() {
   return (
     <section className="relative w-full h-[calc(100vh-5rem)] bg-apple-gray-50 dark:bg-[#1a1a1a] transition-colors duration-200 overflow-x-auto">
       <div className="relative w-full h-full max-w-[1800px] mx-auto">
-        {/* Left Sidebar: Filter + Legend (stacked) */}
-        <div className="absolute left-4 top-4 flex flex-col gap-4 z-30">
+        {/* Left Sidebar: Filter + Legend (stacked) - Hidden on mobile */}
+        <div className="hidden md:absolute md:left-4 md:top-4 md:flex md:flex-col md:gap-4 z-30">
           <FiltersPanel />
           <Legend />
         </div>
 
-        {/* Center: Canvas */}
-        <div className="absolute left-[19rem] right-[21rem] top-0 bottom-0">
+        {/* Center: Canvas - Full width on mobile, centered on desktop */}
+        <div className="absolute left-0 right-0 md:left-[19rem] md:right-[21rem] top-0 bottom-0">
           <Canvas camera={{ position: [8, 8, 8], fov: 75 }}>
             <RadarScene />
           </Canvas>
         </div>
 
-        {/* Right Sidebar: Reset Button + Signal Details */}
-        <div className="absolute right-4 top-4 flex flex-col gap-4 z-30">
+        {/* Right Sidebar: Reset Button + Signal Details - Hidden on mobile */}
+        <div className="hidden md:absolute md:right-4 md:top-4 md:flex md:flex-col md:gap-4 z-30">
           <ResetViewButtonOverlay />
           <SignalDetailsPanel />
         </div>
 
+        {/* HoverTooltip - Hidden on mobile (no hover on touch devices) */}
         <HoverTooltip />
         <ScrollIndicator />
       </div>
