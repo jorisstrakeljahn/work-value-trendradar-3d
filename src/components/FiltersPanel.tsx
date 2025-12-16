@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { useRadarStore } from '../store/useRadarStore'
 import industriesData from '../data/industries.json'
 import type { Industry } from '../types/signal'
 
 export default function FiltersPanel() {
+  const [isCollapsed, setIsCollapsed] = useState(false)
   const { filters, setFilters } = useRadarStore()
   const industries = industriesData as Industry[]
 
@@ -20,44 +22,64 @@ export default function FiltersPanel() {
   }
 
   return (
-    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-xs">
-      <h2 className="text-lg font-semibold mb-3">Filter</h2>
-      <div className="space-y-2">
-        <div>
-          <h3 className="text-sm font-medium mb-2">Branchen</h3>
-          <div className="space-y-1 max-h-64 overflow-y-auto">
-            {industries.map((industry) => {
-              const isSelected = filters.industries?.includes(industry.id) ?? false
-              return (
-                <label
-                  key={industry.id}
-                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded"
-                >
-                  <input
-                    type="checkbox"
-                    checked={isSelected}
-                    onChange={() => toggleIndustry(industry.id)}
-                    className="rounded"
-                  />
-                  <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ backgroundColor: industry.color }}
-                  />
-                  <span className="text-sm">{industry.name}</span>
-                </label>
-              )
-            })}
+    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg max-w-xs">
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="w-full flex items-center justify-between p-4 hover:bg-gray-50 rounded-t-lg transition-colors"
+      >
+        <h2 className="text-lg font-semibold">Filter</h2>
+        <svg
+          className={`w-4 h-4 transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+      {!isCollapsed && (
+        <div className="p-4 space-y-2">
+          <div>
+            <h3 className="text-sm font-medium mb-2">Branchen</h3>
+            <div className="space-y-1 max-h-64 overflow-y-auto">
+              {industries.map((industry) => {
+                const isSelected = filters.industries?.includes(industry.id) ?? false
+                return (
+                  <label
+                    key={industry.id}
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-1 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleIndustry(industry.id)}
+                      className="rounded"
+                    />
+                    <div
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: industry.color }}
+                    />
+                    <span className="text-sm">{industry.name}</span>
+                  </label>
+                )
+              })}
+            </div>
           </div>
+          {filters.industries && filters.industries.length > 0 && (
+            <button
+              onClick={() => setFilters({ industries: [] })}
+              className="text-xs text-blue-600 hover:text-blue-800 mt-2"
+            >
+              Alle zurücksetzen
+            </button>
+          )}
         </div>
-        {filters.industries && filters.industries.length > 0 && (
-          <button
-            onClick={() => setFilters({ industries: [] })}
-            className="text-xs text-blue-600 hover:text-blue-800 mt-2"
-          >
-            Alle zurücksetzen
-          </button>
-        )}
-      </div>
+      )}
     </div>
   )
 }
