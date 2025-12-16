@@ -1,10 +1,9 @@
 import { useRadarStore } from '../store/useRadarStore'
-import industriesData from '../data/industries.json'
-import type { Industry } from '../types/signal'
+import { useIndustries } from '../lib/useIndustries'
 
 export default function HoverTooltip() {
   const { hoveredSignal } = useRadarStore()
-  const industries = industriesData as Industry[]
+  const industries = useIndustries()
 
   if (!hoveredSignal) return null
 

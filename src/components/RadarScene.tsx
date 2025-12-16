@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { OrbitControls, Html } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
-import signalsData from '../data/signals.seed.json'
+import { useSignals } from '../lib/useSignals'
 import { mapSignalToPosition } from '../lib/mapping'
 import SignalPoint from './SignalPoint'
 import ResetViewButton from './ResetViewButton'
@@ -17,6 +17,7 @@ export default function RadarScene() {
   const { camera } = useThree()
   const controlsRef = useRef<any>(null)
   const { filters } = useRadarStore()
+  const signalsData = useSignals()
 
   // Map signals to positions and apply filters
   const signals = useMemo(() => {
@@ -40,7 +41,7 @@ export default function RadarScene() {
       ...signal,
       position: mapSignalToPosition(signal, MAX_RADIUS, MAX_HEIGHT),
     }))
-  }, [filters])
+  }, [filters, signalsData])
 
   useEffect(() => {
     // Camera from above (45° angle) - shows x/y plane

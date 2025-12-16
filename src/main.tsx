@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import './i18n/config'
 
 // Initialize theme from localStorage before rendering
 const storedTheme = localStorage.getItem('radar-theme')

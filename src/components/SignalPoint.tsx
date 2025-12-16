@@ -2,8 +2,8 @@ import { useRef, useState } from 'react'
 import { Mesh } from 'three'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { useRadarStore } from '../store/useRadarStore'
-import industriesData from '../data/industries.json'
-import type { Signal, Industry } from '../types/signal'
+import { useIndustries } from '../lib/useIndustries'
+import type { Signal } from '../types/signal'
 
 interface SignalPointProps {
   signal: Signal
@@ -14,7 +14,7 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   const { selectedSignal, hoveredSignal, setSelectedSignal, setHoveredSignal } =
     useRadarStore()
   const [hovered, setHovered] = useState(false)
-  const industries = industriesData as Industry[]
+  const industries = useIndustries()
 
   const isSelected = selectedSignal?.id === signal.id
   const isHovered = hoveredSignal?.id === signal.id || hovered

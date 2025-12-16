@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useRadarStore } from '../store/useRadarStore'
-import industriesData from '../data/industries.json'
-import type { Industry } from '../types/signal'
+import { useIndustries } from '../lib/useIndustries'
 
 export default function FiltersPanel() {
+  const { t } = useTranslation()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const { filters, setFilters } = useRadarStore()
-  const industries = industriesData as Industry[]
+  const industries = useIndustries()
 
   const toggleIndustry = (industryId: string) => {
     const currentIndustries = filters.industries || []
@@ -28,29 +30,19 @@ export default function FiltersPanel() {
         className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/50 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-200"
       >
         <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">
-          Filter
+          {t('filter.title')}
         </h2>
-        <svg
+        <ChevronDown
           className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${
             isCollapsed ? '' : 'rotate-180'
           }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        />
       </button>
       {!isCollapsed && (
         <div className="px-5 pb-5 space-y-4">
           <div>
             <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              Branchen
+              {t('filter.industries')}
             </h3>
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {industries.map(industry => {
@@ -84,7 +76,7 @@ export default function FiltersPanel() {
               onClick={() => setFilters({ industries: [] })}
               className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors duration-150"
             >
-              Alle zurücksetzen
+              {t('filter.resetAll')}
             </button>
           )}
         </div>

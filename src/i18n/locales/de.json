@@ -1,0 +1,86 @@
+{
+  "header": {
+    "title": "3D Trend Radar",
+    "subtitle": "Schwache Signale von KI/Robotik und deren Auswirkung auf den Wert der Arbeit kartieren"
+  },
+  "filter": {
+    "title": "Filter",
+    "industries": "Branchen",
+    "resetAll": "Alle zurücksetzen"
+  },
+  "legend": {
+    "title": "Legende",
+    "status": "Status",
+    "selected": "Ausgewählt",
+    "hover": "Hover",
+    "radarAxes": "Radar-Achsen",
+    "xAxis": "X-Achse:",
+    "xAxisLabel": "Impact / Relevanz",
+    "xAxisLow": "Links = Low Impact",
+    "xAxisHigh": "Rechts = High Impact",
+    "yAxis": "Y-Achse:",
+    "yAxisLabel": "Zeithorizont / Reifegrad",
+    "yAxisNow": "Unten = Jetzt (Now)",
+    "yAxisFar": "Oben = Zukunft (Far)",
+    "zAxis": "Z-Achse:",
+    "zAxisLabel": "Work-Value-Index",
+    "zAxisAggregated": "Aggregiert aus 4 Teilwerten",
+    "zAxisHigher": "Höher = mehr Aufwertung",
+    "zAxisLower": "Niedriger = weniger Aufwertung"
+  },
+  "signalDetails": {
+    "title": "Signal Details",
+    "clickToSee": "Klicken Sie auf einen Punkt, um Details zu sehen",
+    "industries": "Branchen:",
+    "impact": "Impact:",
+    "horizon": "Horizon:",
+    "workValue": "Work Value:",
+    "aggregated": "(aggregiert aus 4 Teilwerten)",
+    "confidence": "Confidence:",
+    "valueDimensions": "Value Dimensions",
+    "economic": "Economic:",
+    "social": "Social:",
+    "subjective": "Subjective:",
+    "political": "Political:",
+    "tags": "Tags"
+  },
+  "scrollIndicator": {
+    "learnMore": "Mehr erfahren"
+  },
+  "resetView": {
+    "button": "Ansicht zurücksetzen"
+  },
+  "explanation": {
+    "title": "Das 3D Trend Radar verstehen",
+    "intro": "Diese interaktive 3D-Visualisierung kartiert schwache Signale von KI- und Robotiktechnologien und deren potenzielle Auswirkung auf den Wert der Arbeit in verschiedenen Branchen. Jeder Punkt repräsentiert einen Trend oder ein Signal, positioniert im dreidimensionalen Raum basierend auf seinen Eigenschaften.",
+    "threeDimensions": "Die drei Dimensionen",
+    "xAxisTitle": "X-Achse: Impact / Relevanz",
+    "xAxisDesc": "Misst, wie signifikant die Auswirkung dieses Trends auf die Branche ist. Punkte weiter rechts zeigen höhere Impact und Relevanz. Diese Dimension hilft zu identifizieren, welche Signale am wahrscheinlichsten Arbeitspraktiken transformieren werden.",
+    "yAxisTitle": "Y-Achse: Zeithorizont / Reifegrad",
+    "yAxisDesc": "Repräsentiert die zeitliche Dimension des Trends. Das Zentrum des Radars repräsentiert Trends, die jetzt passieren, während die äußeren Ringe zukünftige Entwicklungen repräsentieren. Diese radiale Abbildung folgt dem klassischen Trend-Radar-Muster und macht es intuitiv zu verstehen, wann Trends sich materialisieren könnten.",
+    "yAxisNow": "Zentrum (Jetzt): Aktuelle Trends und Technologien",
+    "yAxisNext": "Mittlerer Ring (Nächste): Kurzfristige Entwicklungen (1-3 Jahre)",
+    "yAxisFar": "Äußerer Ring (Weit): Langfristige Zukunftstrends (3+ Jahre)",
+    "zAxisTitle": "Z-Achse: Work-Value-Index",
+    "zAxisDesc": "Die Höhe jedes Punkts zeigt, wie der Trend den Wert der Arbeit beeinflusst. Höhere Punkte repräsentieren Trends, die den Arbeitswert erhöhen, während niedrigere Punkte Trends mit weniger positiver Auswirkung oder potenzieller Abwertung anzeigen. Dieser Index wird aus vier Teil-Dimensionen berechnet:",
+    "zAxisEconomic": "Economic: Finanzieller Wert und Vergütung",
+    "zAxisSocial": "Social: Soziale Anerkennung und Status",
+    "zAxisSubjective": "Subjective: Persönliche Erfüllung und Bedeutung",
+    "zAxisPolitical": "Political: Einfluss und Entscheidungsmacht",
+    "howToUse": "Wie man das Radar nutzt",
+    "step1": "Erkunden: Verwenden Sie die Maus, um das 3D-Radar zu drehen, zu zoomen und zu verschieben. Klicken und ziehen zum Drehen, scrollen zum Zoomen und Rechtsklick-Ziehen zum Verschieben.",
+    "step2": "Filtern: Verwenden Sie das Filter-Panel oben links, um Trends nach Branche anzuzeigen oder auszublenden. Dies hilft Ihnen, sich auf bestimmte Sektoren zu konzentrieren und zu vergleichen, wie Trends verschiedene Branchen beeinflussen.",
+    "step3": "Hover: Bewegen Sie die Maus über einen Punkt, um eine schnelle Vorschau des Trend-Titels und der zugehörigen Branchen zu sehen.",
+    "step4": "Klicken: Klicken Sie auf einen Punkt, um detaillierte Informationen zum Trend zu sehen, einschließlich vollständiger Beschreibung, Impact-Werten, Konfidenz-Level und Aufschlüsselung der Wert-Dimensionen.",
+    "step5": "Zurücksetzen: Verwenden Sie den \"Ansicht zurücksetzen\"-Button oben rechts im Radar, um zur Standard-Kameraposition zurückzukehren.",
+    "visualElements": "Die visuellen Elemente verstehen",
+    "colorCoding": "Farbcodierung: Jeder Punkt ist entsprechend seiner primären Branche eingefärbt. Dies ermöglicht es Ihnen, schnell zu identifizieren, welche Sektoren am stärksten von bestimmten Trends betroffen sind.",
+    "pointSize": "Punktgröße: Die Größe jedes Punkts spiegelt sein Impact-Level wider. Größere Punkte zeigen Trends mit höherem Impact auf den Arbeitswert.",
+    "selection": "Auswahl: Wenn Sie auf einen Punkt klicken, wird er mit einem gelben Glühen hervorgehoben, was es einfach macht, zu verfolgen, welchen Trend Sie gerade untersuchen.",
+    "thematicSegments": "Thematische Segmente: Das Radar ist in Segmente unterteilt, die verschiedene thematische Cluster repräsentieren und Ihnen helfen zu verstehen, wie Trends miteinander zusammenhängen.",
+    "about": "Über dieses Projekt",
+    "aboutDesc1": "Dieses 3D Trend Radar wurde entwickelt, um Forschern, Politikern und Branchenexperten zu helfen zu verstehen, wie aufkommende KI- und Robotiktechnologien den Wert der Arbeit neu gestalten könnten. Durch die Visualisierung schwacher Signale in drei Dimensionen können wir zukünftige Veränderungen besser antizipieren und uns auf die sich entwickelnde Arbeitslandschaft vorbereiten.",
+    "aboutDesc2": "Die hier präsentierten Daten repräsentieren eine kuratierte Sammlung von Trends und Signalen, die in mehreren Branchen beobachtet wurden. Jedes Signal wird basierend auf seinem potenziellen Impact, Zeithorizont und Effekt auf den Arbeitswert über wirtschaftliche, soziale, subjektive und politische Dimensionen bewertet."
+  }
+}
+

@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
+import { ChevronDown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function ScrollIndicator() {
+  const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState(true)
   const [hasScrolled, setHasScrolled] = useState(false)
 
@@ -41,20 +44,8 @@ export default function ScrollIndicator() {
         className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200 group"
         aria-label="Scroll to explanation"
       >
-        <span className="text-xs font-medium">Learn more</span>
-        <svg
-          className="w-6 h-6 animate-bounce"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
+        <span className="text-xs font-medium">{t('scrollIndicator.learnMore')}</span>
+        <ChevronDown className="w-6 h-6 animate-bounce" />
       </button>
     </div>
   )

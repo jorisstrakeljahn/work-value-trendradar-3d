@@ -1,20 +1,21 @@
+import { useTranslation } from 'react-i18next'
 import { useRadarStore } from '../store/useRadarStore'
-import industriesData from '../data/industries.json'
+import { useIndustries } from '../lib/useIndustries'
 import { calculateWorkValueIndex } from '../lib/mapping'
-import type { Industry } from '../types/signal'
 
 export default function SignalDetailsPanel() {
+  const { t } = useTranslation()
   const { selectedSignal } = useRadarStore()
-  const industries = industriesData as Industry[]
+  const industries = useIndustries()
 
   if (!selectedSignal) {
     return (
       <div className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-80 p-6">
         <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
-          Signal Details
+          {t('signalDetails.title')}
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Click on a point to see details
+          {t('signalDetails.clickToSee')}
         </p>
       </div>
     )
@@ -39,13 +40,13 @@ export default function SignalDetailsPanel() {
         <div className="space-y-3 text-sm">
           <div className="flex items-start gap-2">
             <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              Industries:
+              {t('signalDetails.industries')}
             </span>
             <span className="text-gray-900 dark:text-gray-100">{industryNames}</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              Impact:
+              {t('signalDetails.impact')}
             </span>
             <span className="text-gray-900 dark:text-gray-100">
               {selectedSignal.xImpact}/100
@@ -53,7 +54,7 @@ export default function SignalDetailsPanel() {
           </div>
           <div className="flex items-center gap-2">
             <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              Horizon:
+              {t('signalDetails.horizon')}
             </span>
             <span className="text-gray-900 dark:text-gray-100">
               {selectedSignal.yHorizon}/100
@@ -61,7 +62,7 @@ export default function SignalDetailsPanel() {
           </div>
           <div className="flex items-start gap-2">
             <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              Work Value:
+              {t('signalDetails.workValue')}
             </span>
             <div>
               <span className="text-gray-900 dark:text-gray-100">
@@ -72,13 +73,13 @@ export default function SignalDetailsPanel() {
                 {calculateWorkValueIndex(selectedSignal).toFixed(1)}
               </span>
               <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                (aggregated from 4 sub-values)
+                {t('signalDetails.aggregated')}
               </div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              Confidence:
+              {t('signalDetails.confidence')}
             </span>
             <span className="text-gray-900 dark:text-gray-100">
               {selectedSignal.confidence}/5
@@ -88,32 +89,32 @@ export default function SignalDetailsPanel() {
 
         <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
           <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">
-            Value Dimensions
+            {t('signalDetails.valueDimensions')}
           </h4>
           <div className="space-y-2 text-xs">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Economic:</span>
+              <span className="text-gray-600 dark:text-gray-400">{t('signalDetails.economic')}</span>
               <span className="text-gray-900 dark:text-gray-100 font-medium">
                 {selectedSignal.valueDimensions.economic > 0 ? '+' : ''}
                 {selectedSignal.valueDimensions.economic}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Social:</span>
+              <span className="text-gray-600 dark:text-gray-400">{t('signalDetails.social')}</span>
               <span className="text-gray-900 dark:text-gray-100 font-medium">
                 {selectedSignal.valueDimensions.social > 0 ? '+' : ''}
                 {selectedSignal.valueDimensions.social}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Subjective:</span>
+              <span className="text-gray-600 dark:text-gray-400">{t('signalDetails.subjective')}</span>
               <span className="text-gray-900 dark:text-gray-100 font-medium">
                 {selectedSignal.valueDimensions.subjective > 0 ? '+' : ''}
                 {selectedSignal.valueDimensions.subjective}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Political:</span>
+              <span className="text-gray-600 dark:text-gray-400">{t('signalDetails.political')}</span>
               <span className="text-gray-900 dark:text-gray-100 font-medium">
                 {selectedSignal.valueDimensions.political > 0 ? '+' : ''}
                 {selectedSignal.valueDimensions.political}
@@ -124,7 +125,7 @@ export default function SignalDetailsPanel() {
 
         {selectedSignal.tags.length > 0 && (
           <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
-            <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">Tags</h4>
+            <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">{t('signalDetails.tags')}</h4>
             <div className="flex flex-wrap gap-2">
               {selectedSignal.tags.map(tag => (
                 <span

@@ -1,0 +1,86 @@
+{
+  "header": {
+    "title": "3D Trend Radar",
+    "subtitle": "Mapping weak signals of AI/robotics and their impact on work value"
+  },
+  "filter": {
+    "title": "Filter",
+    "industries": "Industries",
+    "resetAll": "Reset all"
+  },
+  "legend": {
+    "title": "Legend",
+    "status": "Status",
+    "selected": "Selected",
+    "hover": "Hover",
+    "radarAxes": "Radar Axes",
+    "xAxis": "X-Axis:",
+    "xAxisLabel": "Impact / Relevance",
+    "xAxisLow": "Left = Low Impact",
+    "xAxisHigh": "Right = High Impact",
+    "yAxis": "Y-Axis:",
+    "yAxisLabel": "Time Horizon / Maturity",
+    "yAxisNow": "Bottom = Now",
+    "yAxisFar": "Top = Future (Far)",
+    "zAxis": "Z-Axis:",
+    "zAxisLabel": "Work Value Index",
+    "zAxisAggregated": "Aggregated from 4 sub-values",
+    "zAxisHigher": "Higher = more value increase",
+    "zAxisLower": "Lower = less value increase"
+  },
+  "signalDetails": {
+    "title": "Signal Details",
+    "clickToSee": "Click on a point to see details",
+    "industries": "Industries:",
+    "impact": "Impact:",
+    "horizon": "Horizon:",
+    "workValue": "Work Value:",
+    "aggregated": "(aggregated from 4 sub-values)",
+    "confidence": "Confidence:",
+    "valueDimensions": "Value Dimensions",
+    "economic": "Economic:",
+    "social": "Social:",
+    "subjective": "Subjective:",
+    "political": "Political:",
+    "tags": "Tags"
+  },
+  "scrollIndicator": {
+    "learnMore": "Learn more"
+  },
+  "resetView": {
+    "button": "Reset View"
+  },
+  "explanation": {
+    "title": "Understanding the 3D Trend Radar",
+    "intro": "This interactive 3D visualization maps weak signals of AI and robotics technologies and their potential impact on the value of work across different industries. Each point represents a trend or signal, positioned in three-dimensional space based on its characteristics.",
+    "threeDimensions": "The Three Dimensions",
+    "xAxisTitle": "X-Axis: Impact / Relevance",
+    "xAxisDesc": "Measures how significant the impact of this trend is on the industry. Points further to the right indicate higher impact and relevance. This dimension helps identify which signals are most likely to transform work practices.",
+    "yAxisTitle": "Y-Axis: Time Horizon / Maturity",
+    "yAxisDesc": "Represents the temporal dimension of the trend. The center of the radar represents trends happening now, while the outer rings represent future developments. This radial mapping follows the classic trend radar pattern, making it intuitive to understand when trends might materialize.",
+    "yAxisNow": "Center (Now): Current trends and technologies",
+    "yAxisNext": "Middle Ring (Next): Near-term developments (1-3 years)",
+    "yAxisFar": "Outer Ring (Far): Long-term future trends (3+ years)",
+    "zAxisTitle": "Z-Axis: Work Value Index",
+    "zAxisDesc": "The height of each point indicates how the trend affects the value of work. Higher points represent trends that increase work value, while lower points indicate trends with less positive impact or potential devaluation. This index is calculated from four sub-dimensions:",
+    "zAxisEconomic": "Economic: Financial value and compensation",
+    "zAxisSocial": "Social: Social recognition and status",
+    "zAxisSubjective": "Subjective: Personal fulfillment and meaning",
+    "zAxisPolitical": "Political: Influence and decision-making power",
+    "howToUse": "How to Use the Radar",
+    "step1": "Explore: Use your mouse to rotate, zoom, and pan the 3D radar. Click and drag to rotate, scroll to zoom, and right-click drag to pan.",
+    "step2": "Filter: Use the filter panel in the top-left to show or hide trends by industry. This helps you focus on specific sectors and compare how trends affect different industries.",
+    "step3": "Hover: Move your mouse over any point to see a quick preview of the trend's title and associated industries.",
+    "step4": "Click: Click on any point to see detailed information about the trend, including its full description, impact scores, confidence level, and value dimensions breakdown.",
+    "step5": "Reset: Use the \"Reset View\" button in the top-right of the radar to return to the default camera position.",
+    "visualElements": "Understanding the Visual Elements",
+    "colorCoding": "Color Coding: Each point is colored according to its primary industry. This allows you to quickly identify which sectors are most affected by specific trends.",
+    "pointSize": "Point Size: The size of each point reflects its impact level. Larger points indicate trends with higher impact on work value.",
+    "selection": "Selection: When you click on a point, it becomes highlighted with a yellow glow, making it easy to track which trend you're currently examining.",
+    "thematicSegments": "Thematic Segments: The radar is divided into segments that represent different thematic clusters, helping you understand how trends relate to each other.",
+    "about": "About This Project",
+    "aboutDesc1": "This 3D Trend Radar is designed to help researchers, policymakers, and industry professionals understand how emerging AI and robotics technologies might reshape the value of work. By visualizing weak signals in three dimensions, we can better anticipate future changes and prepare for the evolving landscape of work.",
+    "aboutDesc2": "The data presented here represents a curated collection of trends and signals observed across multiple industries. Each signal is evaluated based on its potential impact, time horizon, and effect on work value across economic, social, subjective, and political dimensions."
+  }
+}
+

@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function Legend() {
+  const { t } = useTranslation()
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   return (
@@ -10,81 +13,71 @@ export default function Legend() {
         className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/50 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-200"
       >
         <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-          Legende
+          {t('legend.title')}
         </h3>
-        <svg
+        <ChevronDown
           className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${
             isCollapsed ? '' : 'rotate-180'
           }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        />
       </button>
       {!isCollapsed && (
         <div className="px-5 pb-5 space-y-4 text-xs">
           <div className="pt-2 border-t border-gray-200/50 dark:border-gray-600/50">
             <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">
-              Status
+              {t('legend.status')}
             </h4>
             <div className="space-y-2.5">
               <div className="flex items-center gap-3">
                 <div className="w-3.5 h-3.5 rounded-full bg-yellow-500 flex-shrink-0"></div>
-                <span className="text-gray-700 dark:text-gray-300">Ausgewählt</span>
+                <span className="text-gray-700 dark:text-gray-300">{t('legend.selected')}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-3.5 h-3.5 rounded-full bg-white dark:bg-[#252525] border-2 border-gray-400 dark:border-gray-500 flex-shrink-0"></div>
-                <span className="text-gray-700 dark:text-gray-300">Hover</span>
+                <span className="text-gray-700 dark:text-gray-300">{t('legend.hover')}</span>
               </div>
             </div>
           </div>
           <div className="pt-2 border-t border-gray-200/50 dark:border-gray-600/50">
             <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">
-              Radar-Achsen
+              {t('legend.radarAxes')}
             </h4>
             <div className="space-y-3">
               <div>
                 <span className="font-medium text-gray-900 dark:text-gray-100">
-                  X-Achse:
+                  {t('legend.xAxis')}
                 </span>{' '}
                 <span className="text-gray-600 dark:text-gray-400">
-                  Impact / Relevanz
+                  {t('legend.xAxisLabel')}
                 </span>
                 <div className="text-xs text-gray-500 dark:text-gray-500 mt-1.5 ml-2 space-y-0.5">
-                  <div>• Links = Low Impact</div>
-                  <div>• Rechts = High Impact</div>
+                  <div>• {t('legend.xAxisLow')}</div>
+                  <div>• {t('legend.xAxisHigh')}</div>
                 </div>
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-gray-100">
-                  Y-Achse:
+                  {t('legend.yAxis')}
                 </span>{' '}
                 <span className="text-gray-600 dark:text-gray-400">
-                  Zeithorizont / Reifegrad
+                  {t('legend.yAxisLabel')}
                 </span>
                 <div className="text-xs text-gray-500 dark:text-gray-500 mt-1.5 ml-2 space-y-0.5">
-                  <div>• Unten = Jetzt (Now)</div>
-                  <div>• Oben = Zukunft (Far)</div>
+                  <div>• {t('legend.yAxisNow')}</div>
+                  <div>• {t('legend.yAxisFar')}</div>
                 </div>
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-gray-100">
-                  Z-Achse:
+                  {t('legend.zAxis')}
                 </span>{' '}
                 <span className="text-gray-600 dark:text-gray-400">
-                  Work-Value-Index
+                  {t('legend.zAxisLabel')}
                 </span>
                 <div className="text-xs text-gray-500 dark:text-gray-500 mt-1.5 ml-2 space-y-0.5">
-                  <div>• Aggregiert aus 4 Teilwerten</div>
-                  <div>• Höher = mehr Aufwertung</div>
-                  <div>• Niedriger = weniger Aufwertung</div>
+                  <div>• {t('legend.zAxisAggregated')}</div>
+                  <div>• {t('legend.zAxisHigher')}</div>
+                  <div>• {t('legend.zAxisLower')}</div>
                 </div>
               </div>
             </div>
