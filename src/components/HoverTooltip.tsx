@@ -1,5 +1,5 @@
 import { useRadarStore } from '../store/useRadarStore'
-import { useIndustries } from '../lib/useIndustries'
+import { useIndustries } from '../shared/hooks/useIndustries'
 
 export default function HoverTooltip() {
   const { hoveredSignal } = useRadarStore()

@@ -1,4 +1,4 @@
-import type { Signal } from '../types/signal'
+import type { Signal } from '../../types/signal'
 
 /**
  * Calculates the Work-Value-Index from 4 sub-values

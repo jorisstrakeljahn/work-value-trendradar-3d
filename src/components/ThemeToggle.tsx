@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Moon, Sun } from 'lucide-react'
+import { Button } from '../shared/components/ui'
 import { useThemeStore } from '../store/useThemeStore'
 
 export default function ThemeToggle() {
@@ -16,9 +17,9 @@ export default function ThemeToggle() {
   }, [theme])
 
   return (
-    <button
+    <Button
+      variant="icon"
       onClick={toggleTheme}
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-[#252525]/80 backdrop-blur-xl shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 border border-gray-200/50 dark:border-gray-600/50"
       aria-label="Toggle theme"
     >
       {theme === 'light' ? (
@@ -26,7 +27,7 @@ export default function ThemeToggle() {
       ) : (
         <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300" />
       )}
-    </button>
+    </Button>
   )
 }
 

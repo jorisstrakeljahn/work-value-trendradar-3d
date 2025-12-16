@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next'
+import { Panel, InfoRow, Tag } from '../shared/components/ui'
 import { useRadarStore } from '../store/useRadarStore'
-import { useIndustries } from '../lib/useIndustries'
-import { calculateWorkValueIndex } from '../lib/mapping'
+import { useIndustries } from '../shared/hooks/useIndustries'
+import { calculateWorkValueIndex } from '../shared/utils/mapping'
 
 export default function SignalDetailsPanel() {
   const { t } = useTranslation()
@@ -10,14 +11,14 @@ export default function SignalDetailsPanel() {
 
   if (!selectedSignal) {
     return (
-      <div className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-80 p-6">
+      <Panel className="w-80 p-6">
         <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
           {t('signalDetails.title')}
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
           {t('signalDetails.clickToSee')}
         </p>
-      </div>
+      </Panel>
     )
   }
 
@@ -25,8 +26,10 @@ export default function SignalDetailsPanel() {
     .map(tag => industries.find(ind => ind.id === tag)?.name || tag)
     .join(', ')
 
+  const workValueIndex = calculateWorkValueIndex(selectedSignal)
+
   return (
-    <div className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-80 max-h-[calc(100vh-10rem)] overflow-y-auto">
+    <Panel className="w-80 max-h-[calc(100vh-10rem)] overflow-y-auto">
       <div className="p-6 space-y-5">
         <div>
           <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
@@ -38,53 +41,25 @@ export default function SignalDetailsPanel() {
         </div>
 
         <div className="space-y-3 text-sm">
-          <div className="flex items-start gap-2">
-            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              {t('signalDetails.industries')}
-            </span>
-            <span className="text-gray-900 dark:text-gray-100">{industryNames}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              {t('signalDetails.impact')}
-            </span>
-            <span className="text-gray-900 dark:text-gray-100">
-              {selectedSignal.xImpact}/100
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              {t('signalDetails.horizon')}
-            </span>
-            <span className="text-gray-900 dark:text-gray-100">
-              {selectedSignal.yHorizon}/100
-            </span>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              {t('signalDetails.workValue')}
-            </span>
-            <div>
-              <span className="text-gray-900 dark:text-gray-100">
-                {(() => {
-                  const workValueIndex = calculateWorkValueIndex(selectedSignal)
-                  return workValueIndex > 0 ? '+' : ''
-                })()}
-                {calculateWorkValueIndex(selectedSignal).toFixed(1)}
-              </span>
-              <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                {t('signalDetails.aggregated')}
+          <InfoRow label={t('signalDetails.industries')} value={industryNames} align="start" />
+          <InfoRow label={t('signalDetails.impact')} value={`${selectedSignal.xImpact}/100`} />
+          <InfoRow label={t('signalDetails.horizon')} value={`${selectedSignal.yHorizon}/100`} />
+          <InfoRow
+            label={t('signalDetails.workValue')}
+            align="start"
+            value={
+              <div>
+                <span className="text-gray-900 dark:text-gray-100">
+                  {workValueIndex > 0 ? '+' : ''}
+                  {workValueIndex.toFixed(1)}
+                </span>
+                <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                  {t('signalDetails.aggregated')}
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
-              {t('signalDetails.confidence')}
-            </span>
-            <span className="text-gray-900 dark:text-gray-100">
-              {selectedSignal.confidence}/5
-            </span>
-          </div>
+            }
+          />
+          <InfoRow label={t('signalDetails.confidence')} value={`${selectedSignal.confidence}/5`} />
         </div>
 
         <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
@@ -128,17 +103,12 @@ export default function SignalDetailsPanel() {
             <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">{t('signalDetails.tags')}</h4>
             <div className="flex flex-wrap gap-2">
               {selectedSignal.tags.map(tag => (
-                <span
-                  key={tag}
-                  className="px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium"
-                >
-                  {tag}
-                </span>
+                <Tag key={tag}>{tag}</Tag>
               ))}
             </div>
           </div>
         )}
       </div>
-    </div>
+    </Panel>
   )
 }

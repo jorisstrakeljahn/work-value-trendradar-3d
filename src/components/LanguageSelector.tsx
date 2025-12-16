@@ -1,6 +1,8 @@
-import { useState, useRef, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useState, useRef } from 'react'
 import { Globe, Check } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Button } from '../shared/components/ui'
+import { useClickOutside } from '../shared/hooks/useClickOutside'
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -12,16 +14,7 @@ export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  useClickOutside(dropdownRef, () => setIsOpen(false))
 
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode)
@@ -30,13 +23,13 @@ export default function LanguageSelector() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button
+      <Button
+        variant="icon"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-[#252525]/80 backdrop-blur-xl shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 border border-gray-200/50 dark:border-gray-600/50"
         aria-label="Select language"
       >
         <Globe className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="absolute right-0 top-12 mt-2 w-48 glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 overflow-hidden z-50">

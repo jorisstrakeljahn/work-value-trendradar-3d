@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next'
+import { DimensionCard } from '../features/explanation/components/DimensionCard'
+import { StepCard } from '../features/explanation/components/StepCard'
 
 export default function ExplanationSection() {
   const { t } = useTranslation()
 
   return (
-    <section className="w-full bg-white dark:bg-[#1a1a1a] py-20 px-6">
+    <section className="w-full bg-white dark:bg-[#1a1a1a] py-20 px-6 pt-32">
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="space-y-6">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
@@ -21,43 +23,52 @@ export default function ExplanationSection() {
               {t('explanation.threeDimensions')}
             </h3>
             <div className="space-y-6">
-              <div className="pl-6 border-l-4 border-blue-500 dark:border-blue-400">
-                <h4 className="text-xl font-medium text-gray-900 dark:text-gray-100 mb-2">
-                  {t('explanation.xAxisTitle')}
-                </h4>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {t('explanation.xAxisDesc')}
-                </p>
-              </div>
+              <DimensionCard
+                title={t('explanation.xAxisTitle')}
+                description={t('explanation.xAxisDesc')}
+                borderColor="border-blue-500 dark:border-blue-400"
+              />
 
-              <div className="pl-6 border-l-4 border-green-500 dark:border-green-400">
-                <h4 className="text-xl font-medium text-gray-900 dark:text-gray-100 mb-2">
-                  {t('explanation.yAxisTitle')}
-                </h4>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {t('explanation.yAxisDesc')}
-                </p>
-                <ul className="mt-3 space-y-2 text-gray-600 dark:text-gray-400 text-sm">
-                  <li>• <strong>{t('explanation.yAxisNow')}</strong></li>
-                  <li>• <strong>{t('explanation.yAxisNext')}</strong></li>
-                  <li>• <strong>{t('explanation.yAxisFar')}</strong></li>
-                </ul>
-              </div>
+              <DimensionCard
+                title={t('explanation.yAxisTitle')}
+                description={t('explanation.yAxisDesc')}
+                borderColor="border-green-500 dark:border-green-400"
+              >
+                <li>• <strong>{t('explanation.yAxisNow')}</strong></li>
+                <li>• <strong>{t('explanation.yAxisNext')}</strong></li>
+                <li>• <strong>{t('explanation.yAxisFar')}</strong></li>
+              </DimensionCard>
 
-              <div className="pl-6 border-l-4 border-purple-500 dark:border-purple-400">
-                <h4 className="text-xl font-medium text-gray-900 dark:text-gray-100 mb-2">
-                  {t('explanation.zAxisTitle')}
-                </h4>
-                <p className="text-gray-700 dark:text-gray-300">
-                  {t('explanation.zAxisDesc')}
-                </p>
-                <ul className="mt-3 space-y-2 text-gray-600 dark:text-gray-400 text-sm">
-                  <li>• <strong>{t('explanation.zAxisEconomic')}</strong></li>
-                  <li>• <strong>{t('explanation.zAxisSocial')}</strong></li>
-                  <li>• <strong>{t('explanation.zAxisSubjective')}</strong></li>
-                  <li>• <strong>{t('explanation.zAxisPolitical')}</strong></li>
-                </ul>
+              <DimensionCard
+                title={t('explanation.zAxisTitle')}
+                description={t('explanation.zAxisDesc')}
+                borderColor="border-purple-500 dark:border-purple-400"
+              >
+                <li>• <strong>{t('explanation.zAxisEconomic')}</strong></li>
+                <li>• <strong>{t('explanation.zAxisSocial')}</strong></li>
+                <li>• <strong>{t('explanation.zAxisSubjective')}</strong></li>
+                <li>• <strong>{t('explanation.zAxisPolitical')}</strong></li>
+              </DimensionCard>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+              {t('explanation.workValueCalculation')}
+            </h3>
+            <div className="bg-gray-50 dark:bg-[#252525] rounded-xl p-6 space-y-4">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                {t('explanation.workValueCalcDesc1')}
+              </p>
+              <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcEconomic')}</strong> {t('explanation.workValueCalcEconomicDesc')}</p>
+                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcSocial')}</strong> {t('explanation.workValueCalcSocialDesc')}</p>
+                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcSubjective')}</strong> {t('explanation.workValueCalcSubjectiveDesc')}</p>
+                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcPolitical')}</strong> {t('explanation.workValueCalcPoliticalDesc')}</p>
               </div>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed pt-2">
+                {t('explanation.workValueCalcDesc2')}
+              </p>
             </div>
           </div>
 
@@ -65,47 +76,12 @@ export default function ExplanationSection() {
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
               {t('explanation.howToUse')}
             </h3>
-            <div className="space-y-4 text-gray-700 dark:text-gray-300">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">1</span>
-                </div>
-                <div>
-                  {t('explanation.step1')}
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">2</span>
-                </div>
-                <div>
-                  {t('explanation.step2')}
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">3</span>
-                </div>
-                <div>
-                  {t('explanation.step3')}
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">4</span>
-                </div>
-                <div>
-                  {t('explanation.step4')}
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">5</span>
-                </div>
-                <div>
-                  {t('explanation.step5')}
-                </div>
-              </div>
+            <div className="space-y-4">
+              <StepCard stepNumber={1}>{t('explanation.step1')}</StepCard>
+              <StepCard stepNumber={2}>{t('explanation.step2')}</StepCard>
+              <StepCard stepNumber={3}>{t('explanation.step3')}</StepCard>
+              <StepCard stepNumber={4}>{t('explanation.step4')}</StepCard>
+              <StepCard stepNumber={5}>{t('explanation.step5')}</StepCard>
             </div>
           </div>
 
@@ -114,18 +90,10 @@ export default function ExplanationSection() {
               {t('explanation.visualElements')}
             </h3>
             <div className="space-y-4 text-gray-700 dark:text-gray-300">
-              <p>
-                {t('explanation.colorCoding')}
-              </p>
-              <p>
-                {t('explanation.pointSize')}
-              </p>
-              <p>
-                {t('explanation.selection')}
-              </p>
-              <p>
-                {t('explanation.thematicSegments')}
-              </p>
+              <p>{t('explanation.colorCoding')}</p>
+              <p>{t('explanation.pointSize')}</p>
+              <p>{t('explanation.selection')}</p>
+              <p>{t('explanation.thematicSegments')}</p>
             </div>
           </div>
 

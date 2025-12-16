@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Mesh } from 'three'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { useRadarStore } from '../store/useRadarStore'
-import { useIndustries } from '../lib/useIndustries'
+import { useIndustries } from '../shared/hooks/useIndustries'
 import type { Signal } from '../types/signal'
 
 interface SignalPointProps {

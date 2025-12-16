@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import signalsDataDe from '../data/signals.seed.de.json'
-import signalsDataEn from '../data/signals.seed.en.json'
-import type { Signal } from '../types/signal'
+import signalsDataDe from '../../data/signals.seed.de.json'
+import signalsDataEn from '../../data/signals.seed.en.json'
+import type { Signal } from '../../types/signal'
 
 /**
  * Hook to load signals based on current language

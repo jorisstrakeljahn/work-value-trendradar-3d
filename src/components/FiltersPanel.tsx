@@ -1,12 +1,10 @@
-import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { CollapsiblePanel } from '../shared/components/ui'
 import { useRadarStore } from '../store/useRadarStore'
-import { useIndustries } from '../lib/useIndustries'
+import { useIndustries } from '../shared/hooks/useIndustries'
 
 export default function FiltersPanel() {
   const { t } = useTranslation()
-  const [isCollapsed, setIsCollapsed] = useState(false)
   const { filters, setFilters } = useRadarStore()
   const industries = useIndustries()
 
@@ -24,22 +22,8 @@ export default function FiltersPanel() {
   }
 
   return (
-    <div className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-72 overflow-hidden transition-all duration-300">
-      <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/50 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-200"
-      >
-        <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">
-          {t('filter.title')}
-        </h2>
-        <ChevronDown
-          className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${
-            isCollapsed ? '' : 'rotate-180'
-          }`}
-        />
-      </button>
-      {!isCollapsed && (
-        <div className="px-5 pb-5 space-y-4">
+    <CollapsiblePanel title={t('filter.title')} className="w-72">
+      <div className="space-y-4">
           <div>
             <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
               {t('filter.industries')}
@@ -79,8 +63,7 @@ export default function FiltersPanel() {
               {t('filter.resetAll')}
             </button>
           )}
-        </div>
-      )}
-    </div>
+      </div>
+    </CollapsiblePanel>
   )
 }
