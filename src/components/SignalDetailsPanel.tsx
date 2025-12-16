@@ -9,7 +9,7 @@ export default function SignalDetailsPanel() {
 
   if (!selectedSignal) {
     return (
-      <div className="absolute top-20 right-4 glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 max-w-sm p-6">
+      <div className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-80 p-6">
         <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
           Signal Details
         </h2>
@@ -25,7 +25,7 @@ export default function SignalDetailsPanel() {
     .join(', ')
 
   return (
-    <div className="absolute top-20 right-4 glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 max-w-sm max-h-[calc(100vh-6rem)] overflow-y-auto">
+    <div className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-80 max-h-[calc(100vh-10rem)] overflow-y-auto">
       <div className="p-6 space-y-5">
         <div>
           <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">

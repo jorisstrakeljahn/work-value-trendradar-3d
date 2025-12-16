@@ -22,7 +22,7 @@ export default function FiltersPanel() {
   }
 
   return (
-    <div className="absolute top-4 left-4 glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 max-w-xs overflow-hidden transition-all duration-300">
+    <div className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-72 overflow-hidden transition-all duration-300">
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/50 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-200"
