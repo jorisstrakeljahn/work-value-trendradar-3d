@@ -1,0 +1,63 @@
+[
+  {
+    "id": "tech",
+    "name": "Technologie",
+    "color": "#3B82F6"
+  },
+  {
+    "id": "software",
+    "name": "Software",
+    "color": "#8B5CF6"
+  },
+  {
+    "id": "logistics",
+    "name": "Logistik",
+    "color": "#10B981"
+  },
+  {
+    "id": "retail",
+    "name": "Einzelhandel",
+    "color": "#F59E0B"
+  },
+  {
+    "id": "finance",
+    "name": "Finanzwesen",
+    "color": "#EF4444"
+  },
+  {
+    "id": "insurance",
+    "name": "Versicherung",
+    "color": "#06B6D4"
+  },
+  {
+    "id": "healthcare",
+    "name": "Gesundheitswesen",
+    "color": "#EC4899"
+  },
+  {
+    "id": "manufacturing",
+    "name": "Produktion",
+    "color": "#6366F1"
+  },
+  {
+    "id": "creative",
+    "name": "Kreativwirtschaft",
+    "color": "#F97316"
+  },
+  {
+    "id": "hospitality",
+    "name": "Gastgewerbe",
+    "color": "#14B8A6"
+  },
+  {
+    "id": "administration",
+    "name": "Verwaltung",
+    "color": "#64748B"
+  },
+  {
+    "id": "transport",
+    "name": "Transport",
+    "color": "#8B5CF6"
+  }
+]
+
