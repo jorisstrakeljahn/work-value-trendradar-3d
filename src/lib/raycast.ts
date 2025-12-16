@@ -2,7 +2,7 @@ import { Raycaster, Vector2 } from 'three'
 import type { Camera, Object3D } from 'three'
 
 /**
- * Führt einen Raycast durch, um Objekte unter dem Mauszeiger zu finden
+ * Performs a raycast to find objects under the mouse cursor
  */
 export function performRaycast(
   event: MouseEvent,
@@ -18,6 +18,7 @@ export function performRaycast(
   mouse.y = -(event.clientY / height) * 2 + 1
 
   raycaster.setFromCamera(mouse, camera)
-  return raycaster.intersectObjects(objects, true).map((intersection) => intersection.object)
+  return raycaster
+    .intersectObjects(objects, true)
+    .map(intersection => intersection.object)
 }
-

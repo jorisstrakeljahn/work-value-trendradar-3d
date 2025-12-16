@@ -1,6 +1,9 @@
 import { create } from 'zustand'
 import type { Signal } from '../types/signal'
 
+/**
+ * State interface for the radar store
+ */
 interface RadarState {
   selectedSignal: Signal | null
   hoveredSignal: Signal | null
@@ -23,16 +26,19 @@ const defaultFilters = {
   maxImpact: 100,
 }
 
-export const useRadarStore = create<RadarState>((set) => ({
+/**
+ * Zustand store for radar state management
+ * Manages selected signal, hovered signal, and filters
+ */
+export const useRadarStore = create<RadarState>(set => ({
   selectedSignal: null,
   hoveredSignal: null,
   filters: defaultFilters,
-  setSelectedSignal: (signal) => set({ selectedSignal: signal }),
-  setHoveredSignal: (signal) => set({ hoveredSignal: signal }),
-  setFilters: (newFilters) =>
-    set((state) => ({
+  setSelectedSignal: signal => set({ selectedSignal: signal }),
+  setHoveredSignal: signal => set({ hoveredSignal: signal }),
+  setFilters: newFilters =>
+    set(state => ({
       filters: { ...state.filters, ...newFilters },
     })),
   resetFilters: () => set({ filters: defaultFilters }),
 }))
-

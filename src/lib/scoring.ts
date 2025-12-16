@@ -2,7 +2,7 @@ import type { Signal } from '../types/signal'
 import { calculateWorkValueIndex } from './mapping'
 
 /**
- * Berechnet einen Gesamtscore für ein Signal basierend auf Impact, Horizon und Work Value
+ * Calculates an overall score for a signal based on Impact, Horizon and Work Value
  */
 export function calculateSignalScore(signal: Signal): number {
   const weights = {
@@ -11,9 +11,9 @@ export function calculateSignalScore(signal: Signal): number {
     workValue: 0.3,
   }
 
-  // Work Value Index aus 4 Teilwerten berechnen
+  // Calculate Work Value Index from 4 sub-values
   const workValueIndex = calculateWorkValueIndex(signal)
-  // Normalisiere von -100..100 auf 0..100
+  // Normalize from -100..100 to 0..100
   const normalizedWorkValue = (workValueIndex + 100) / 2
 
   return (
@@ -24,10 +24,9 @@ export function calculateSignalScore(signal: Signal): number {
 }
 
 /**
- * Normalisiert einen Wert auf einen Bereich von 0-1
+ * Normalizes a value to a range of 0-1
  */
 export function normalize(value: number, min: number, max: number): number {
   if (max === min) return 0
   return (value - min) / (max - min)
 }
-

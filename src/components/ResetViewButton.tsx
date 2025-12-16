@@ -5,16 +5,16 @@ export default function ResetViewButton() {
   const { camera } = useThree()
 
   const resetCamera = () => {
-    // Reset OrbitControls falls verfügbar
+    // Reset OrbitControls if available
     const controlsRef = (window as any).__radarControlsRef
     if (controlsRef?.current) {
       controlsRef.current.reset()
     }
 
-    // Setze Kamera-Position manuell (45° Winkel von oben)
+    // Set camera position manually (45° angle from above)
     const distance = 18
-    const angle = Math.PI / 4 // 45 Grad
-    const maxHeight = 8 // Entspricht MAX_HEIGHT in RadarScene
+    const angle = Math.PI / 4 // 45 degrees
+    const maxHeight = 8 // Corresponds to MAX_HEIGHT in RadarScene
     camera.position.set(
       distance * Math.cos(angle),
       distance * Math.sin(angle) + maxHeight / 2,
@@ -23,7 +23,7 @@ export default function ResetViewButton() {
     camera.lookAt(0, maxHeight / 2, 0)
   }
 
-  // Exportiere resetCamera für externen Zugriff
+  // Export resetCamera for external access
   useEffect(() => {
     ;(window as any).__resetRadarCamera = resetCamera
     return () => {
@@ -31,6 +31,5 @@ export default function ResetViewButton() {
     }
   }, [camera])
 
-  return null // Diese Komponente rendert nichts, sie exportiert nur die Funktion
+  return null // This component renders nothing, it only exports the function
 }
-

@@ -9,7 +9,7 @@ export default function HoverTooltip() {
   if (!hoveredSignal) return null
 
   const industryNames = hoveredSignal.industryTags
-    .map((tag) => industries.find((ind) => ind.id === tag)?.name || tag)
+    .map(tag => industries.find(ind => ind.id === tag)?.name || tag)
     .join(', ')
 
   return (
@@ -19,4 +19,3 @@ export default function HoverTooltip() {
     </div>
   )
 }
-

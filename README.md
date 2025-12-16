@@ -5,57 +5,31 @@ Interactive 3D trend radar for mapping weak signals of AI/robotics and their imp
 ## 🚀 Tech Stack
 
 - **Frontend Framework**: React 18 + TypeScript
-- **Build Tool**: Vite (schnellster Weg zu einer Web-Demo)
+- **Build Tool**: Vite (fastest way to a web demo)
 - **3D Rendering**: Three.js + @react-three/fiber
 - **Styling**: TailwindCSS
 - **State Management**: Zustand
 - **Code Quality**: ESLint + Prettier
 
-## 📁 Projektstruktur
-
-```
-/src
-  /components
-    RadarScene.tsx          # Haupt-3D-Szene
-    FiltersPanel.tsx        # Filter-UI
-    SignalDetailsPanel.tsx  # Detailansicht für ausgewählte Signale
-    Legend.tsx              # Legende für das Radar
-  /data
-    signals.seed.json       # Seed-Daten für Signale
-    industries.json         # Branchen-Definitionen
-  /lib
-    scoring.ts              # Scoring-Logik für Signale
-    mapping.ts              # Mapping von Signalen zu 3D-Positionen
-    raycast.ts              # Raycasting für Interaktionen
-  /store
-    useRadarStore.ts        # Zustand Store für State Management
-  /types
-    signal.ts               # TypeScript-Definitionen
-  App.tsx
-  main.tsx
-/public
-README.md
-```
-
 ## 🛠️ Setup & Installation
 
-### Voraussetzungen
+### Prerequisites
 
-- Node.js 18+ und npm/yarn/pnpm
+- Node.js 18+ and npm/yarn/pnpm
 
 ### Installation
 
 ```bash
-# Dependencies installieren
+# Install dependencies
 npm install
 
-# Development Server starten
+# Start development server
 npm run dev
 
-# Build für Production
+# Build for production
 npm run build
 
-# Preview des Production Builds
+# Preview production build
 npm preview
 ```
 
@@ -65,10 +39,10 @@ npm preview
 # Linting
 npm run lint
 
-# Code formatieren
+# Format code
 npm run format
 
-# Format-Check (ohne Änderungen)
+# Check formatting (without changes)
 npm run format:check
 ```
 
@@ -78,41 +52,67 @@ npm run format:check
 
 #### US0.1 — Repo & Tooling ✅
 
-**Als Team** wollen wir ein TS-Frontend-Projekt mit sauberem Lint/Format, damit wir parallel arbeiten können.
+**As a team** we want a TS frontend project with clean lint/format, so we can work in parallel.
 
 **Acceptance Criteria:**
-- ✅ Vite + TS läuft lokal (`npm run dev`)
-- ✅ ESLint + Prettier aktiv
-- ✅ Basic folder structure vorhanden
+- ✅ Vite + TS runs locally (`npm run dev`)
+- ✅ ESLint + Prettier active
+- ✅ Basic folder structure present
 
-## 🎯 Nächste Schritte
+### Epic 1 — Data Model & Seed Data
 
-- [ ] 3D-Radar-Visualisierung implementieren
-- [ ] Signal-Daten in 3D-Szene rendern
-- [ ] Filter-Funktionalität implementieren
-- [ ] Interaktive Signal-Auswahl (Raycasting)
-- [ ] Detail-Panel mit Signal-Informationen
-- [ ] Legende für Kategorien und Branchen
-- [ ] Responsive Design
-- [ ] Deployment auf Vercel/Netlify
+#### US1.1 — Signal Schema ✅
 
-## 📝 Entwicklung
+**As a developer** I want a clear data model for Weak Signals, so visualization and popups are consistent.
 
-Das Projekt verwendet:
-- **TypeScript** für Type-Safety
-- **React Three Fiber** für deklarative 3D-Grafiken
-- **Zustand** für einfaches State Management
-- **TailwindCSS** für schnelles Styling
+#### US1.2 — Seed Dataset ✅
+
+**As a team** we want initial 15-25 signals as demo data, so something is immediately visible in the 3D radar.
+
+### Epic 2 — 3D Radar View
+
+#### US2.1 — Render 3D Scene ✅
+
+**As a user** I want to see a 3D space where points (Weak Signals) are placed.
+
+#### US2.2 — Map Values to Coordinates ✅
+
+**As a user** I want axes to be logical (Impact, Horizon, Work Value), so the model is explainable.
+
+#### US2.3 — Hover Tooltip ✅
+
+**As a user** I want to see a tooltip (Title + Industry) on hover, so I can quickly scan.
+
+#### US2.4 — Click to Select Signal ✅
+
+**As a user** I want to click on a point to see details.
+
+## 🎯 Features
+
+- ✅ 3D Radar Visualization with classic trend radar design
+- ✅ Interactive signal points with hover and click
+- ✅ Industry-based filtering
+- ✅ Collapsible filter and legend panels
+- ✅ Work Value Index calculated from 4 value dimensions
+- ✅ Responsive UI with TailwindCSS
+
+## 📝 Development
+
+The project uses:
+- **TypeScript** for type safety
+- **React Three Fiber** for declarative 3D graphics
+- **Zustand** for simple state management
+- **TailwindCSS** for fast styling
 
 ## 🚢 Deployment
 
-Das Projekt kann einfach auf Vercel oder Netlify deployed werden:
+The project can be easily deployed on Vercel or Netlify:
 
-1. Repository zu GitHub/GitLab pushen
-2. In Vercel/Netlify importieren
-3. Build-Kommando: `npm run build`
-4. Output-Verzeichnis: `dist`
+1. Push repository to GitHub/GitLab
+2. Import in Vercel/Netlify
+3. Build command: `npm run build`
+4. Output directory: `dist`
 
-## 📄 Lizenz
+## 📄 License
 
 MIT

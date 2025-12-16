@@ -12,7 +12,7 @@ export default function FiltersPanel() {
     const currentIndustries = filters.industries || []
     if (currentIndustries.includes(industryId)) {
       setFilters({
-        industries: currentIndustries.filter((id) => id !== industryId),
+        industries: currentIndustries.filter(id => id !== industryId),
       })
     } else {
       setFilters({
@@ -47,8 +47,9 @@ export default function FiltersPanel() {
           <div>
             <h3 className="text-sm font-medium mb-2">Branchen</h3>
             <div className="space-y-1 max-h-64 overflow-y-auto">
-              {industries.map((industry) => {
-                const isSelected = filters.industries?.includes(industry.id) ?? false
+              {industries.map(industry => {
+                const isSelected =
+                  filters.industries?.includes(industry.id) ?? false
                 return (
                   <label
                     key={industry.id}

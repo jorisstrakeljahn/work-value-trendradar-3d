@@ -19,29 +19,31 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   const isSelected = selectedSignal?.id === signal.id
   const isHovered = hoveredSignal?.id === signal.id || hovered
 
-  // Farbe basierend auf erster Branche
+  // Color based on first industry
   const getColor = () => {
-    if (isSelected) return '#FFD700' // Gold für ausgewählt
-    if (isHovered) return '#FFFFFF' // Weiß für Hover
+    if (isSelected) return '#FFD700' // Gold for selected
+    if (isHovered) return '#FFFFFF' // White for hover
 
-    // Verwende Farbe der ersten Branche
+    // Use color of first industry
     if (signal.industryTags.length > 0) {
-      const firstIndustry = industries.find((ind) => ind.id === signal.industryTags[0])
+      const firstIndustry = industries.find(
+        ind => ind.id === signal.industryTags[0]
+      )
       if (firstIndustry) {
         return firstIndustry.color
       }
     }
 
-    // Fallback: Grau
+    // Fallback: Gray
     return '#94A3B8'
   }
 
-  // Größe basierend auf Impact
+  // Size based on impact
   const size = 0.08 + (signal.xImpact / 100) * 0.12
 
   useFrame(() => {
     if (meshRef.current) {
-      // Leichtes Pulsieren für ausgewählte/hovered Punkte
+      // Slight pulsing for selected/hovered points
       if (isSelected || isHovered) {
         const scale = 1 + Math.sin(Date.now() * 0.005) * 0.3
         meshRef.current.scale.setScalar(scale)

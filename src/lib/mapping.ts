@@ -1,17 +1,17 @@
 import type { Signal } from '../types/signal'
 
 /**
- * Berechnet den Work-Value-Index aus den 4 Teilwerten
- * Aggregiert: economic, social, subjective, political (-5..+5)
- * 
- * @param signal - Das Signal mit valueDimensions
+ * Calculates the Work-Value-Index from 4 sub-values
+ * Aggregates: economic, social, subjective, political (-5..+5)
+ *
+ * @param signal - The signal with valueDimensions
  * @returns Work-Value-Index (-100..100)
  */
 export function calculateWorkValueIndex(signal: Signal): number {
   const { economic, social, subjective, political } = signal.valueDimensions
 
-  // Gewichtete Summe der Dimensionen
-  // Jede Dimension kann -5 bis +5 sein, also max 20 Punkte pro Dimension
+  // Weighted sum of dimensions
+  // Each dimension can be -5 to +5, so max 20 points per dimension
   const weights = {
     economic: 0.3,
     social: 0.25,
@@ -19,7 +19,7 @@ export function calculateWorkValueIndex(signal: Signal): number {
     political: 0.2,
   }
 
-  // Normalisiere von -5..+5 zu -100..+100
+  // Normalize from -5..+5 to -100..+100
   const normalizedEconomic = (economic / 5) * 100
   const normalizedSocial = (social / 5) * 100
   const normalizedSubjective = (subjective / 5) * 100
@@ -35,39 +35,39 @@ export function calculateWorkValueIndex(signal: Signal): number {
 }
 
 /**
- * Mappt ein Signal auf eine 3D-Position im klassischen Trendradar
- * 
- * Koordinatensystem (klassisches Trendradar):
- * - X-Achse: Impact / Relevanz (0..100) → -maxRadius bis +maxRadius
- * - Y-Achse: Zeithorizont / Reifegrad (0..100) → 0 bis +maxRadius (Halbkreis)
- * - Z-Achse: Work-Value-Index (aggregiert aus 4 Teilwerten) → Höhe (0..maxHeight)
- *   - Nur positive Höhen (Abwertung = niedrige Höhe, nicht negativ)
- * 
- * @param signal - Das Signal, das gemappt werden soll
- * @param maxRadius - Maximaler Radius für x/y Ebene (Standard: 5)
- * @param maxHeight - Maximale Höhe für z-Achse (Standard: 3)
- * @returns 3D-Position {x, y, z} in kartesischen Koordinaten
+ * Maps a signal to a 3D position in the classic trend radar
+ *
+ * Coordinate system (classic trend radar):
+ * - X-axis: Impact / Relevance (0..100) → -maxRadius to +maxRadius
+ * - Y-axis: Time Horizon / Maturity (0..100) → 0 to +maxRadius (semicircle)
+ * - Z-axis: Work-Value-Index (aggregated from 4 sub-values) → Height (0..maxHeight)
+ *   - Only positive heights (devaluation = low height, not negative)
+ *
+ * @param signal - The signal to be mapped
+ * @param maxRadius - Maximum radius for x/y plane (default: 5)
+ * @param maxHeight - Maximum height for z-axis (default: 3)
+ * @returns 3D position {x, y, z} in cartesian coordinates
  */
 export function mapSignalToPosition(
   signal: Signal,
   maxRadius: number = 5,
   maxHeight: number = 3
 ): { x: number; y: number; z: number } {
-  // X: Impact / Relevanz (0..100) → -maxRadius bis +maxRadius
-  // Normalisiere zu -1..1, dann skaliere
-  const x = ((signal.xImpact / 100) - 0.5) * 2 * maxRadius
+  // X: Impact / Relevance (0..100) → -maxRadius to +maxRadius
+  // Normalize to -1..1, then scale
+  const x = (signal.xImpact / 100 - 0.5) * 2 * maxRadius
 
-  // Y: Zeithorizont / Reifegrad (0..100) → 0 bis +maxRadius (Halbkreis)
-  // 0 = jetzt/kurzfristig, 100 = langfristig
+  // Y: Time Horizon / Maturity (0..100) → 0 to +maxRadius (semicircle)
+  // 0 = now/short-term, 100 = long-term
   const y = (signal.yHorizon / 100) * maxRadius
 
-  // Z: Work-Value-Index (aggregiert aus 4 Teilwerten)
-  // Berechne Work-Value-Index aus valueDimensions
+  // Z: Work-Value-Index (aggregated from 4 sub-values)
+  // Calculate Work-Value-Index from valueDimensions
   const workValueIndex = calculateWorkValueIndex(signal)
 
-  // Normalisiere von -100..100 zu 0..maxHeight
-  // Negative Werte werden zu niedrigen Höhen, positive zu hohen Höhen
-  // Keine negativen Höhen!
+  // Normalize from -100..100 to 0..maxHeight
+  // Negative values become low heights, positive become high heights
+  // No negative heights!
   const normalizedWorkValue = (workValueIndex + 100) / 200 // 0..1
   const z = normalizedWorkValue * maxHeight
 

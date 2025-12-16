@@ -50,7 +50,8 @@ export default function Legend() {
                 </div>
               </div>
               <div>
-                <span className="font-medium">Y-Achse:</span> Zeithorizont / Reifegrad
+                <span className="font-medium">Y-Achse:</span> Zeithorizont /
+                Reifegrad
                 <div className="text-xs text-gray-600 ml-2">
                   • Unten = Jetzt (Now)
                   <br />• Oben = Zukunft (Far)

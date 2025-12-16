@@ -11,13 +11,13 @@ export default function SignalDetailsPanel() {
     return (
       <div className="absolute top-20 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
         <h2 className="text-lg font-semibold mb-2">Signal Details</h2>
-        <p className="text-sm text-gray-600">Klicke auf einen Punkt, um Details zu sehen</p>
+        <p className="text-sm text-gray-600">Click on a point to see details</p>
       </div>
     )
   }
 
   const industryNames = selectedSignal.industryTags
-    .map((tag) => industries.find((ind) => ind.id === tag)?.name || tag)
+    .map(tag => industries.find(ind => ind.id === tag)?.name || tag)
     .join(', ')
 
   return (
@@ -27,13 +27,15 @@ export default function SignalDetailsPanel() {
 
       <div className="space-y-2 text-sm">
         <div>
-          <span className="font-semibold">Branchen:</span> {industryNames}
+          <span className="font-semibold">Industries:</span> {industryNames}
         </div>
         <div>
-          <span className="font-semibold">Impact:</span> {selectedSignal.xImpact}/100
+          <span className="font-semibold">Impact:</span>{' '}
+          {selectedSignal.xImpact}/100
         </div>
         <div>
-          <span className="font-semibold">Horizon:</span> {selectedSignal.yHorizon}/100
+          <span className="font-semibold">Horizon:</span>{' '}
+          {selectedSignal.yHorizon}/100
         </div>
         <div>
           <span className="font-semibold">Work Value Index:</span>{' '}
@@ -43,20 +45,35 @@ export default function SignalDetailsPanel() {
           })()}
           {calculateWorkValueIndex(selectedSignal).toFixed(1)}
           <div className="text-xs text-gray-500 mt-1">
-            (aggregiert aus 4 Teilwerten)
+            (aggregated from 4 sub-values)
           </div>
         </div>
         <div>
-          <span className="font-semibold">Confidence:</span> {selectedSignal.confidence}/5
+          <span className="font-semibold">Confidence:</span>{' '}
+          {selectedSignal.confidence}/5
         </div>
 
         <div className="mt-3 pt-3 border-t border-gray-300">
           <span className="font-semibold">Value Dimensions:</span>
           <div className="mt-1 space-y-1 text-xs">
-            <div>Economic: {selectedSignal.valueDimensions.economic > 0 ? '+' : ''}{selectedSignal.valueDimensions.economic}</div>
-            <div>Social: {selectedSignal.valueDimensions.social > 0 ? '+' : ''}{selectedSignal.valueDimensions.social}</div>
-            <div>Subjective: {selectedSignal.valueDimensions.subjective > 0 ? '+' : ''}{selectedSignal.valueDimensions.subjective}</div>
-            <div>Political: {selectedSignal.valueDimensions.political > 0 ? '+' : ''}{selectedSignal.valueDimensions.political}</div>
+            <div>
+              Economic: {selectedSignal.valueDimensions.economic > 0 ? '+' : ''}
+              {selectedSignal.valueDimensions.economic}
+            </div>
+            <div>
+              Social: {selectedSignal.valueDimensions.social > 0 ? '+' : ''}
+              {selectedSignal.valueDimensions.social}
+            </div>
+            <div>
+              Subjective:{' '}
+              {selectedSignal.valueDimensions.subjective > 0 ? '+' : ''}
+              {selectedSignal.valueDimensions.subjective}
+            </div>
+            <div>
+              Political:{' '}
+              {selectedSignal.valueDimensions.political > 0 ? '+' : ''}
+              {selectedSignal.valueDimensions.political}
+            </div>
           </div>
         </div>
 
@@ -64,7 +81,7 @@ export default function SignalDetailsPanel() {
           <div className="mt-3 pt-3 border-t border-gray-300">
             <span className="font-semibold">Tags:</span>
             <div className="flex flex-wrap gap-1 mt-1">
-              {selectedSignal.tags.map((tag) => (
+              {selectedSignal.tags.map(tag => (
                 <span
                   key={tag}
                   className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs"
@@ -79,4 +96,3 @@ export default function SignalDetailsPanel() {
     </div>
   )
 }
-
