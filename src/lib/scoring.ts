@@ -1,4 +1,5 @@
 import type { Signal } from '../types/signal'
+import { calculateWorkValueIndex } from './mapping'
 
 /**
  * Berechnet einen Gesamtscore für ein Signal basierend auf Impact, Horizon und Work Value
@@ -10,8 +11,10 @@ export function calculateSignalScore(signal: Signal): number {
     workValue: 0.3,
   }
 
-  // Work Value normalisieren von -100..100 auf 0..100
-  const normalizedWorkValue = (signal.zWorkValue + 100) / 2
+  // Work Value Index aus 4 Teilwerten berechnen
+  const workValueIndex = calculateWorkValueIndex(signal)
+  // Normalisiere von -100..100 auf 0..100
+  const normalizedWorkValue = (workValueIndex + 100) / 2
 
   return (
     signal.xImpact * weights.impact +

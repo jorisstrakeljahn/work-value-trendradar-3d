@@ -1,5 +1,6 @@
 import { useRadarStore } from '../store/useRadarStore'
 import industriesData from '../data/industries.json'
+import { calculateWorkValueIndex } from '../lib/mapping'
 import type { Industry } from '../types/signal'
 
 export default function SignalDetailsPanel() {
@@ -8,7 +9,7 @@ export default function SignalDetailsPanel() {
 
   if (!selectedSignal) {
     return (
-      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
+      <div className="absolute top-20 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm">
         <h2 className="text-lg font-semibold mb-2">Signal Details</h2>
         <p className="text-sm text-gray-600">Klicke auf einen Punkt, um Details zu sehen</p>
       </div>
@@ -20,7 +21,7 @@ export default function SignalDetailsPanel() {
     .join(', ')
 
   return (
-    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm max-h-[80vh] overflow-y-auto">
+    <div className="absolute top-20 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-sm max-h-[80vh] overflow-y-auto">
       <h2 className="text-lg font-semibold mb-2">{selectedSignal.title}</h2>
       <p className="text-sm text-gray-700 mb-3">{selectedSignal.summary}</p>
 
@@ -35,8 +36,15 @@ export default function SignalDetailsPanel() {
           <span className="font-semibold">Horizon:</span> {selectedSignal.yHorizon}/100
         </div>
         <div>
-          <span className="font-semibold">Work Value:</span> {selectedSignal.zWorkValue > 0 ? '+' : ''}
-          {selectedSignal.zWorkValue}
+          <span className="font-semibold">Work Value Index:</span>{' '}
+          {(() => {
+            const workValueIndex = calculateWorkValueIndex(selectedSignal)
+            return workValueIndex > 0 ? '+' : ''
+          })()}
+          {calculateWorkValueIndex(selectedSignal).toFixed(1)}
+          <div className="text-xs text-gray-500 mt-1">
+            (aggregiert aus 4 Teilwerten)
+          </div>
         </div>
         <div>
           <span className="font-semibold">Confidence:</span> {selectedSignal.confidence}/5

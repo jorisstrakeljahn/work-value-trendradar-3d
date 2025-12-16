@@ -2,7 +2,8 @@ import { useRef, useState } from 'react'
 import { Mesh } from 'three'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { useRadarStore } from '../store/useRadarStore'
-import type { Signal } from '../types/signal'
+import industriesData from '../data/industries.json'
+import type { Signal, Industry } from '../types/signal'
 
 interface SignalPointProps {
   signal: Signal
@@ -13,27 +14,36 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   const { selectedSignal, hoveredSignal, setSelectedSignal, setHoveredSignal } =
     useRadarStore()
   const [hovered, setHovered] = useState(false)
+  const industries = industriesData as Industry[]
 
   const isSelected = selectedSignal?.id === signal.id
   const isHovered = hoveredSignal?.id === signal.id || hovered
 
-  // Farbe basierend auf Work Value
+  // Farbe basierend auf erster Branche
   const getColor = () => {
     if (isSelected) return '#FFD700' // Gold für ausgewählt
-    if (isHovered) return '#00FF00' // Grün für Hover
-    if (signal.zWorkValue > 0) return '#3B82F6' // Blau für positive Work Value
-    if (signal.zWorkValue < 0) return '#EF4444' // Rot für negative Work Value
-    return '#94A3B8' // Grau für neutral
+    if (isHovered) return '#FFFFFF' // Weiß für Hover
+
+    // Verwende Farbe der ersten Branche
+    if (signal.industryTags.length > 0) {
+      const firstIndustry = industries.find((ind) => ind.id === signal.industryTags[0])
+      if (firstIndustry) {
+        return firstIndustry.color
+      }
+    }
+
+    // Fallback: Grau
+    return '#94A3B8'
   }
 
   // Größe basierend auf Impact
-  const size = 0.1 + (signal.xImpact / 100) * 0.15
+  const size = 0.08 + (signal.xImpact / 100) * 0.12
 
   useFrame(() => {
     if (meshRef.current) {
       // Leichtes Pulsieren für ausgewählte/hovered Punkte
       if (isSelected || isHovered) {
-        const scale = 1 + Math.sin(Date.now() * 0.005) * 0.2
+        const scale = 1 + Math.sin(Date.now() * 0.005) * 0.3
         meshRef.current.scale.setScalar(scale)
       } else {
         meshRef.current.scale.setScalar(1)
@@ -73,9 +83,10 @@ export default function SignalPoint({ signal }: SignalPointProps) {
       <meshStandardMaterial
         color={getColor()}
         emissive={isSelected || isHovered ? getColor() : '#000000'}
-        emissiveIntensity={isSelected ? 0.5 : isHovered ? 0.3 : 0}
+        emissiveIntensity={isSelected ? 0.6 : isHovered ? 0.4 : 0}
+        metalness={0.3}
+        roughness={0.4}
       />
     </mesh>
   )
 }
-

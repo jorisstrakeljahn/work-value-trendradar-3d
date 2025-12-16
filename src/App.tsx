@@ -4,6 +4,7 @@ import FiltersPanel from './components/FiltersPanel'
 import SignalDetailsPanel from './components/SignalDetailsPanel'
 import Legend from './components/Legend'
 import HoverTooltip from './components/HoverTooltip'
+import ResetViewButtonOverlay from './components/ResetViewButtonOverlay'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <RadarScene />
       </Canvas>
       <HoverTooltip />
+      <ResetViewButtonOverlay />
       <FiltersPanel />
       <SignalDetailsPanel />
       <Legend />
