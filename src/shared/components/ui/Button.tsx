@@ -1,8 +1,10 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
+import { Loader2 } from 'lucide-react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'icon'
   children: ReactNode
+  loading?: boolean
 }
 
 /**
@@ -12,6 +14,8 @@ export function Button({
   variant = 'primary',
   children,
   className = '',
+  loading = false,
+  disabled,
   ...props
 }: ButtonProps) {
   const baseClasses =
@@ -28,9 +32,17 @@ export function Button({
   return (
     <button
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      disabled={disabled || loading}
       {...props}
     >
-      {children}
+      {loading ? (
+        <span className="flex items-center gap-2">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          {children}
+        </span>
+      ) : (
+        children
+      )}
     </button>
   )
 }

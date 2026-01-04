@@ -10,9 +10,9 @@ export function ResetViewButton() {
 
   // Export resetCamera for external access
   useEffect(() => {
-    ;(window as any).__resetRadarCamera = resetCamera
+    window.__resetRadarCamera = resetCamera
     return () => {
-      delete (window as any).__resetRadarCamera
+      delete window.__resetRadarCamera
     }
   }, [resetCamera])
 

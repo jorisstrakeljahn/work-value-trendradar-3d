@@ -103,6 +103,7 @@
       "deleteConfirmWarning": "Diese Aktion kann nicht rückgängig gemacht werden.",
       "uploadError": "Fehler beim Hochladen des Bildes",
       "uploadSuccess": "Bild erfolgreich hochgeladen",
+      "uploading": "Wird hochgeladen...",
       "validationError": "Bitte füllen Sie alle erforderlichen Felder aus",
       "nameDeRequired": "Der deutsche Name ist erforderlich"
     },

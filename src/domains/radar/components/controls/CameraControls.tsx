@@ -12,9 +12,9 @@ export function CameraControls() {
 
   // Export controls ref for reset button
   useEffect(() => {
-    ;(window as any).__radarControlsRef = controlsRef
+    window.__radarControlsRef = controlsRef
     return () => {
-      delete (window as any).__radarControlsRef
+      delete window.__radarControlsRef
     }
   }, [])
 

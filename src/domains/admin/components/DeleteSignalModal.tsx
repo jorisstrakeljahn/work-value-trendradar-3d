@@ -60,10 +60,10 @@ export default function DeleteSignalModal({
             type="button"
             variant="primary"
             onClick={handleConfirm}
-            disabled={loading}
+            loading={loading}
             className="flex-1 bg-red-600 hover:bg-red-700"
           >
-            {loading ? '...' : t('admin.delete')}
+            {t('admin.delete')}
           </Button>
         </div>
       </div>

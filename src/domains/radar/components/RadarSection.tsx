@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import RadarScene from './RadarScene'
 import FiltersPanel from './FiltersPanel'
@@ -7,9 +8,17 @@ import HoverTooltip from './HoverTooltip'
 import ResetViewButtonOverlay from './ResetViewButtonOverlay'
 import ScrollIndicator from './ScrollIndicator'
 import { useModalStore } from '../../../store/useModalStore'
+import { useRadarStore } from '../../../store/useRadarStore'
+import SignalFormModal from '../../admin/components/SignalFormModal'
+import DeleteSignalModal from '../../admin/components/DeleteSignalModal'
+import { deleteSignal } from '../../../firebase/services/signalsService'
 
 export default function RadarSection() {
   const { isAnyModalOpen } = useModalStore()
+  const { selectedSignal } = useRadarStore()
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   return (
     <section className="relative w-full h-[calc(100vh-5rem)] bg-apple-gray-50 dark:bg-[#1a1a1a] transition-colors duration-200 overflow-x-auto">
@@ -32,13 +41,45 @@ export default function RadarSection() {
         {/* Right Sidebar: Reset Button + Signal Details - Hidden on mobile */}
         <div className="hidden md:absolute md:right-4 md:top-4 md:flex md:flex-col md:gap-4 z-30">
           <ResetViewButtonOverlay />
-          <SignalDetailsPanel />
+          <SignalDetailsPanel
+            onEdit={() => setShowEditModal(true)}
+            onDelete={() => setShowDeleteModal(true)}
+          />
         </div>
 
         {/* HoverTooltip - Hidden on mobile (no hover on touch devices) */}
         <HoverTooltip />
         <ScrollIndicator />
       </div>
+
+      <SignalFormModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        signal={selectedSignal || undefined}
+        onSuccess={() => {
+          setShowEditModal(false)
+        }}
+      />
+
+      <DeleteSignalModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        signal={selectedSignal}
+        loading={deleting}
+        onConfirm={async () => {
+          if (!selectedSignal?.id) return
+          setDeleting(true)
+          try {
+            await deleteSignal(selectedSignal.id)
+            setShowDeleteModal(false)
+          } catch (error) {
+            console.error('Error deleting signal:', error)
+            throw error
+          } finally {
+            setDeleting(false)
+          }
+        }}
+      />
     </section>
   )
 }

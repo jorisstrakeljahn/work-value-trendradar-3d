@@ -5,12 +5,12 @@ import { Button, ConfirmModal, AlertModal } from '../../../../shared/components/
 import { useIndustries } from '../../../../shared/hooks/useIndustries'
 import { useAuthStore } from '../../../../store/useAuthStore'
 import { deleteIndustry, isIndustryInUse } from '../../../../firebase/services/industriesService'
-import CreateIndustryModal from '../../../admin/components/CreateIndustryModal'
 import { IndustryItem } from './IndustryItem'
 
 interface IndustryFilterProps {
   selectedIndustryIds: string[]
   onSelectionChange: (industryIds: string[]) => void
+  onCreateIndustryClick?: () => void
 }
 
 /**
@@ -19,11 +19,11 @@ interface IndustryFilterProps {
 export function IndustryFilter({
   selectedIndustryIds,
   onSelectionChange,
+  onCreateIndustryClick,
 }: IndustryFilterProps) {
   const { t } = useTranslation()
   const industries = useIndustries()
   const { user } = useAuthStore()
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [deletingIndustryId, setDeletingIndustryId] = useState<string | null>(null)
   const [confirmDeleteModal, setConfirmDeleteModal] = useState<{
     isOpen: boolean
@@ -92,10 +92,10 @@ export function IndustryFilter({
           <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {t('filter.industries')}
           </h3>
-          {user && (
+          {user && onCreateIndustryClick && (
             <Button
               type="button"
-              onClick={() => setIsCreateModalOpen(true)}
+              onClick={onCreateIndustryClick}
               variant="secondary"
               className="h-7 w-7 p-0 flex items-center justify-center min-w-[28px] text-gray-700 dark:text-gray-300 font-bold text-lg leading-none"
               title={t('admin.industries.createTitle')}
@@ -124,12 +124,6 @@ export function IndustryFilter({
           ))}
         </div>
       </div>
-
-      <CreateIndustryModal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        onSuccess={() => setIsCreateModalOpen(false)}
-      />
 
       <ConfirmModal
         isOpen={confirmDeleteModal.isOpen}

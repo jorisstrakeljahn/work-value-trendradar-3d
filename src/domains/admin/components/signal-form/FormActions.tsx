@@ -30,8 +30,8 @@ export function FormActions({
       >
         {cancelLabel || t('admin.cancel')}
       </Button>
-      <Button type="submit" variant="primary" disabled={loading} className="flex-1">
-        {loading ? '...' : submitLabel || t('admin.create')}
+      <Button type="submit" variant="primary" loading={loading} className="flex-1">
+        {submitLabel || t('admin.create')}
       </Button>
     </div>
   )

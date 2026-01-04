@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Upload, X } from 'lucide-react'
+import { Upload, X, Loader2 } from 'lucide-react'
 
 interface ImageUploadProps {
   currentImageUrl?: string
@@ -132,8 +132,9 @@ export default function ImageUpload({
             )}
           </div>
           {uploading && (
-            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              {t('admin.messages.uploadSuccess')}...
+            <div className="mt-2 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              {t('admin.messages.uploading')}
             </div>
           )}
         </div>

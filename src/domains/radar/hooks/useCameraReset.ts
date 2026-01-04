@@ -10,7 +10,7 @@ export function useCameraReset() {
 
   const resetCamera = () => {
     // Reset OrbitControls if available
-    const controlsRef = (window as any).__radarControlsRef
+    const controlsRef = window.__radarControlsRef
     if (controlsRef?.current) {
       controlsRef.current.reset()
     }

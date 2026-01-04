@@ -1,11 +1,7 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Panel } from '../../../shared/components/ui'
 import { useRadarStore } from '../../../store/useRadarStore'
 import { useAuthStore } from '../../../store/useAuthStore'
-import SignalFormModal from '../../admin/components/SignalFormModal'
-import DeleteSignalModal from '../../admin/components/DeleteSignalModal'
-import { deleteSignal } from '../../../firebase/services/signalsService'
 import {
   SignalHeader,
   SignalInfo,
@@ -14,13 +10,18 @@ import {
   SignalActions,
 } from './signal-details'
 
-export default function SignalDetailsPanel() {
+interface SignalDetailsPanelProps {
+  onEdit?: () => void
+  onDelete?: () => void
+}
+
+export default function SignalDetailsPanel({
+  onEdit,
+  onDelete,
+}: SignalDetailsPanelProps) {
   const { t } = useTranslation()
   const { selectedSignal } = useRadarStore()
   const { user } = useAuthStore()
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [deleting, setDeleting] = useState(false)
 
   if (!selectedSignal) {
     return (
@@ -43,42 +44,13 @@ export default function SignalDetailsPanel() {
         <ValueDimensionsDisplay valueDimensions={selectedSignal.valueDimensions} />
         <SignalTags tags={selectedSignal.tags} />
 
-        {user && (
+        {user && onEdit && onDelete && (
           <SignalActions
-            onEdit={() => setShowEditModal(true)}
-            onDelete={() => setShowDeleteModal(true)}
+            onEdit={onEdit}
+            onDelete={onDelete}
           />
         )}
       </div>
-
-      <SignalFormModal
-        isOpen={showEditModal}
-        onClose={() => setShowEditModal(false)}
-        signal={selectedSignal || undefined}
-        onSuccess={() => {
-          setShowEditModal(false)
-        }}
-      />
-
-      <DeleteSignalModal
-        isOpen={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-        signal={selectedSignal}
-        loading={deleting}
-        onConfirm={async () => {
-          if (!selectedSignal?.id) return
-          setDeleting(true)
-          try {
-            await deleteSignal(selectedSignal.id)
-            setShowDeleteModal(false)
-          } catch (error) {
-            console.error('Error deleting signal:', error)
-            throw error
-          } finally {
-            setDeleting(false)
-          }
-        }}
-      />
     </Panel>
   )
 }
