@@ -27,21 +27,24 @@ export function SignalDetailsContent({
   const { user } = useAuthStore()
   const industries = useIndustries()
 
-  // Get industry names for display
-  const industryNames = signal.industryTags
-    .map(tag => {
-      const industry = industries.find(ind => ind.id === tag)
-      return industry?.name || tag
-    })
-    .join(', ')
+  // Get industry names for display (only if industries exist)
+  const hasIndustries = signal.industryTags.length > 0
+  const industryNames = hasIndustries
+    ? signal.industryTags
+        .map(tag => {
+          const industry = industries.find(ind => ind.id === tag)
+          return industry?.name || tag
+        })
+        .join(', ')
+    : ''
 
   return (
-    <div className="p-6 space-y-5 overflow-y-auto h-full">
+    <div className="p-6 space-y-5">
       {/* Header with image, title, and summary */}
       <SignalHeader signal={signal} />
 
-      {/* Industries */}
-      {industryNames && (
+      {/* Industries - only show if industries exist */}
+      {hasIndustries && industryNames && (
         <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
           <div className="space-y-2">
             <h4 className="font-medium text-sm text-gray-900 dark:text-gray-100">

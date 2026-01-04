@@ -171,29 +171,32 @@ export default function DraggableSignalWindow({
         onDragStop={handleDragStop}
         onResizeStop={handleResizeStop}
         onMouseDown={handleMouseDown}
-        style={{
-          zIndex,
-          position: 'absolute',
-        }}
-        className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden flex flex-col"
-      >
-        {/* Header Bar */}
-        <div className="window-header flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#252525] border-b border-gray-200 dark:border-gray-700 cursor-move flex-shrink-0">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate flex-1 mr-2">
-            {signal.title}
-          </h3>
-          <button
-            onClick={onClose}
-            className="flex-shrink-0 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-            aria-label={t('signalWindows.close')}
-            title={t('signalWindows.close')}
-          >
-            <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-          </button>
-        </div>
+          style={{
+            zIndex,
+            position: 'absolute',
+          }}
+          className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden flex flex-col"
+        >
+          {/* Header Bar */}
+          <div className="window-header flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#252525] border-b border-gray-200 dark:border-gray-700 cursor-move flex-shrink-0">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate flex-1 mr-2">
+              {signal.title}
+            </h3>
+            <button
+              onClick={onClose}
+              className="flex-shrink-0 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+              aria-label={t('signalWindows.close')}
+              title={t('signalWindows.close')}
+            >
+              <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            </button>
+          </div>
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-hidden">
+        {/* Content Area - scrollable */}
+        <div
+          className="flex-1 overflow-y-auto min-h-0"
+          style={{ maxHeight: '100%', colorScheme: 'light dark' }}
+        >
           <SignalDetailsContent
             signal={signal}
             onEdit={user ? handleEdit : undefined}
