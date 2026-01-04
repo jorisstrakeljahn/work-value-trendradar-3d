@@ -10,8 +10,7 @@ export function YAxis() {
   const { MAX_RADIUS } = RADAR_CONFIG
 
   const timeLines = [
-    { y: MAX_RADIUS * 0.33, label: 'Now', color: RADAR_COLORS.TIME_LINES.NOW },
-    { y: MAX_RADIUS * 0.66, label: 'Next', color: RADAR_COLORS.TIME_LINES.NEXT },
+    { y: MAX_RADIUS * 0.5, label: 'Next', color: RADAR_COLORS.TIME_LINES.NEXT },
     { y: MAX_RADIUS, label: 'Far', color: RADAR_COLORS.TIME_LINES.FAR },
   ]
 
@@ -23,15 +22,15 @@ export function YAxis() {
           <bufferAttribute
             attach="attributes-position"
             count={2}
-            array={new Float32Array([0, 0, 0, 0, MAX_RADIUS + 1.5, 0])}
+            array={new Float32Array([0, 0, 0, 0, MAX_RADIUS, 0])}
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={2} />
+        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={4} />
       </line>
 
       {/* Y-axis label at the end */}
-      <Billboard position={[-1.2, MAX_RADIUS + 1.5, 0]}>
+      <Billboard position={[0, MAX_RADIUS + 0.5, 0]}>
         <Html
           center
           transform
@@ -73,11 +72,6 @@ export function YAxis() {
             </Html>
           </Billboard>
 
-          {/* Y-axis markers */}
-          <mesh position={[0, line.y, 0.05]}>
-            <boxGeometry args={[0.1, 0.05, 0.05]} />
-            <meshStandardMaterial color={RADAR_COLORS.AXIS.PRIMARY} />
-          </mesh>
         </group>
       ))}
     </group>

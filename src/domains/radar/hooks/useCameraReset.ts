@@ -15,7 +15,7 @@ export function useCameraReset() {
       controlsRef.current.reset()
     }
 
-    // Set camera position manually (45° angle from above)
+    // Set camera position manually (15° angle - frontal view)
     const distance = CAMERA.DISTANCE
     const angle = CAMERA.ANGLE
 

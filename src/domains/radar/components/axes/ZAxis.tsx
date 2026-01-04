@@ -26,7 +26,7 @@ export function ZAxis() {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={2} />
+        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={4} />
       </line>
 
       {/* Z-axis label at the end */}
@@ -47,10 +47,6 @@ export function ZAxis() {
       {/* Z-axis markers */}
       {markers.map((marker, i) => (
         <group key={i}>
-          <mesh position={[0, 0, marker.z]}>
-            <boxGeometry args={[0.05, 0.05, 0.05]} />
-            <meshStandardMaterial color={RADAR_COLORS.AXIS.PRIMARY} />
-          </mesh>
           <Billboard position={[0.5, 0, marker.z]}>
             <Html
               center

@@ -3,6 +3,7 @@ import { Mesh } from 'three'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { useRadarStore } from '../../../store/useRadarStore'
 import { useModalStore } from '../../../store/useModalStore'
+import { useSignalWindowsStore } from '../../../store/useSignalWindowsStore'
 import { useIndustries } from '../../../shared/hooks/useIndustries'
 import type { Signal } from '../../../types/signal'
 
@@ -12,18 +13,18 @@ interface SignalPointProps {
 
 export default function SignalPoint({ signal }: SignalPointProps) {
   const meshRef = useRef<Mesh>(null)
-  const { selectedSignal, hoveredSignal, setSelectedSignal, setHoveredSignal } =
-    useRadarStore()
+  const { hoveredSignal, setSelectedSignal, setHoveredSignal } = useRadarStore()
   const { isAnyModalOpen } = useModalStore()
+  const { windows, openWindow, closeWindow } = useSignalWindowsStore()
   const [hovered, setHovered] = useState(false)
   const industries = useIndustries()
 
-  const isSelected = selectedSignal?.id === signal.id
+  // Check if a window is open for this signal
+  const hasOpenWindow = windows.some(w => w.signalId === signal.id)
   const isHovered = hoveredSignal?.id === signal.id || hovered
 
   // Color based on first industry
   const getColor = () => {
-    if (isSelected) return '#FFD700' // Gold for selected
     if (isHovered) return '#FFFFFF' // White for hover
 
     // Use color of first industry
@@ -41,35 +42,40 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   }
 
   // Fixed size for all points (uniform, larger for better clickability)
-  const size = 0.22
+  const baseSize = 0.22
 
   useFrame(() => {
     if (meshRef.current) {
-      // Slight pulsing for selected/hovered points
-      if (isSelected || isHovered) {
+      // Pulsing effect for points with open windows
+      if (hasOpenWindow) {
         const scale = 1 + Math.sin(Date.now() * 0.005) * 0.3
         meshRef.current.scale.setScalar(scale)
       } else {
-        meshRef.current.scale.setScalar(1)
+        // Static size increase for hover (no pulsing)
+        const hoverScale = isHovered ? 1.4 : 1.0
+        meshRef.current.scale.setScalar(hoverScale)
       }
     }
   })
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
-    console.log('[SignalPoint] Click detected:', {
-      signalId: signal.id,
-      signalTitle: signal.title,
-      isAnyModalOpen,
-      isSelected,
-    })
     if (isAnyModalOpen) {
-      console.log('[SignalPoint] Modal is open, ignoring click')
       return
     }
     e.stopPropagation()
-    const newSignal = isSelected ? null : signal
-    console.log('[SignalPoint] Setting selectedSignal:', newSignal ? newSignal.id : 'null')
-    setSelectedSignal(newSignal)
+
+    // If window is already open, close it
+    if (hasOpenWindow) {
+      const windowToClose = windows.find(w => w.signalId === signal.id)
+      if (windowToClose) {
+        closeWindow(windowToClose.id)
+        setSelectedSignal(null) // Clear selection
+      }
+    } else {
+      // Open window for this signal
+      setSelectedSignal(signal)
+      openWindow(signal.id)
+    }
   }
 
   const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
@@ -97,11 +103,11 @@ export default function SignalPoint({ signal }: SignalPointProps) {
       onPointerOver={handlePointerOver}
       onPointerOut={handlePointerOut}
     >
-      <sphereGeometry args={[size, 16, 16]} />
+      <sphereGeometry args={[baseSize, 16, 16]} />
       <meshStandardMaterial
         color={getColor()}
-        emissive={isSelected || isHovered ? getColor() : '#000000'}
-        emissiveIntensity={isSelected ? 0.6 : isHovered ? 0.4 : 0}
+        emissive={isHovered || hasOpenWindow ? getColor() : '#000000'}
+        emissiveIntensity={isHovered ? 0.8 : hasOpenWindow ? 1.4 : 0}
         metalness={0.3}
         roughness={0.4}
       />

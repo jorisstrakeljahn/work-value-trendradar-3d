@@ -102,15 +102,10 @@ export const useSignalWindowsStore = create<SignalWindowsState>(set => ({
   nextZIndex: 1000,
 
   openWindow: (signalId: string) => {
-    console.log('[useSignalWindowsStore] openWindow called:', {
-      signalId,
-      currentWindowsCount: useSignalWindowsStore.getState().windows.length,
-    })
     set(state => {
       // Check if window for this signal already exists
       const existingWindow = state.windows.find(w => w.signalId === signalId)
       if (existingWindow) {
-        console.log('[useSignalWindowsStore] Window already exists, bringing to front:', existingWindow.id)
         // Bring existing window to front
         const newZIndex = state.nextZIndex + 1
         return {
@@ -131,15 +126,6 @@ export const useSignalWindowsStore = create<SignalWindowsState>(set => ({
         size: DEFAULT_WINDOW_SIZE,
         zIndex: state.nextZIndex + 1,
       }
-
-      console.log('[useSignalWindowsStore] Creating new window:', {
-        windowId: newWindow.id,
-        signalId: newWindow.signalId,
-        position: newWindow.position,
-        size: newWindow.size,
-        zIndex: newWindow.zIndex,
-        newWindowsCount: state.windows.length + 1,
-      })
 
       return {
         windows: [...state.windows, newWindow],

@@ -16,33 +16,27 @@ type PanelId = 'filters' | 'weights' | 'legend' | null
 
 export default function RadarSection() {
   const { isAnyModalOpen } = useModalStore()
-  const { selectedSignal } = useRadarStore()
+  const { selectedSignal, setSelectedSignal } = useRadarStore()
   const { windows, openWindow, closeWindow, updateWindowPosition, updateWindowSize, bringToFront } =
     useSignalWindowsStore()
   const [openPanel, setOpenPanel] = useState<PanelId>(null)
 
   // Open window when signal is selected
   useEffect(() => {
-    console.log('[RadarSection] useEffect triggered:', {
-      selectedSignal: selectedSignal ? { id: selectedSignal.id, title: selectedSignal.title } : null,
-      selectedSignalId: selectedSignal?.id,
-      windowsCount: windows.length,
-    })
     if (selectedSignal) {
-      console.log('[RadarSection] Calling openWindow with signalId:', selectedSignal.id)
       openWindow(selectedSignal.id)
-    } else {
-      console.log('[RadarSection] No selectedSignal, not opening window')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSignal?.id]) // Only depend on signal ID, not the entire signal object or function
 
-  useEffect(() => {
-    console.log('[RadarSection] Windows state changed:', {
-      windowsCount: windows.length,
-      windows: windows.map(w => ({ id: w.id, signalId: w.signalId, zIndex: w.zIndex })),
-    })
-  }, [windows])
+  // Handle window close: clear selectedSignal if it's the signal that was closed
+  const handleWindowClose = (windowId: string) => {
+    const windowToClose = windows.find(w => w.id === windowId)
+    if (windowToClose && selectedSignal?.id === windowToClose.signalId) {
+      setSelectedSignal(null)
+    }
+    closeWindow(windowId)
+  }
 
   return (
     <section className="relative w-full h-[calc(100vh-5rem)] bg-apple-gray-50 dark:bg-[#1a1a1a] transition-colors duration-200 overflow-x-auto">
@@ -66,7 +60,7 @@ export default function RadarSection() {
         {/* Center: Canvas - Full width on mobile, centered on desktop */}
         <div className="absolute left-0 right-0 md:left-[19rem] md:right-[21rem] top-0 bottom-0">
           <div className={`relative w-full h-full ${isAnyModalOpen ? 'pointer-events-none opacity-0 invisible' : ''}`}>
-            <Canvas camera={{ position: [8, 8, 8], fov: 75 }}>
+            <Canvas camera={{ position: [10, 3, 10], fov: 75 }}>
               <RadarScene />
             </Canvas>
           </div>
@@ -88,17 +82,17 @@ export default function RadarSection() {
       <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
         {windows.map((window) => (
           <div key={window.id} className="pointer-events-auto">
-            <DraggableSignalWindow
-              windowId={window.id}
-              signalId={window.signalId}
-              position={window.position}
-              size={window.size}
-              zIndex={window.zIndex}
-              onClose={() => closeWindow(window.id)}
-              onPositionChange={position => updateWindowPosition(window.id, position)}
-              onSizeChange={size => updateWindowSize(window.id, size)}
-              onFocus={() => bringToFront(window.id)}
-            />
+                    <DraggableSignalWindow
+                      windowId={window.id}
+                      signalId={window.signalId}
+                      position={window.position}
+                      size={window.size}
+                      zIndex={window.zIndex}
+                      onClose={() => handleWindowClose(window.id)}
+                      onPositionChange={position => updateWindowPosition(window.id, position)}
+                      onSizeChange={size => updateWindowSize(window.id, size)}
+                      onFocus={() => bringToFront(window.id)}
+                    />
           </div>
         ))}
       </div>

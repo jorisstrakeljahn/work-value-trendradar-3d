@@ -10,7 +10,7 @@ export function useCameraSetup() {
   const { MAX_HEIGHT, CAMERA } = RADAR_CONFIG
 
   useEffect(() => {
-    // Camera from above (45° angle) - shows x/y plane
+    // Camera frontal view (15° angle from horizontal) - closer and more frontal
     const distance = CAMERA.DISTANCE
     const angle = CAMERA.ANGLE
 

@@ -11,7 +11,6 @@ export function XAxis() {
 
   const impactLines = [
     { x: -MAX_RADIUS, label: 'Low Impact', color: RADAR_COLORS.IMPACT_LINES.LOW },
-    { x: 0, label: 'Medium Impact', color: RADAR_COLORS.IMPACT_LINES.MEDIUM },
     { x: MAX_RADIUS, label: 'High Impact', color: RADAR_COLORS.IMPACT_LINES.HIGH },
   ]
 
@@ -25,10 +24,10 @@ export function XAxis() {
             count={2}
             array={
               new Float32Array([
-                -MAX_RADIUS - 0.5,
+                -MAX_RADIUS,
                 0,
                 0,
-                MAX_RADIUS + 1.5,
+                MAX_RADIUS,
                 0,
                 0,
               ])
@@ -36,7 +35,7 @@ export function XAxis() {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={2} />
+        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={4} />
       </line>
 
       {/* X-axis label at the end */}
@@ -69,13 +68,6 @@ export function XAxis() {
         </Billboard>
       ))}
 
-      {/* X-axis markers */}
-      {impactLines.map((line, i) => (
-        <mesh key={`marker-${i}`} position={[line.x, 0.05, 0]}>
-          <boxGeometry args={[0.05, 0.1, 0.05]} />
-          <meshStandardMaterial color={RADAR_COLORS.AXIS.PRIMARY} />
-        </mesh>
-      ))}
     </group>
   )
 }

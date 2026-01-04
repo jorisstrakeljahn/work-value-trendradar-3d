@@ -50,25 +50,12 @@ export default function DraggableSignalWindow({
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  console.log('[DraggableSignalWindow] Rendering:', {
-    windowId: signalId,
-    signalId,
-    signalFound: !!signal,
-    signalTitle: signal?.title,
-    signalsCount: signals.length,
-    fromSelectedSignal: selectedSignal?.id === signalId,
-    position,
-    size,
-    zIndex,
-  })
-
   // Close window if signal not found, but only if signals have been loaded
   // (don't close if signals are still loading)
   useEffect(() => {
     // Only close if signals array exists but signal is still not found
     // This means signals were loaded but this signal doesn't exist
     if (signals.length > 0 && !signal) {
-      console.log('[DraggableSignalWindow] Signal not found after signals loaded, closing window')
       onClose()
     }
   }, [signal, signals.length, onClose])
@@ -77,7 +64,6 @@ export default function DraggableSignalWindow({
   if (!signal) {
     // If signals haven't loaded yet, show loading state
     if (signals.length === 0) {
-      console.log('[DraggableSignalWindow] Signals not loaded yet, showing loading state')
       return (
         <Rnd
           size={{ width: size.width, height: size.height }}

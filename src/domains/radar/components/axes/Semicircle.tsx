@@ -23,11 +23,11 @@ export function Semicircle() {
               <bufferAttribute
                 attach="attributes-position"
                 count={2}
-                array={new Float32Array([x1, y1, -0.05, x2, y2, -0.05])}
+                array={new Float32Array([x1, y1, 0, x2, y2, 0])}
                 itemSize={3}
               />
             </bufferGeometry>
-            <lineBasicMaterial color={RADAR_COLORS.AXIS.SECONDARY} opacity={0.3} transparent />
+            <lineBasicMaterial color={RADAR_COLORS.AXIS.SECONDARY} opacity={0.3} transparent linewidth={4} />
           </line>
         )
       })}

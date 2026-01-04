@@ -4,7 +4,7 @@ import { useCameraSetup } from '../hooks/useCameraSetup'
 import { SceneLighting } from './lighting/SceneLighting'
 import { CameraControls } from './controls/CameraControls'
 import { ResetViewButton } from './controls/ResetViewButton'
-import { XAxis, YAxis, ZAxis, Semicircle, OriginMarker } from './axes'
+import { XAxis, YAxis, ZAxis, Semicircle } from './axes'
 
 /**
  * Main 3D radar scene component
@@ -23,7 +23,6 @@ export default function RadarScene() {
       <YAxis />
       <ZAxis />
       <Semicircle />
-      <OriginMarker />
 
       {/* Render signals as points */}
       {signals.map(signal => (
