@@ -1,6 +1,6 @@
-import Header from './components/Header'
-import RadarSection from './components/RadarSection'
-import ExplanationSection from './components/ExplanationSection'
+import Header from './domains/layout/components/Header'
+import RadarSection from './domains/radar/components/RadarSection'
+import ExplanationSection from './domains/explanation/components/ExplanationSection'
 
 function App() {
   return (
