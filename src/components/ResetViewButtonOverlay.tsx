@@ -18,13 +18,13 @@ export default function ResetViewButtonOverlay() {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-row gap-2">
         {user && (
-          <Button variant="primary" onClick={() => setShowCreateModal(true)} className="self-start">
+          <Button variant="primary" onClick={() => setShowCreateModal(true)}>
             {t('admin.createSignal')}
           </Button>
         )}
-        <Button onClick={resetCamera} className="self-start">
+        <Button onClick={resetCamera}>
           {t('resetView.button')}
         </Button>
       </div>
