@@ -86,6 +86,7 @@ export function AlertModal({
       <div
         ref={modalRef}
         className="bg-white dark:bg-[#1a1a1a] rounded-xl shadow-xl max-w-md w-full max-h-[calc(90vh-8rem)] overflow-y-auto"
+        style={{ colorScheme: 'light dark' }}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">

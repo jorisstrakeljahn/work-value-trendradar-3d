@@ -2,7 +2,6 @@ import { useEffect, useRef, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { X } from 'lucide-react'
-import { Button } from './Button'
 import { useModalStore } from '../../../store/useModalStore'
 
 interface ModalProps {
@@ -58,13 +57,18 @@ export function Modal({ isOpen, onClose, title, children, className = '' }: Moda
       <div
         ref={modalRef}
         className={`glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-full max-h-[90vh] overflow-hidden flex flex-col ${className || 'max-w-md'}`}
+        style={{ colorScheme: 'light dark' }}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-600/50">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
-          <Button variant="icon" onClick={onClose} aria-label="Close">
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            aria-label="Close"
+          >
             <X className="w-5 h-5" />
-          </Button>
+          </button>
         </div>
 
                 {/* Content */}

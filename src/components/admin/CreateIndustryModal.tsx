@@ -104,24 +104,28 @@ export default function CreateIndustryModal({
   if (!isOpen) return null
 
   return createPortal(
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div
         ref={modalRef}
-        className="bg-white dark:bg-[#1a1a1a] rounded-xl shadow-xl max-w-md w-full max-h-[calc(90vh-8rem)] overflow-y-auto"
+        className="glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-full max-h-[90vh] overflow-hidden flex flex-col max-w-md"
+        style={{ colorScheme: 'light dark' }}
       >
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              {t('admin.industries.createTitle')}
-            </h2>
-            <button
-              onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-              aria-label={t('common.close')}
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-600/50">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            {t('admin.industries.createTitle')}
+          </h2>
+          <button
+            onClick={handleClose}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            aria-label={t('common.close')}
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-6 max-h-[calc(90vh-8rem)]">
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* German Name */}
