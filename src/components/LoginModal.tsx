@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, Button } from '../shared/components/ui'
+import { ErrorAlert, FormField } from '../shared/components/forms'
 import { useAuthStore } from '../store/useAuthStore'
 
 interface LoginModalProps {
@@ -47,49 +48,29 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={t('auth.loginTitle')}>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {errorMessage && (
-          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400">
-            {errorMessage}
-          </div>
-        )}
+        {errorMessage && <ErrorAlert message={errorMessage} />}
 
-        <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-          >
-            {t('auth.email')}
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#252525] text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 focus:border-blue-500 dark:focus:border-blue-400 outline-none transition-colors"
-            placeholder={t('auth.emailPlaceholder')}
-            disabled={loading}
-          />
-        </div>
+        <FormField
+          type="input"
+          label={t('auth.email')}
+          inputType="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder={t('auth.emailPlaceholder')}
+          required
+          disabled={loading}
+        />
 
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-          >
-            {t('auth.password')}
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#252525] text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 focus:border-blue-500 dark:focus:border-blue-400 outline-none transition-colors"
-            placeholder={t('auth.passwordPlaceholder')}
-            disabled={loading}
-          />
-        </div>
+        <FormField
+          type="input"
+          label={t('auth.password')}
+          inputType="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder={t('auth.passwordPlaceholder')}
+          required
+          disabled={loading}
+        />
 
         <div className="flex gap-3 pt-2">
           <Button

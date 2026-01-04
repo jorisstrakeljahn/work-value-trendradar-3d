@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, Button } from '../shared/components/ui'
+import { ErrorAlert, SuccessAlert, FormField } from '../shared/components/forms'
 import { useAuthStore } from '../store/useAuthStore'
 
 interface ChangePasswordModalProps {
@@ -68,57 +69,32 @@ export default function ChangePasswordModal({ isOpen, onClose }: ChangePasswordM
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={t('auth.changePasswordTitle')}>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {displayError && (
-          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-400">
-            {displayError}
-          </div>
-        )}
+        {displayError && <ErrorAlert message={displayError} />}
+        {success && <SuccessAlert message={t('auth.passwordChangedSuccess')} />}
 
-        {success && (
-          <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-sm text-green-700 dark:text-green-400">
-            {t('auth.passwordChangedSuccess')}
-          </div>
-        )}
+        <FormField
+          type="input"
+          label={t('auth.newPassword')}
+          inputType="password"
+          value={newPassword}
+          onChange={e => setNewPassword(e.target.value)}
+          placeholder={t('auth.newPasswordPlaceholder')}
+          required
+          minLength={6}
+          disabled={loading || success}
+        />
 
-        <div>
-          <label
-            htmlFor="newPassword"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-          >
-            {t('auth.newPassword')}
-          </label>
-          <input
-            id="newPassword"
-            type="password"
-            value={newPassword}
-            onChange={e => setNewPassword(e.target.value)}
-            required
-            minLength={6}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#252525] text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 focus:border-blue-500 dark:focus:border-blue-400 outline-none transition-colors"
-            placeholder={t('auth.newPasswordPlaceholder')}
-            disabled={loading || success}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="confirmPassword"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-          >
-            {t('auth.confirmPassword')}
-          </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            required
-            minLength={6}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#252525] text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 focus:border-blue-500 dark:focus:border-blue-400 outline-none transition-colors"
-            placeholder={t('auth.confirmPasswordPlaceholder')}
-            disabled={loading || success}
-          />
-        </div>
+        <FormField
+          type="input"
+          label={t('auth.confirmPassword')}
+          inputType="password"
+          value={confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
+          placeholder={t('auth.confirmPasswordPlaceholder')}
+          required
+          minLength={6}
+          disabled={loading || success}
+        />
 
         <div className="flex gap-3 pt-2">
           <Button
