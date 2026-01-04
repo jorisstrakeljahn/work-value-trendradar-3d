@@ -84,24 +84,20 @@ The Firestore Security Rules must be configured in the Firebase Console. The `fi
 
 ### Firebase Storage Rules
 
-If you want to upload images, Storage Rules must also be configured:
+If you want to upload images, Storage Rules must also be configured. The `storage.rules` file contains the necessary rules.
 
-1. Go to **Storage** > **Rules**
-2. Use the following rules:
+**How to set up the Rules:**
 
-```
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /signals/{signalId}/{allPaths=**} {
-      // Only authenticated users can upload images
-      allow write: if request.auth != null;
-      // Anyone can view images
-      allow read: if true;
-    }
-  }
-}
-```
+1. Open the [Firebase Console](https://console.firebase.google.com/)
+2. Select your project
+3. Go to **Storage** > **Rules**
+4. Copy the content from the `storage.rules` file
+5. Paste the rules into the console
+6. Click **Publish**
+
+**The rules allow:**
+- **Write**: Only authenticated users can upload images
+- **Read**: Anyone can view images (public access)
 
 ## 🚢 Deployment
 

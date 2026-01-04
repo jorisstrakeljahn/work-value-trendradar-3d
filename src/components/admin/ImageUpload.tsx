@@ -40,33 +40,34 @@ export default function ImageUpload({
       return
     }
 
-    // Show preview
+    // Show preview and store as data URL
     const reader = new FileReader()
     reader.onloadend = () => {
-      setPreview(reader.result as string)
+      const dataUrl = reader.result as string
+      setPreview(dataUrl)
+      
+      // Upload to Firebase Storage if signalId is provided
+      if (signalId) {
+        setUploading(true)
+        // Use the File directly for upload, not the data URL
+        import('../../firebase/services/imageService')
+          .then(({ uploadSignalImage }) => uploadSignalImage(signalId, file))
+          .then((downloadURL) => {
+            onImageChange(downloadURL)
+            setUploading(false)
+          })
+          .catch((err: unknown) => {
+            const errorMessage = err instanceof Error ? err.message : t('admin.messages.uploadError')
+            setError(errorMessage)
+            setUploading(false)
+            setPreview(currentImageUrl || null)
+          })
+      } else {
+        // For new signals, store as data URL for later upload
+        onImageChange(dataUrl) // Temporary data URL
+      }
     }
     reader.readAsDataURL(file)
-
-    // Upload to Firebase Storage if signalId is provided
-    if (signalId) {
-      setUploading(true)
-      try {
-        const { uploadSignalImage } = await import('../../firebase/services/imageService')
-        const downloadURL = await uploadSignalImage(signalId, file)
-        onImageChange(downloadURL)
-        setUploading(false)
-      } catch (err: unknown) {
-        const errorMessage = err instanceof Error ? err.message : t('admin.messages.uploadError')
-        setError(errorMessage)
-        setUploading(false)
-        setPreview(currentImageUrl || null)
-      }
-    } else {
-      // For new signals, just show preview
-      // Image will be uploaded when signal is created
-      setPreview(reader.result as string)
-      onImageChange(reader.result as string) // Temporary data URL
-    }
   }
 
   const handleDrop = (e: React.DragEvent) => {

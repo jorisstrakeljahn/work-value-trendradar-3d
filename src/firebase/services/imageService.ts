@@ -12,30 +12,50 @@ export async function uploadSignalImage(
   signalId: string,
   file: File
 ): Promise<string> {
-  // Validate file type
-  if (!file.type.startsWith('image/')) {
-    throw new Error('File must be an image')
+  try {
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      throw new Error('File must be an image')
+    }
+
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024 // 5MB
+    if (file.size > maxSize) {
+      throw new Error('Image size must be less than 5MB')
+    }
+
+    // Generate unique filename
+    const timestamp = Date.now()
+    const fileExtension = file.name.split('.').pop() || 'jpg'
+    const fileName = `${timestamp}.${fileExtension}`
+    const storagePath = `signals/${signalId}/${fileName}`
+    const storageRef = ref(storage, storagePath)
+
+    // Upload file
+    const snapshot = await uploadBytes(storageRef, file)
+
+    // Get download URL
+    const downloadURL = await getDownloadURL(snapshot.ref)
+
+    return downloadURL
+  } catch (error: unknown) {
+    // Provide more specific error messages
+    const errorObj = error as { code?: string; message?: string; stack?: string }
+    
+    if (errorObj.code === 'storage/unauthorized' || errorObj.code === 'storage/permission-denied') {
+      throw new Error('Storage permission denied. Please check Firebase Storage Rules in the Firebase Console.')
+    }
+    
+    if (errorObj.code === 'storage/unauthenticated') {
+      throw new Error('Unauthorized. Please make sure you are logged in.')
+    }
+    
+    if (error instanceof Error) {
+      throw error
+    }
+    
+    throw new Error('Failed to upload image. Please try again.')
   }
-
-  // Validate file size (max 5MB)
-  const maxSize = 5 * 1024 * 1024 // 5MB
-  if (file.size > maxSize) {
-    throw new Error('Image size must be less than 5MB')
-  }
-
-  // Generate unique filename
-  const timestamp = Date.now()
-  const fileExtension = file.name.split('.').pop()
-  const fileName = `${timestamp}.${fileExtension}`
-  const storageRef = ref(storage, `signals/${signalId}/${fileName}`)
-
-  // Upload file
-  const snapshot = await uploadBytes(storageRef, file)
-
-  // Get download URL
-  const downloadURL = await getDownloadURL(snapshot.ref)
-
-  return downloadURL
 }
 
 /**
