@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import ThemeToggle from './ThemeToggle'
 import LanguageSelector from './LanguageSelector'
+import AuthButton from './AuthButton'
 
 export default function Header() {
   const { t } = useTranslation()
@@ -19,6 +20,7 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <LanguageSelector />
           <ThemeToggle />
+          <AuthButton />
         </div>
       </div>
     </header>
