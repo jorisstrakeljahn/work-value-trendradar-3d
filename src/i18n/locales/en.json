@@ -103,7 +103,19 @@
       "deleteConfirmWarning": "This action cannot be undone.",
       "uploadError": "Error uploading image",
       "uploadSuccess": "Image uploaded successfully",
-      "validationError": "Please fill in all required fields"
+      "validationError": "Please fill in all required fields",
+      "nameDeRequired": "German name is required"
+    },
+    "industries": {
+      "createTitle": "Create New Industry",
+      "nameDe": "Name (German)",
+      "nameDePlaceholder": "German industry name",
+      "nameEn": "Name (English)",
+      "nameEnPlaceholder": "English industry name",
+      "nameEnHint": "Optional - will display German name if empty",
+      "color": "Color",
+      "colorFormat": "Hex color code (e.g. #3B82F6)",
+      "colorPreview": "Color preview"
     },
     "list": {
       "noSignals": "No signals found",
@@ -157,6 +169,12 @@
   },
   "resetView": {
     "button": "Reset View"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "create": "Create",
+    "creating": "Creating...",
+    "close": "Close"
   },
   "explanation": {
     "title": "Understanding the 3D Trend Radar",

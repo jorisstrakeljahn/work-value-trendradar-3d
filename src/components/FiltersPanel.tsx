@@ -1,12 +1,18 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CollapsiblePanel } from '../shared/components/ui'
+import { Plus } from 'lucide-react'
+import { CollapsiblePanel, Button } from '../shared/components/ui'
 import { useRadarStore } from '../store/useRadarStore'
 import { useIndustries } from '../shared/hooks/useIndustries'
+import { useAuthStore } from '../store/useAuthStore'
+import CreateIndustryModal from './admin/CreateIndustryModal'
 
 export default function FiltersPanel() {
   const { t } = useTranslation()
   const { filters, setFilters } = useRadarStore()
   const industries = useIndustries()
+  const { user } = useAuthStore()
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
   const toggleIndustry = (industryId: string) => {
     const currentIndustries = filters.industries || []
@@ -22,12 +28,26 @@ export default function FiltersPanel() {
   }
 
   return (
-    <CollapsiblePanel title={t('filter.title')} className="w-72">
-      <div className="space-y-4">
+    <>
+      <CollapsiblePanel title={t('filter.title')} className="w-72">
+        <div className="space-y-4">
           <div>
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              {t('filter.industries')}
-            </h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                {t('filter.industries')}
+              </h3>
+              {user && (
+                <Button
+                  type="button"
+                  onClick={() => setIsCreateModalOpen(true)}
+                  variant="secondary"
+                  className="h-6 px-2 text-xs"
+                  title={t('admin.industries.createTitle')}
+                >
+                  <Plus className="w-3 h-3" />
+                </Button>
+              )}
+            </div>
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {industries.map(industry => {
                 const isSelected =
@@ -63,7 +83,14 @@ export default function FiltersPanel() {
               {t('filter.resetAll')}
             </button>
           )}
-      </div>
-    </CollapsiblePanel>
+        </div>
+      </CollapsiblePanel>
+
+      <CreateIndustryModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSuccess={() => setIsCreateModalOpen(false)}
+      />
+    </>
   )
 }

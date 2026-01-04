@@ -103,7 +103,19 @@
       "deleteConfirmWarning": "Diese Aktion kann nicht rückgängig gemacht werden.",
       "uploadError": "Fehler beim Hochladen des Bildes",
       "uploadSuccess": "Bild erfolgreich hochgeladen",
-      "validationError": "Bitte füllen Sie alle erforderlichen Felder aus"
+      "validationError": "Bitte füllen Sie alle erforderlichen Felder aus",
+      "nameDeRequired": "Der deutsche Name ist erforderlich"
+    },
+    "industries": {
+      "createTitle": "Neue Branche erstellen",
+      "nameDe": "Name (Deutsch)",
+      "nameDePlaceholder": "Deutscher Branchenname",
+      "nameEn": "Name (Englisch)",
+      "nameEnPlaceholder": "Englischer Branchenname",
+      "nameEnHint": "Optional - wird auf Deutsch angezeigt, wenn leer",
+      "color": "Farbe",
+      "colorFormat": "Hex-Farbcode (z.B. #3B82F6)",
+      "colorPreview": "Farbvorschau"
     },
     "list": {
       "noSignals": "Keine Signale gefunden",
@@ -157,6 +169,12 @@
   },
   "resetView": {
     "button": "Ansicht zurücksetzen"
+  },
+  "common": {
+    "cancel": "Abbrechen",
+    "create": "Erstellen",
+    "creating": "Wird erstellt...",
+    "close": "Schließen"
   },
   "explanation": {
     "title": "Das 3D Trend Radar verstehen",

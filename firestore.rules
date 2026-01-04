@@ -18,5 +18,23 @@ service cloud.firestore {
       allow delete: if request.auth != null 
                     && resource.data.createdBy == request.auth.uid;
     }
+    
+    // Industries collection
+    match /industries/{industryId} {
+      // Anyone can read industries (public viewing)
+      allow read: if true;
+      
+      // Only authenticated users can create industries
+      allow create: if request.auth != null 
+                    && request.resource.data.createdBy == request.auth.uid;
+      
+      // Only the creator can update their industry
+      allow update: if request.auth != null 
+                    && resource.data.createdBy == request.auth.uid;
+      
+      // Only the creator can delete their industry
+      allow delete: if request.auth != null 
+                    && resource.data.createdBy == request.auth.uid;
+    }
   }
 }

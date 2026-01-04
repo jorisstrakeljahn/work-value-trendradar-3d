@@ -49,7 +49,6 @@ export default function SignalFormModal({
   const [newTag, setNewTag] = useState('')
   const [sourceUrl, setSourceUrl] = useState('')
   const [sourceName, setSourceName] = useState('')
-  const [newIndustryName, setNewIndustryName] = useState('')
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -111,13 +110,6 @@ export default function SignalFormModal({
         ? prev.filter(id => id !== industryId)
         : [...prev, industryId]
     )
-  }
-
-  const addCustomIndustry = () => {
-    if (newIndustryName.trim() && !industryTags.includes(newIndustryName.trim())) {
-      setIndustryTags(prev => [...prev, newIndustryName.trim()])
-      setNewIndustryName('')
-    }
   }
 
   const removeIndustry = (industryId: string) => {
@@ -372,31 +364,6 @@ export default function SignalFormModal({
             </div>
           )}
 
-          {/* Add Custom Industry */}
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={newIndustryName}
-              onChange={e => setNewIndustryName(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  e.preventDefault()
-                  addCustomIndustry()
-                }
-              }}
-              placeholder={t('admin.form.addCustomIndustry')}
-              className="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#252525] text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none text-sm"
-              disabled={loading}
-            />
-            <Button
-              type="button"
-              onClick={addCustomIndustry}
-              disabled={loading || !newIndustryName.trim()}
-              variant="primary"
-            >
-              {t('admin.form.add')}
-            </Button>
-          </div>
         </div>
 
         {/* Impact & Horizon */}

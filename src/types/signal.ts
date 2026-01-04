@@ -73,6 +73,18 @@ export interface SignalDocument {
  */
 export interface Industry {
   id: string
-  name: string
+  name: string // For backward compatibility, can be multilingual object
   color: string
+}
+
+/**
+ * Firestore document structure for industries (with multilingual name)
+ */
+export interface IndustryDocument {
+  id: string
+  name: MultilingualText
+  color: string
+  createdAt: unknown // Firestore Timestamp
+  updatedAt: unknown // Firestore Timestamp
+  createdBy: string // User UID
 }
