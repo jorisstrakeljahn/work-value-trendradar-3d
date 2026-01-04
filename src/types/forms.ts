@@ -18,7 +18,6 @@ export interface SignalFormData {
   valueDimensions: ValueDimensions
   sources: Source[]
   tags: string[]
-  confidence: number
   imageUrl: string | null
 }
 

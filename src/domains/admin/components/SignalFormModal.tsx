@@ -15,7 +15,6 @@ import {
   ValueDimensionsSection,
   SourcesSection,
   TagsSection,
-  ConfidenceSection,
   ImageSection,
 } from './signal-form'
 import type { Signal } from '../../../types/signal'
@@ -85,7 +84,6 @@ export default function SignalFormModal({
         valueDimensions: formData.valueDimensions,
         sources: formData.sources,
         tags: formData.tags,
-        confidence: formData.confidence,
         imageUrl: formData.imageUrl || undefined,
       }
 
@@ -200,12 +198,6 @@ export default function SignalFormModal({
         <TagsSection
           tags={formData.tags}
           onTagsChange={value => updateFormData('tags', value)}
-          disabled={loading}
-        />
-
-        <ConfidenceSection
-          confidence={formData.confidence}
-          onConfidenceChange={value => updateFormData('confidence', value)}
           disabled={loading}
         />
 

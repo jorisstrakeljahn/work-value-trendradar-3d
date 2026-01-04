@@ -10,7 +10,7 @@ interface SignalInfoProps {
 }
 
 /**
- * Signal info component displaying industries, impact, horizon, work value, confidence
+ * Signal info component displaying industries, impact, horizon, work value
  */
 export function SignalInfo({ signal }: SignalInfoProps) {
   const { t } = useTranslation()
@@ -43,7 +43,6 @@ export function SignalInfo({ signal }: SignalInfoProps) {
           </div>
         }
       />
-      <InfoRow label={t('signalDetails.confidence')} value={`${signal.confidence}/5`} />
     </div>
   )
 }

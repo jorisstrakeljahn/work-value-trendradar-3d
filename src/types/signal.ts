@@ -45,7 +45,6 @@ export interface Signal {
   zWorkValue: number // -100..100 (negative = value loss, positive = value gain)
   valueDimensions: ValueDimensions
   sources: Source[]
-  confidence: number // 1..5
   tags: string[]
   imageUrl?: string
   position?: {
@@ -75,7 +74,6 @@ export interface SignalDocument {
   yHorizon: number
   valueDimensions: ValueDimensions
   sources: Source[]
-  confidence: number
   tags: string[]
   imageUrl?: string
   createdAt: unknown // Firestore Timestamp

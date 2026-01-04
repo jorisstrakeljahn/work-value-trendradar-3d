@@ -13,7 +13,6 @@ export interface SignalFormData {
   valueDimensions: ValueDimensions
   sources: Source[]
   tags: string[]
-  confidence: number
   imageUrl: string | null
 }
 
@@ -33,7 +32,6 @@ const defaultFormData: SignalFormData = {
   },
   sources: [],
   tags: [],
-  confidence: 3,
   imageUrl: null,
 }
 
@@ -65,7 +63,6 @@ export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean
               valueDimensions: signal.valueDimensions,
               sources: signal.sources || [],
               tags: signal.tags || [],
-              confidence: signal.confidence,
               imageUrl: signal.imageUrl || null,
             })
           } else {
@@ -81,7 +78,6 @@ export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean
               valueDimensions: signal.valueDimensions,
               sources: signal.sources || [],
               tags: signal.tags || [],
-              confidence: signal.confidence,
               imageUrl: signal.imageUrl || null,
             })
           }
@@ -89,20 +85,19 @@ export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean
         })
         .catch(() => {
           // Error loading, use signal data as fallback
-          setFormData({
-            titleDe: signal.title,
-            titleEn: signal.title,
-            summaryDe: signal.summary,
-            summaryEn: signal.summary,
-            industryTags: signal.industryTags || [],
-            xImpact: signal.xImpact,
-            yHorizon: signal.yHorizon,
-            valueDimensions: signal.valueDimensions,
-            sources: signal.sources || [],
-            tags: signal.tags || [],
-            confidence: signal.confidence,
-            imageUrl: signal.imageUrl || null,
-          })
+            setFormData({
+              titleDe: signal.title,
+              titleEn: signal.title,
+              summaryDe: signal.summary,
+              summaryEn: signal.summary,
+              industryTags: signal.industryTags || [],
+              xImpact: signal.xImpact,
+              yHorizon: signal.yHorizon,
+              valueDimensions: signal.valueDimensions,
+              sources: signal.sources || [],
+              tags: signal.tags || [],
+              imageUrl: signal.imageUrl || null,
+            })
           setIsInitialized(true)
         })
     } else if (!signal && isOpen) {

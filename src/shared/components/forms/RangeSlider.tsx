@@ -12,7 +12,7 @@ interface RangeSliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, '
 
 /**
  * Reusable range slider component that displays current value
- * Used for Impact, Horizon, Confidence sliders
+ * Used for Impact, Horizon sliders
  */
 export function RangeSlider({
   label,

@@ -53,7 +53,7 @@ export function SignalDetailsContent({
         </div>
       )}
 
-      {/* Signal Info (Impact, Horizon, Work Value, Confidence) */}
+      {/* Signal Info (Impact, Horizon, Work Value) */}
       <SignalInfo signal={signal} />
 
       {/* Value Dimensions */}

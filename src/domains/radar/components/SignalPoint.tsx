@@ -40,8 +40,8 @@ export default function SignalPoint({ signal }: SignalPointProps) {
     return '#94A3B8'
   }
 
-  // Size based on impact
-  const size = 0.08 + (signal.xImpact / 100) * 0.12
+  // Fixed size for all points (uniform, larger for better clickability)
+  const size = 0.22
 
   useFrame(() => {
     if (meshRef.current) {
