@@ -12,11 +12,11 @@ const defaultWeights: ValueWeights = {
 
 /**
  * Calculates the Work-Value-Index from 4 sub-values
- * Aggregates: economic, social, subjective, political (-5..+5)
+ * Aggregates: economic, social, subjective, political (0..5)
  *
  * @param signal - The signal with valueDimensions
  * @param weights - Optional weights in percent (0-100). If not provided, uses default weights
- * @returns Work-Value-Index (-100..100)
+ * @returns Work-Value-Index (0..100)
  */
 export function calculateWorkValueIndex(signal: Signal, weights?: ValueWeights): number {
   const { economic, social, subjective, political } = signal.valueDimensions
@@ -32,7 +32,7 @@ export function calculateWorkValueIndex(signal: Signal, weights?: ValueWeights):
     political: weightValues.political / 100,
   }
 
-  // Normalize from -5..+5 to -100..+100
+  // Normalize from 0..5 to 0..100
   const normalizedEconomic = (economic / 5) * 100
   const normalizedSocial = (social / 5) * 100
   const normalizedSubjective = (subjective / 5) * 100
@@ -44,7 +44,7 @@ export function calculateWorkValueIndex(signal: Signal, weights?: ValueWeights):
     normalizedSubjective * normalizedWeights.subjective +
     normalizedPolitical * normalizedWeights.political
 
-  return Math.max(-100, Math.min(100, workValueIndex))
+  return Math.max(0, Math.min(100, workValueIndex))
 }
 
 /**
@@ -78,13 +78,13 @@ export function mapSignalToPosition(
 
   // Z: Work-Value-Index (aggregated from 4 sub-values)
   // Calculate Work-Value-Index from valueDimensions with optional weights
+  // Returns 0..100 (0 = all dimensions 0, 100 = all dimensions 5)
   const workValueIndex = calculateWorkValueIndex(signal, weights)
 
-  // Normalize from -100..100 to 0..maxHeight
-  // Negative values become low heights, positive become high heights
-  // No negative heights!
-  const normalizedWorkValue = (workValueIndex + 100) / 200 // 0..1
-  const z = normalizedWorkValue * maxHeight
+  // Normalize from 0..100 to 0..maxHeight
+  // All dimensions 0 → z = 0 (on X-axis plane)
+  // All dimensions 5 → z = maxHeight (maximum height)
+  const z = (workValueIndex / 100) * maxHeight
 
   return { x, y, z }
 }

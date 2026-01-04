@@ -8,13 +8,13 @@ export interface Source {
 
 /**
  * Value dimensions that contribute to the Work-Value-Index
- * Each dimension ranges from -5 to +5
+ * Each dimension ranges from 0 to 5
  */
 export interface ValueDimensions {
-  economic: number // -5 to +5
-  social: number // -5 to +5
-  subjective: number // -5 to +5
-  political: number // -5 to +5
+  economic: number // 0 to 5
+  social: number // 0 to 5
+  subjective: number // 0 to 5
+  political: number // 0 to 5
 }
 
 /**
@@ -42,7 +42,7 @@ export interface Signal {
   industryTags: string[]
   xImpact: number // 0..100 (Impact / Relevance)
   yHorizon: number // 0..100 (Time Horizon / Maturity: 0 = now, 100 = far future)
-  zWorkValue: number // -100..100 (negative = value loss, positive = value gain)
+  zWorkValue: number // 0..100 (0 = no value change, 100 = maximum value gain)
   valueDimensions: ValueDimensions
   sources: Source[]
   imageUrl?: string

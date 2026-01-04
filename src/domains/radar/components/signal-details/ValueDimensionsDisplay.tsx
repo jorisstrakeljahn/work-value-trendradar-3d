@@ -28,7 +28,6 @@ export function ValueDimensionsDisplay({ valueDimensions }: ValueDimensionsDispl
           <div key={key} className="flex items-center justify-between">
             <span className="text-gray-600 dark:text-gray-400">{label}</span>
             <span className="text-gray-900 dark:text-gray-100 font-medium">
-              {valueDimensions[key] > 0 ? '+' : ''}
               {valueDimensions[key]}
             </span>
           </div>
