@@ -39,7 +39,7 @@ export function SignalDetailsContent({
     : ''
 
   return (
-    <div className="p-6 space-y-5">
+    <div className="px-6 pt-6 pb-8 space-y-5">
       {/* Header with image, title, and summary */}
       <SignalHeader signal={signal} />
 
@@ -63,7 +63,9 @@ export function SignalDetailsContent({
 
       {/* Admin Actions */}
       {user && onEdit && onDelete && (
-        <SignalActions onEdit={onEdit} onDelete={onDelete} />
+        <div className="pt-2 pb-4">
+          <SignalActions onEdit={onEdit} onDelete={onDelete} />
+        </div>
       )}
     </div>
   )

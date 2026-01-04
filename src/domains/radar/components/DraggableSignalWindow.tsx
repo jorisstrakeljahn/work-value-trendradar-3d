@@ -174,8 +174,10 @@ export default function DraggableSignalWindow({
           style={{
             zIndex,
             position: 'absolute',
+            display: 'flex',
+            flexDirection: 'column',
           }}
-          className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden flex flex-col"
+          className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden"
         >
           {/* Header Bar */}
           <div className="window-header flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#252525] border-b border-gray-200 dark:border-gray-700 cursor-move flex-shrink-0">
@@ -195,7 +197,10 @@ export default function DraggableSignalWindow({
         {/* Content Area - scrollable */}
         <div
           className="flex-1 overflow-y-auto min-h-0"
-          style={{ maxHeight: '100%', colorScheme: 'light dark' }}
+          style={{ 
+            maxHeight: '100%',
+            colorScheme: 'light dark'
+          }}
         >
           <SignalDetailsContent
             signal={signal}

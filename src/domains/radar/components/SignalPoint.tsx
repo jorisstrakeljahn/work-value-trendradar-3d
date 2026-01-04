@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import { Mesh } from 'three'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { useRadarStore } from '../../../store/useRadarStore'
@@ -23,23 +23,23 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   const hasOpenWindow = windows.some(w => w.signalId === signal.id)
   const isHovered = hoveredSignal?.id === signal.id || hovered
 
-  // Color based on first industry
-  const getColor = () => {
-    if (isHovered) return '#FFFFFF' // White for hover
-
-    // Use color of first industry
-    if (signal.industryTags.length > 0) {
-      const firstIndustry = industries.find(
-        ind => ind.id === signal.industryTags[0]
-      )
-      if (firstIndustry) {
+  // Color based on first industry (memoized to update when industries change)
+  const baseColor = useMemo(() => {
+    // Use color of first industry from signal.industryTags
+    if (signal.industryTags && signal.industryTags.length > 0) {
+      const firstIndustryId = signal.industryTags[0]
+      const firstIndustry = industries.find(ind => ind.id === firstIndustryId)
+      if (firstIndustry && firstIndustry.color) {
         return firstIndustry.color
       }
     }
 
-    // Fallback: Gray
+    // Fallback: Gray if no industry or industry not found
     return '#94A3B8'
-  }
+  }, [signal.industryTags, industries])
+
+  // Color for current state (hover overrides base color)
+  const currentColor = isHovered ? '#FFFFFF' : baseColor
 
   // Fixed size for all points (uniform, larger for better clickability)
   const baseSize = 0.22
@@ -105,8 +105,8 @@ export default function SignalPoint({ signal }: SignalPointProps) {
     >
       <sphereGeometry args={[baseSize, 16, 16]} />
       <meshStandardMaterial
-        color={getColor()}
-        emissive={isHovered || hasOpenWindow ? getColor() : '#000000'}
+        color={currentColor}
+        emissive={isHovered || hasOpenWindow ? currentColor : '#000000'}
         emissiveIntensity={isHovered ? 0.8 : hasOpenWindow ? 1.4 : 0}
         metalness={0.3}
         roughness={0.4}
