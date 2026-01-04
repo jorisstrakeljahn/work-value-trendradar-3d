@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { InfoRow } from '../../../../shared/components/ui'
 import { useIndustries } from '../../../../shared/hooks/useIndustries'
 import { calculateWorkValueIndex } from '../../../../shared/utils/mapping'
+import { useRadarStore } from '../../../../store/useRadarStore'
 import type { Signal } from '../../../../types/signal'
 
 interface SignalInfoProps {
@@ -14,12 +15,13 @@ interface SignalInfoProps {
 export function SignalInfo({ signal }: SignalInfoProps) {
   const { t } = useTranslation()
   const industries = useIndustries()
+  const { valueWeights } = useRadarStore()
 
   const industryNames = signal.industryTags
     .map(tag => industries.find(ind => ind.id === tag)?.name || tag)
     .join(', ')
 
-  const workValueIndex = calculateWorkValueIndex(signal)
+  const workValueIndex = calculateWorkValueIndex(signal, valueWeights)
 
   return (
     <div className="space-y-3 text-sm">

@@ -178,6 +178,19 @@
   "resetView": {
     "button": "Reset View"
   },
+  "weights": {
+    "title": "Weights",
+    "economic": "Economic",
+    "social": "Social",
+    "subjective": "Subjective",
+    "political": "Political",
+    "locked": "Locked",
+    "unlock": "Unlock",
+    "lock": "Lock",
+    "lockLimit": "Maximum 2 dimensions can be locked",
+    "reset": "Reset",
+    "percent": "%"
+  },
   "common": {
     "cancel": "Cancel",
     "create": "Create",

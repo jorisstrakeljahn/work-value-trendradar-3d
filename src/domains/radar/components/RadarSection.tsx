@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import RadarScene from './RadarScene'
 import FiltersPanel from './FiltersPanel'
+import WeightDimensionsPanel from './WeightDimensionsPanel'
 import SignalDetailsPanel from './SignalDetailsPanel'
 import Legend from './Legend'
 import HoverTooltip from './HoverTooltip'
@@ -23,9 +24,10 @@ export default function RadarSection() {
   return (
     <section className="relative w-full h-[calc(100vh-5rem)] bg-apple-gray-50 dark:bg-[#1a1a1a] transition-colors duration-200 overflow-x-auto">
       <div className="relative w-full h-full max-w-[1800px] mx-auto">
-        {/* Left Sidebar: Filter + Legend (stacked) - Hidden on mobile */}
+        {/* Left Sidebar: Filter + Weight Dimensions + Legend (stacked) - Hidden on mobile */}
         <div className="hidden md:absolute md:left-4 md:top-4 md:flex md:flex-col md:gap-4 z-30">
           <FiltersPanel />
+          <WeightDimensionsPanel />
           <Legend />
         </div>
 

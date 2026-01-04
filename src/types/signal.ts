@@ -18,6 +18,21 @@ export interface ValueDimensions {
 }
 
 /**
+ * Dimension key type for value dimensions
+ */
+export type DimensionKey = 'economic' | 'social' | 'subjective' | 'political'
+
+/**
+ * Weights for value dimensions (in percent, 0-100, sum = 100)
+ */
+export interface ValueWeights {
+  economic: number
+  social: number
+  subjective: number
+  political: number
+}
+
+/**
  * Weak Signal representing a trend or development
  */
 export interface Signal {

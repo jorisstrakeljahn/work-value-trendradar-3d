@@ -1,22 +1,35 @@
-import type { Signal } from '../../types/signal'
+import type { Signal, ValueWeights } from '../../types/signal'
+
+/**
+ * Default weights (for backward compatibility)
+ */
+const defaultWeights: ValueWeights = {
+  economic: 30,
+  social: 25,
+  subjective: 25,
+  political: 20,
+}
 
 /**
  * Calculates the Work-Value-Index from 4 sub-values
  * Aggregates: economic, social, subjective, political (-5..+5)
  *
  * @param signal - The signal with valueDimensions
+ * @param weights - Optional weights in percent (0-100). If not provided, uses default weights
  * @returns Work-Value-Index (-100..100)
  */
-export function calculateWorkValueIndex(signal: Signal): number {
+export function calculateWorkValueIndex(signal: Signal, weights?: ValueWeights): number {
   const { economic, social, subjective, political } = signal.valueDimensions
 
-  // Weighted sum of dimensions
-  // Each dimension can be -5 to +5, so max 20 points per dimension
-  const weights = {
-    economic: 0.3,
-    social: 0.25,
-    subjective: 0.25,
-    political: 0.2,
+  // Use provided weights or default weights
+  const weightValues = weights || defaultWeights
+
+  // Normalize percent weights (0-100) to decimal weights (0.0-1.0)
+  const normalizedWeights = {
+    economic: weightValues.economic / 100,
+    social: weightValues.social / 100,
+    subjective: weightValues.subjective / 100,
+    political: weightValues.political / 100,
   }
 
   // Normalize from -5..+5 to -100..+100
@@ -26,10 +39,10 @@ export function calculateWorkValueIndex(signal: Signal): number {
   const normalizedPolitical = (political / 5) * 100
 
   const workValueIndex =
-    normalizedEconomic * weights.economic +
-    normalizedSocial * weights.social +
-    normalizedSubjective * weights.subjective +
-    normalizedPolitical * weights.political
+    normalizedEconomic * normalizedWeights.economic +
+    normalizedSocial * normalizedWeights.social +
+    normalizedSubjective * normalizedWeights.subjective +
+    normalizedPolitical * normalizedWeights.political
 
   return Math.max(-100, Math.min(100, workValueIndex))
 }
@@ -46,12 +59,14 @@ export function calculateWorkValueIndex(signal: Signal): number {
  * @param signal - The signal to be mapped
  * @param maxRadius - Maximum radius for x/y plane (default: 5)
  * @param maxHeight - Maximum height for z-axis (default: 3)
+ * @param weights - Optional weights for value dimensions. If not provided, uses default weights
  * @returns 3D position {x, y, z} in cartesian coordinates
  */
 export function mapSignalToPosition(
   signal: Signal,
   maxRadius: number = 5,
-  maxHeight: number = 3
+  maxHeight: number = 3,
+  weights?: ValueWeights
 ): { x: number; y: number; z: number } {
   // X: Impact / Relevance (0..100) → -maxRadius to +maxRadius
   // Normalize to -1..1, then scale
@@ -62,8 +77,8 @@ export function mapSignalToPosition(
   const y = (signal.yHorizon / 100) * maxRadius
 
   // Z: Work-Value-Index (aggregated from 4 sub-values)
-  // Calculate Work-Value-Index from valueDimensions
-  const workValueIndex = calculateWorkValueIndex(signal)
+  // Calculate Work-Value-Index from valueDimensions with optional weights
+  const workValueIndex = calculateWorkValueIndex(signal, weights)
 
   // Normalize from -100..100 to 0..maxHeight
   // Negative values become low heights, positive become high heights

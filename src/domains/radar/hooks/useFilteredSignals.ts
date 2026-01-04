@@ -7,10 +7,11 @@ import type { Signal } from '../../../types/signal'
 
 /**
  * Hook to filter signals and map them to 3D positions
+ * Uses current value weights from store for position calculation
  */
 export function useFilteredSignals() {
   const signals = useSignals()
-  const { filters } = useRadarStore()
+  const { filters, valueWeights } = useRadarStore()
   const { MAX_RADIUS, MAX_HEIGHT } = RADAR_CONFIG
 
   return useMemo(() => {
@@ -30,10 +31,10 @@ export function useFilteredSignals() {
         signal.xImpact <= filters.maxImpact
     )
 
-    // Map to positions
+    // Map to positions using current weights
     return filtered.map(signal => ({
       ...signal,
-      position: mapSignalToPosition(signal, MAX_RADIUS, MAX_HEIGHT),
+      position: mapSignalToPosition(signal, MAX_RADIUS, MAX_HEIGHT, valueWeights),
     }))
-  }, [signals, filters, MAX_RADIUS, MAX_HEIGHT])
+  }, [signals, filters, valueWeights, MAX_RADIUS, MAX_HEIGHT])
 }

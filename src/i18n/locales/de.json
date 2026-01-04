@@ -178,6 +178,19 @@
   "resetView": {
     "button": "Ansicht zurücksetzen"
   },
+  "weights": {
+    "title": "Gewichtungen",
+    "economic": "Ökonomisch",
+    "social": "Sozial",
+    "subjective": "Subjektiv",
+    "political": "Politisch",
+    "locked": "Gesperrt",
+    "unlock": "Entsperren",
+    "lock": "Sperren",
+    "lockLimit": "Maximal 2 Dimensionen können gesperrt werden",
+    "reset": "Zurücksetzen",
+    "percent": "%"
+  },
   "common": {
     "cancel": "Abbrechen",
     "create": "Erstellen",
