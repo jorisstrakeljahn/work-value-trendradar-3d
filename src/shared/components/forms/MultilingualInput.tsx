@@ -52,12 +52,12 @@ export function MultilingualInput({
         />
       </div>
       <div>
-        <Label>{currentLanguage === 'de' ? labelEn : labelEn}</Label>
+        <Label>{currentLanguage === 'de' ? labelEn : labelDe}</Label>
         <Input
           type="text"
           value={valueEn}
           onChange={e => onChangeEn(e.target.value)}
-          placeholder={currentLanguage === 'de' ? placeholderEn : placeholderEn}
+          placeholder={currentLanguage === 'de' ? placeholderEn : placeholderDe}
           disabled={disabled}
         />
       </div>

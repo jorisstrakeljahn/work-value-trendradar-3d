@@ -54,11 +54,11 @@ export function MultilingualTextarea({
         />
       </div>
       <div>
-        <Label>{currentLanguage === 'de' ? labelEn : labelEn}</Label>
+        <Label>{currentLanguage === 'de' ? labelEn : labelDe}</Label>
         <Textarea
           value={valueEn}
           onChange={e => onChangeEn(e.target.value)}
-          placeholder={currentLanguage === 'de' ? placeholderEn : placeholderEn}
+          placeholder={currentLanguage === 'de' ? placeholderEn : placeholderDe}
           rows={rows}
           disabled={disabled}
         />
