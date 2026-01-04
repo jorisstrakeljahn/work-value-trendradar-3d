@@ -6,7 +6,12 @@ import { useAuthStore } from '../../../store/useAuthStore'
 import { IndustryFilter } from './filters'
 import CreateIndustryModal from '../../admin/components/CreateIndustryModal'
 
-export default function FiltersPanel() {
+interface FiltersPanelProps {
+  isCollapsed?: boolean
+  onToggle?: () => void
+}
+
+export default function FiltersPanel({ isCollapsed, onToggle }: FiltersPanelProps) {
   const { t } = useTranslation()
   const { filters, setFilters } = useRadarStore()
   const { user } = useAuthStore()
@@ -14,7 +19,12 @@ export default function FiltersPanel() {
 
   return (
     <>
-      <CollapsiblePanel title={t('filter.title')} className="w-72">
+      <CollapsiblePanel
+        title={t('filter.title')}
+        className="w-72"
+        isCollapsed={isCollapsed}
+        onToggle={onToggle}
+      >
         <div className="space-y-4">
           <IndustryFilter
             selectedIndustryIds={filters.industries || []}

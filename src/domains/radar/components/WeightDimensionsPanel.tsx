@@ -5,7 +5,12 @@ import { RangeSlider } from '../../../shared/components/forms'
 import { useRadarStore } from '../../../store/useRadarStore'
 import type { DimensionKey } from '../../../types/signal'
 
-export default function WeightDimensionsPanel() {
+interface WeightDimensionsPanelProps {
+  isCollapsed?: boolean
+  onToggle?: () => void
+}
+
+export default function WeightDimensionsPanel({ isCollapsed, onToggle }: WeightDimensionsPanelProps) {
   const { t } = useTranslation()
   const { valueWeights, lockedDimensions, setValueWeights, setLockedDimensions, resetWeights } = useRadarStore()
 
@@ -44,7 +49,12 @@ export default function WeightDimensionsPanel() {
   }
 
   return (
-    <CollapsiblePanel title={t('weights.title')} className="w-72">
+    <CollapsiblePanel
+      title={t('weights.title')}
+      className="w-72"
+      isCollapsed={isCollapsed}
+      onToggle={onToggle}
+    >
       <div className="space-y-4">
         {dimensions.map(({ key, labelKey }) => (
           <div key={key} className="space-y-2">

@@ -1,11 +1,21 @@
 import { useTranslation } from 'react-i18next'
 import { CollapsiblePanel } from '../../../shared/components/ui'
 
-export default function Legend() {
+interface LegendProps {
+  isCollapsed?: boolean
+  onToggle?: () => void
+}
+
+export default function Legend({ isCollapsed, onToggle }: LegendProps) {
   const { t } = useTranslation()
 
   return (
-    <CollapsiblePanel title={t('legend.title')} className="w-72">
+    <CollapsiblePanel
+      title={t('legend.title')}
+      className="w-72"
+      isCollapsed={isCollapsed}
+      onToggle={onToggle}
+    >
       <div className="space-y-4 text-xs">
           <div className="pt-2 border-t border-gray-200/50 dark:border-gray-600/50">
             <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">
