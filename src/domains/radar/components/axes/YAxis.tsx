@@ -56,7 +56,11 @@ export function YAxis() {
                 itemSize={3}
               />
             </bufferGeometry>
-            <lineBasicMaterial color={RADAR_COLORS.AXIS.SECONDARY} opacity={0.4} transparent />
+            <lineBasicMaterial
+              color={RADAR_COLORS.AXIS.SECONDARY}
+              opacity={0.4}
+              transparent
+            />
           </line>
 
           {/* Y-axis labels */}
@@ -68,10 +72,11 @@ export function YAxis() {
               zIndexRange={[0, 100]}
               style={{ pointerEvents: 'none', zIndex: 10 }}
             >
-              <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
+              <div className="text-gray-600 dark:text-gray-400 text-xs">
+                {line.label}
+              </div>
             </Html>
           </Billboard>
-
         </group>
       ))}
     </group>

@@ -41,11 +41,14 @@ export default function DraggableSignalWindow({
   const signals = useSignals()
   const { user } = useAuthStore()
   const { selectedSignal } = useRadarStore()
-  
+
   // Try to get signal from selectedSignal first (if it matches), then from signals array
   // This avoids the double-click issue when signals are still loading
-  const signal = selectedSignal?.id === signalId ? selectedSignal : signals.find((s: Signal) => s.id === signalId)
-  
+  const signal =
+    selectedSignal?.id === signalId
+      ? selectedSignal
+      : signals.find((s: Signal) => s.id === signalId)
+
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -88,7 +91,9 @@ export default function DraggableSignalWindow({
             </button>
           </div>
           <div className="flex-1 flex items-center justify-center p-6">
-            <p className="text-sm text-gray-600 dark:text-gray-400">Loading signal...</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Loading signal...
+            </p>
           </div>
         </Rnd>
       )
@@ -143,8 +148,10 @@ export default function DraggableSignalWindow({
   }
 
   // Calculate max size (90% of viewport)
-  const maxWidth = typeof window !== 'undefined' ? window.innerWidth * 0.9 : 1200
-  const maxHeight = typeof window !== 'undefined' ? window.innerHeight * 0.9 : 800
+  const maxWidth =
+    typeof window !== 'undefined' ? window.innerWidth * 0.9 : 1200
+  const maxHeight =
+    typeof window !== 'undefined' ? window.innerHeight * 0.9 : 800
 
   return (
     <>
@@ -171,35 +178,35 @@ export default function DraggableSignalWindow({
         onDragStop={handleDragStop}
         onResizeStop={handleResizeStop}
         onMouseDown={handleMouseDown}
-          style={{
-            zIndex,
-            position: 'absolute',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-          className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden"
-        >
-          {/* Header Bar */}
-          <div className="window-header flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#252525] border-b border-gray-200 dark:border-gray-700 cursor-move flex-shrink-0">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate flex-1 mr-2">
-              {signal.title}
-            </h3>
-            <button
-              onClick={onClose}
-              className="flex-shrink-0 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-              aria-label={t('signalWindows.close')}
-              title={t('signalWindows.close')}
-            >
-              <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-            </button>
-          </div>
+        style={{
+          zIndex,
+          position: 'absolute',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden"
+      >
+        {/* Header Bar */}
+        <div className="window-header flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#252525] border-b border-gray-200 dark:border-gray-700 cursor-move flex-shrink-0">
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate flex-1 mr-2">
+            {signal.title}
+          </h3>
+          <button
+            onClick={onClose}
+            className="flex-shrink-0 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            aria-label={t('signalWindows.close')}
+            title={t('signalWindows.close')}
+          >
+            <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+          </button>
+        </div>
 
         {/* Content Area - scrollable */}
         <div
           className="flex-1 overflow-y-auto min-h-0"
-          style={{ 
+          style={{
             maxHeight: '100%',
-            colorScheme: 'light dark'
+            colorScheme: 'light dark',
           }}
         >
           <SignalDetailsContent

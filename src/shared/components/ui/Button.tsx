@@ -22,9 +22,7 @@ export function Button({
 
   const baseClasses =
     'rounded-full transition-all duration-200 border border-gray-200/50 dark:border-gray-600/50' +
-    (isDisabled
-      ? ' opacity-50 cursor-not-allowed'
-      : ' hover:scale-105')
+    (isDisabled ? ' opacity-50 cursor-not-allowed' : ' hover:scale-105')
 
   const variantClasses = {
     primary:
@@ -55,4 +53,3 @@ export function Button({
     </button>
   )
 }
-

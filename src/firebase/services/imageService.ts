@@ -1,4 +1,9 @@
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage'
 import { storage } from '../config'
 
 /**
@@ -40,20 +45,29 @@ export async function uploadSignalImage(
     return downloadURL
   } catch (error: unknown) {
     // Provide more specific error messages
-    const errorObj = error as { code?: string; message?: string; stack?: string }
-    
-    if (errorObj.code === 'storage/unauthorized' || errorObj.code === 'storage/permission-denied') {
-      throw new Error('Storage permission denied. Please check Firebase Storage Rules in the Firebase Console.')
+    const errorObj = error as {
+      code?: string
+      message?: string
+      stack?: string
     }
-    
+
+    if (
+      errorObj.code === 'storage/unauthorized' ||
+      errorObj.code === 'storage/permission-denied'
+    ) {
+      throw new Error(
+        'Storage permission denied. Please check Firebase Storage Rules in the Firebase Console.'
+      )
+    }
+
     if (errorObj.code === 'storage/unauthenticated') {
       throw new Error('Unauthorized. Please make sure you are logged in.')
     }
-    
+
     if (error instanceof Error) {
       throw error
     }
-    
+
     throw new Error('Failed to upload image. Please try again.')
   }
 }
@@ -68,7 +82,7 @@ export async function deleteSignalImage(imageUrl: string): Promise<void> {
     // Firebase Storage URLs are in format: https://firebasestorage.googleapis.com/v0/b/{bucket}/o/{path}?alt=media&token={token}
     const url = new URL(imageUrl)
     const pathMatch = url.pathname.match(/\/o\/(.+)\?/)
-    
+
     if (!pathMatch) {
       throw new Error('Invalid image URL')
     }

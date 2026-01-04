@@ -10,9 +10,18 @@ interface WeightDimensionsPanelProps {
   onToggle?: () => void
 }
 
-export default function WeightDimensionsPanel({ isCollapsed, onToggle }: WeightDimensionsPanelProps) {
+export default function WeightDimensionsPanel({
+  isCollapsed,
+  onToggle,
+}: WeightDimensionsPanelProps) {
   const { t } = useTranslation()
-  const { valueWeights, lockedDimensions, setValueWeights, setLockedDimensions, resetWeights } = useRadarStore()
+  const {
+    valueWeights,
+    lockedDimensions,
+    setValueWeights,
+    setLockedDimensions,
+    resetWeights,
+  } = useRadarStore()
 
   const dimensions: { key: DimensionKey; labelKey: string }[] = [
     { key: 'economic', labelKey: 'weights.economic' },
@@ -63,7 +72,8 @@ export default function WeightDimensionsPanel({ isCollapsed, onToggle }: WeightD
                 {t(labelKey)}
               </label>
               <span className="text-xs text-gray-600 dark:text-gray-400 min-w-[3rem] text-right">
-                {Math.round(valueWeights[key])}{t('weights.percent')}
+                {Math.round(valueWeights[key])}
+                {t('weights.percent')}
               </span>
               <button
                 type="button"

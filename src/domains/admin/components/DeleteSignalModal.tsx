@@ -40,7 +40,9 @@ export default function DeleteSignalModal({
           {t('admin.messages.deleteConfirm')}
         </p>
         <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-          <p className="font-medium text-gray-900 dark:text-gray-100">{signal.title}</p>
+          <p className="font-medium text-gray-900 dark:text-gray-100">
+            {signal.title}
+          </p>
         </div>
         <p className="text-sm text-red-600 dark:text-red-400">
           {t('admin.messages.deleteConfirmWarning')}

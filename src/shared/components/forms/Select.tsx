@@ -8,7 +8,10 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
  * Reusable select dropdown component with consistent styling
  */
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ error = false, className = '', disabled = false, children, ...props }, ref) => {
+  (
+    { error = false, className = '', disabled = false, children, ...props },
+    ref
+  ) => {
     const baseClasses =
       'w-full px-4 py-2 rounded-lg border bg-white dark:bg-[#252525] text-gray-900 dark:text-gray-100 outline-none transition-colors'
     const stateClasses = error

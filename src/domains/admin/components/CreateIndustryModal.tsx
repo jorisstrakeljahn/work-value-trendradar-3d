@@ -1,7 +1,11 @@
 import { useState, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal } from '../../../shared/components/ui'
-import { MultilingualInput, ColorPicker, ErrorAlert } from '../../../shared/components/forms'
+import {
+  MultilingualInput,
+  ColorPicker,
+  ErrorAlert,
+} from '../../../shared/components/forms'
 import { FormActions } from './signal-form/FormActions'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { createIndustry } from '../../../firebase/services/industriesService'
@@ -61,7 +65,8 @@ export default function CreateIndustryModal({
       onSuccess?.()
       handleClose()
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : t('admin.messages.createError')
+      const errorMessage =
+        err instanceof Error ? err.message : t('admin.messages.createError')
       setError(errorMessage)
     } finally {
       setLoading(false)

@@ -11,7 +11,10 @@ interface FiltersPanelProps {
   onToggle?: () => void
 }
 
-export default function FiltersPanel({ isCollapsed, onToggle }: FiltersPanelProps) {
+export default function FiltersPanel({
+  isCollapsed,
+  onToggle,
+}: FiltersPanelProps) {
   const { t } = useTranslation()
   const { filters, setFilters } = useRadarStore()
   const { user } = useAuthStore()
@@ -28,26 +31,30 @@ export default function FiltersPanel({ isCollapsed, onToggle }: FiltersPanelProp
         <div className="space-y-4">
           <IndustryFilter
             selectedIndustryIds={filters.industries || []}
-            onSelectionChange={industryIds => setFilters({ industries: industryIds })}
-            onCreateIndustryClick={user ? () => setIsCreateModalOpen(true) : undefined}
+            onSelectionChange={industryIds =>
+              setFilters({ industries: industryIds })
+            }
+            onCreateIndustryClick={
+              user ? () => setIsCreateModalOpen(true) : undefined
+            }
           />
-        {filters.industries && filters.industries.length > 0 && (
-          <button
-            onClick={() => setFilters({ industries: [] })}
-            className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors duration-150"
-          >
-            {t('filter.resetAll')}
-          </button>
-        )}
-      </div>
-    </CollapsiblePanel>
-    {user && (
-      <CreateIndustryModal
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        onSuccess={() => setIsCreateModalOpen(false)}
-      />
-    )}
+          {filters.industries && filters.industries.length > 0 && (
+            <button
+              onClick={() => setFilters({ industries: [] })}
+              className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors duration-150"
+            >
+              {t('filter.resetAll')}
+            </button>
+          )}
+        </div>
+      </CollapsiblePanel>
+      {user && (
+        <CreateIndustryModal
+          isOpen={isCreateModalOpen}
+          onClose={() => setIsCreateModalOpen(false)}
+          onSuccess={() => setIsCreateModalOpen(false)}
+        />
+      )}
     </>
   )
 }

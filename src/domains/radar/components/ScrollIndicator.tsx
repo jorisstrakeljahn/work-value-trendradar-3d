@@ -44,7 +44,9 @@ export default function ScrollIndicator() {
         className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200 group"
         aria-label="Scroll to explanation"
       >
-        <span className="text-xs font-medium">{t('scrollIndicator.learnMore')}</span>
+        <span className="text-xs font-medium">
+          {t('scrollIndicator.learnMore')}
+        </span>
         <ChevronDown className="w-6 h-6 animate-bounce" />
       </button>
     </div>

@@ -27,7 +27,8 @@ export function CollapsiblePanel({
   const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed)
 
   // Use controlled state if provided, otherwise use internal state
-  const isCollapsed = controlledCollapsed !== undefined ? controlledCollapsed : internalCollapsed
+  const isCollapsed =
+    controlledCollapsed !== undefined ? controlledCollapsed : internalCollapsed
 
   // Update internal state when defaultCollapsed changes (for uncontrolled mode)
   useEffect(() => {
@@ -65,4 +66,3 @@ export function CollapsiblePanel({
     </Panel>
   )
 }
-

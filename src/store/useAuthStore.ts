@@ -43,10 +43,10 @@ export const useAuthStore = create<AuthState>(set => ({
         firebaseError.code === 'auth/invalid-credential'
           ? 'invalid-credential'
           : firebaseError.code === 'auth/user-not-found'
-          ? 'user-not-found'
-          : firebaseError.code === 'auth/wrong-password'
-          ? 'wrong-password'
-          : 'login-failed'
+            ? 'user-not-found'
+            : firebaseError.code === 'auth/wrong-password'
+              ? 'wrong-password'
+              : 'login-failed'
       set({ errorCode })
       throw error
     } finally {

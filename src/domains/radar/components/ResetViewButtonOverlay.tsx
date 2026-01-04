@@ -10,7 +10,8 @@ export default function ResetViewButtonOverlay() {
   const [showCreateModal, setShowCreateModal] = useState(false)
 
   const resetCamera = () => {
-    const resetFn = (window as { __resetRadarCamera?: () => void }).__resetRadarCamera
+    const resetFn = (window as { __resetRadarCamera?: () => void })
+      .__resetRadarCamera
     if (resetFn) {
       resetFn()
     }
@@ -24,9 +25,7 @@ export default function ResetViewButtonOverlay() {
             {t('admin.createSignal')}
           </Button>
         )}
-        <Button onClick={resetCamera}>
-          {t('resetView.button')}
-        </Button>
+        <Button onClick={resetCamera}>{t('resetView.button')}</Button>
       </div>
 
       <SignalFormModal

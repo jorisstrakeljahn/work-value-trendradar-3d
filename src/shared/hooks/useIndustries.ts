@@ -13,7 +13,7 @@ export function useIndustries(): Industry[] {
 
   useEffect(() => {
     const unsubscribe = subscribeToIndustries(
-      (firestoreIndustries) => {
+      firestoreIndustries => {
         setIndustries(firestoreIndustries)
       },
       language,
@@ -28,4 +28,3 @@ export function useIndustries(): Industry[] {
 
   return industries
 }
-

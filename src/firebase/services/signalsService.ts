@@ -14,7 +14,11 @@ import {
   Timestamp,
 } from 'firebase/firestore'
 import { db } from '../config'
-import type { Signal, SignalDocument, MultilingualText } from '../../types/signal'
+import type {
+  Signal,
+  SignalDocument,
+  MultilingualText,
+} from '../../types/signal'
 
 /**
  * Convert Firestore document to Signal interface
@@ -27,7 +31,8 @@ export function firestoreToSignal(
   return {
     id: docData.id,
     title: docData.title[language] || docData.title.de || docData.title.en,
-    summary: docData.summary[language] || docData.summary.de || docData.summary.en,
+    summary:
+      docData.summary[language] || docData.summary.de || docData.summary.en,
     industryTags: docData.industryTags,
     xImpact: docData.xImpact,
     yHorizon: docData.yHorizon,
@@ -42,7 +47,12 @@ export function firestoreToSignal(
  * Convert Signal to Firestore document format
  */
 export function signalToFirestore(
-  signal: Partial<Signal & { title?: { de: string; en: string } | string; summary?: { de: string; en: string } | string }>,
+  signal: Partial<
+    Signal & {
+      title?: { de: string; en: string } | string
+      summary?: { de: string; en: string } | string
+    }
+  >,
   userId: string,
   isUpdate: boolean = false
 ): Partial<SignalDocument> {
@@ -104,7 +114,9 @@ export function signalToFirestore(
 /**
  * Get a single signal by ID
  */
-export async function getSignal(signalId: string): Promise<SignalDocument | null> {
+export async function getSignal(
+  signalId: string
+): Promise<SignalDocument | null> {
   const signalRef = doc(db, 'signals', signalId)
   const signalSnap = await getDoc(signalRef)
 
@@ -133,7 +145,12 @@ export async function getAllSignals(): Promise<SignalDocument[]> {
  * Create a new signal
  */
 export async function createSignal(
-  signalData: Partial<Signal & { title?: { de: string; en: string } | string; summary?: { de: string; en: string } | string }>,
+  signalData: Partial<
+    Signal & {
+      title?: { de: string; en: string } | string
+      summary?: { de: string; en: string } | string
+    }
+  >,
   userId: string,
   customId?: string
 ): Promise<string> {
@@ -156,7 +173,12 @@ export async function createSignal(
  */
 export async function updateSignal(
   signalId: string,
-  signalData: Partial<Signal & { title?: { de: string; en: string } | string; summary?: { de: string; en: string } | string }>,
+  signalData: Partial<
+    Signal & {
+      title?: { de: string; en: string } | string
+      summary?: { de: string; en: string } | string
+    }
+  >,
   userId: string
 ): Promise<void> {
   const signalRef = doc(db, 'signals', signalId)

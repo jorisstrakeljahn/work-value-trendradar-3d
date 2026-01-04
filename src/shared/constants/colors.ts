@@ -23,4 +23,3 @@ export const RADAR_COLORS = {
     DEFAULT: '#94A3B8', // Gray fallback
   },
 } as const
-

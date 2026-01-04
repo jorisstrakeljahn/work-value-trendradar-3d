@@ -1,10 +1,17 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Plus } from 'lucide-react'
-import { Button, ConfirmModal, AlertModal } from '../../../../shared/components/ui'
+import {
+  Button,
+  ConfirmModal,
+  AlertModal,
+} from '../../../../shared/components/ui'
 import { useIndustries } from '../../../../shared/hooks/useIndustries'
 import { useAuthStore } from '../../../../store/useAuthStore'
-import { deleteIndustry, isIndustryInUse } from '../../../../firebase/services/industriesService'
+import {
+  deleteIndustry,
+  isIndustryInUse,
+} from '../../../../firebase/services/industriesService'
 import { IndustryItem } from './IndustryItem'
 
 interface IndustryFilterProps {
@@ -24,7 +31,9 @@ export function IndustryFilter({
   const { t } = useTranslation()
   const industries = useIndustries()
   const { user } = useAuthStore()
-  const [deletingIndustryId, setDeletingIndustryId] = useState<string | null>(null)
+  const [deletingIndustryId, setDeletingIndustryId] = useState<string | null>(
+    null
+  )
   const [confirmDeleteModal, setConfirmDeleteModal] = useState<{
     isOpen: boolean
     industryId: string
@@ -44,7 +53,10 @@ export function IndustryFilter({
     }
   }
 
-  const handleDeleteClick = async (industryId: string, industryName: string) => {
+  const handleDeleteClick = async (
+    industryId: string,
+    industryName: string
+  ) => {
     if (!user) return
 
     const inUse = await isIndustryInUse(industryId)
@@ -111,7 +123,7 @@ export function IndustryFilter({
           )}
         </div>
         <div className="space-y-2 max-h-64 overflow-y-auto">
-          {industries.map((industry) => (
+          {industries.map(industry => (
             <IndustryItem
               key={industry.id}
               industry={industry}
@@ -127,10 +139,18 @@ export function IndustryFilter({
 
       <ConfirmModal
         isOpen={confirmDeleteModal.isOpen}
-        onClose={() => setConfirmDeleteModal({ isOpen: false, industryId: '', industryName: '' })}
+        onClose={() =>
+          setConfirmDeleteModal({
+            isOpen: false,
+            industryId: '',
+            industryName: '',
+          })
+        }
         onConfirm={handleConfirmDelete}
         title={t('admin.industries.deleteConfirmTitle')}
-        message={t('admin.industries.deleteConfirm', { name: confirmDeleteModal.industryName })}
+        message={t('admin.industries.deleteConfirm', {
+          name: confirmDeleteModal.industryName,
+        })}
         confirmText={t('admin.industries.delete')}
         cancelText={t('common.cancel')}
         variant="danger"

@@ -34,9 +34,15 @@ export default function ExplanationSection() {
                 description={t('explanation.yAxisDesc')}
                 borderColor="border-green-500 dark:border-green-400"
               >
-                <li>• <strong>{t('explanation.yAxisNow')}</strong></li>
-                <li>• <strong>{t('explanation.yAxisNext')}</strong></li>
-                <li>• <strong>{t('explanation.yAxisFar')}</strong></li>
+                <li>
+                  • <strong>{t('explanation.yAxisNow')}</strong>
+                </li>
+                <li>
+                  • <strong>{t('explanation.yAxisNext')}</strong>
+                </li>
+                <li>
+                  • <strong>{t('explanation.yAxisFar')}</strong>
+                </li>
               </DimensionCard>
 
               <DimensionCard
@@ -44,10 +50,18 @@ export default function ExplanationSection() {
                 description={t('explanation.zAxisDesc')}
                 borderColor="border-purple-500 dark:border-purple-400"
               >
-                <li>• <strong>{t('explanation.zAxisEconomic')}</strong></li>
-                <li>• <strong>{t('explanation.zAxisSocial')}</strong></li>
-                <li>• <strong>{t('explanation.zAxisSubjective')}</strong></li>
-                <li>• <strong>{t('explanation.zAxisPolitical')}</strong></li>
+                <li>
+                  • <strong>{t('explanation.zAxisEconomic')}</strong>
+                </li>
+                <li>
+                  • <strong>{t('explanation.zAxisSocial')}</strong>
+                </li>
+                <li>
+                  • <strong>{t('explanation.zAxisSubjective')}</strong>
+                </li>
+                <li>
+                  • <strong>{t('explanation.zAxisPolitical')}</strong>
+                </li>
               </DimensionCard>
             </div>
           </div>
@@ -61,10 +75,30 @@ export default function ExplanationSection() {
                 {t('explanation.workValueCalcDesc1')}
               </p>
               <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcEconomic')}</strong> {t('explanation.workValueCalcEconomicDesc')}</p>
-                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcSocial')}</strong> {t('explanation.workValueCalcSocialDesc')}</p>
-                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcSubjective')}</strong> {t('explanation.workValueCalcSubjectiveDesc')}</p>
-                <p><strong className="text-gray-900 dark:text-gray-100">{t('explanation.workValueCalcPolitical')}</strong> {t('explanation.workValueCalcPoliticalDesc')}</p>
+                <p>
+                  <strong className="text-gray-900 dark:text-gray-100">
+                    {t('explanation.workValueCalcEconomic')}
+                  </strong>{' '}
+                  {t('explanation.workValueCalcEconomicDesc')}
+                </p>
+                <p>
+                  <strong className="text-gray-900 dark:text-gray-100">
+                    {t('explanation.workValueCalcSocial')}
+                  </strong>{' '}
+                  {t('explanation.workValueCalcSocialDesc')}
+                </p>
+                <p>
+                  <strong className="text-gray-900 dark:text-gray-100">
+                    {t('explanation.workValueCalcSubjective')}
+                  </strong>{' '}
+                  {t('explanation.workValueCalcSubjectiveDesc')}
+                </p>
+                <p>
+                  <strong className="text-gray-900 dark:text-gray-100">
+                    {t('explanation.workValueCalcPolitical')}
+                  </strong>{' '}
+                  {t('explanation.workValueCalcPoliticalDesc')}
+                </p>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed pt-2">
                 {t('explanation.workValueCalcDesc2')}

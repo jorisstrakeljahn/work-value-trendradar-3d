@@ -12,11 +12,11 @@ interface ModalStore {
  * Used to disable interactions with the 3D canvas when modals are open
  * Uses a counter to handle multiple modals correctly
  */
-export const useModalStore = create<ModalStore>((set) => ({
+export const useModalStore = create<ModalStore>(set => ({
   openModalCount: 0,
   isAnyModalOpen: false,
   openModal: () =>
-    set((state) => {
+    set(state => {
       const newCount = state.openModalCount + 1
       return {
         openModalCount: newCount,
@@ -24,7 +24,7 @@ export const useModalStore = create<ModalStore>((set) => ({
       }
     }),
   closeModal: () =>
-    set((state) => {
+    set(state => {
       const newCount = Math.max(0, state.openModalCount - 1)
       return {
         openModalCount: newCount,

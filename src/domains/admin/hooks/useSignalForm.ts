@@ -39,7 +39,10 @@ const defaultFormData: SignalFormData = {
  * Handles reset logic
  * Validates form data
  */
-export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean) {
+export function useSignalForm(
+  signal: Signal | null | undefined,
+  isOpen: boolean
+) {
   const [formData, setFormData] = useState<SignalFormData>(defaultFormData)
   const [isInitialized, setIsInitialized] = useState(false)
 
@@ -81,18 +84,18 @@ export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean
         })
         .catch(() => {
           // Error loading, use signal data as fallback
-            setFormData({
-              titleDe: signal.title,
-              titleEn: signal.title,
-              summaryDe: signal.summary,
-              summaryEn: signal.summary,
-              industryTags: signal.industryTags || [],
-              xImpact: signal.xImpact,
-              yHorizon: signal.yHorizon,
-              valueDimensions: signal.valueDimensions,
-              sources: signal.sources || [],
-              imageUrl: signal.imageUrl || null,
-            })
+          setFormData({
+            titleDe: signal.title,
+            titleEn: signal.title,
+            summaryDe: signal.summary,
+            summaryEn: signal.summary,
+            industryTags: signal.industryTags || [],
+            xImpact: signal.xImpact,
+            yHorizon: signal.yHorizon,
+            valueDimensions: signal.valueDimensions,
+            sources: signal.sources || [],
+            imageUrl: signal.imageUrl || null,
+          })
           setIsInitialized(true)
         })
     } else if (!signal && isOpen) {

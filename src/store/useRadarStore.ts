@@ -58,9 +58,9 @@ function calculateAdjustedWeights(
   const availableBudget = 100 - lockedSum
 
   // Get non-locked dimensions (excluding the changed one)
-  const nonLockedDimensions = (['economic', 'social', 'subjective', 'political'] as DimensionKey[]).filter(
-    key => !lockedDimensions.includes(key) && key !== changedDimension
-  )
+  const nonLockedDimensions = (
+    ['economic', 'social', 'subjective', 'political'] as DimensionKey[]
+  ).filter(key => !lockedDimensions.includes(key) && key !== changedDimension)
 
   if (nonLockedDimensions.length === 0) {
     // All other dimensions are locked, adjust changed dimension to fit
@@ -70,7 +70,10 @@ function calculateAdjustedWeights(
   }
 
   // Calculate new value for changed dimension (clamped to available budget)
-  const changedValue = Math.max(0, Math.min(availableBudget, result[changedDimension]))
+  const changedValue = Math.max(
+    0,
+    Math.min(availableBudget, result[changedDimension])
+  )
   result[changedDimension] = changedValue
 
   // Remaining budget for other non-locked dimensions
@@ -82,7 +85,10 @@ function calculateAdjustedWeights(
   }
 
   // Calculate proportional distribution
-  const currentSum = nonLockedDimensions.reduce((sum, key) => sum + result[key], 0)
+  const currentSum = nonLockedDimensions.reduce(
+    (sum, key) => sum + result[key],
+    0
+  )
 
   if (currentSum === 0) {
     // Equal distribution if all are zero
@@ -99,7 +105,12 @@ function calculateAdjustedWeights(
   }
 
   // Round and ensure sum is exactly 100
-  const dimensionKeys: DimensionKey[] = ['economic', 'social', 'subjective', 'political']
+  const dimensionKeys: DimensionKey[] = [
+    'economic',
+    'social',
+    'subjective',
+    'political',
+  ]
   dimensionKeys.forEach(key => {
     result[key] = Math.round(result[key] * 100) / 100
   })
@@ -113,7 +124,8 @@ function calculateAdjustedWeights(
       ? changedDimension
       : nonLockedDimensions[0]
     if (adjustKey) {
-      result[adjustKey] = Math.round((result[adjustKey] + difference) * 100) / 100
+      result[adjustKey] =
+        Math.round((result[adjustKey] + difference) * 100) / 100
     }
   }
 
@@ -139,7 +151,11 @@ export const useRadarStore = create<RadarState>(set => ({
   resetFilters: () => set({ filters: defaultFilters }),
   setValueWeights: newWeights =>
     set(state => {
-      const adjusted = calculateAdjustedWeights(newWeights, state.valueWeights, state.lockedDimensions)
+      const adjusted = calculateAdjustedWeights(
+        newWeights,
+        state.valueWeights,
+        state.lockedDimensions
+      )
       return { valueWeights: adjusted }
     }),
   setLockedDimensions: dimensions =>

@@ -40,13 +40,12 @@ export default function SignalDetailsPanel({
       <div className="p-6 space-y-5">
         <SignalHeader signal={selectedSignal} />
         <SignalInfo signal={selectedSignal} />
-        <ValueDimensionsDisplay valueDimensions={selectedSignal.valueDimensions} />
+        <ValueDimensionsDisplay
+          valueDimensions={selectedSignal.valueDimensions}
+        />
 
         {user && onEdit && onDelete && (
-          <SignalActions
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
+          <SignalActions onEdit={onEdit} onDelete={onDelete} />
         )}
       </div>
     </Panel>

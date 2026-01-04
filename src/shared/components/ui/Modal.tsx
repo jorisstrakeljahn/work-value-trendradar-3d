@@ -16,7 +16,13 @@ interface ModalProps {
  * Reusable modal component with overlay
  * Uses React Portal to render outside the component tree for proper positioning
  */
-export function Modal({ isOpen, onClose, title, children, className = '' }: ModalProps) {
+export function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  className = '',
+}: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null)
   const { openModal, closeModal } = useModalStore()
 
@@ -61,7 +67,9 @@ export function Modal({ isOpen, onClose, title, children, className = '' }: Moda
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-600/50">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            {title}
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
@@ -71,8 +79,10 @@ export function Modal({ isOpen, onClose, title, children, className = '' }: Moda
           </button>
         </div>
 
-                {/* Content */}
-                <div className="flex-1 overflow-y-auto p-6 max-h-[calc(90vh-8rem)]">{children}</div>
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-6 max-h-[calc(90vh-8rem)]">
+          {children}
+        </div>
       </div>
     </div>
   )

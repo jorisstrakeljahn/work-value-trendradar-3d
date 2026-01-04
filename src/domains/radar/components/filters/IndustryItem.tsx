@@ -37,7 +37,9 @@ export function IndustryItem({
           className="w-3 h-3 rounded-full flex-shrink-0"
           style={{ backgroundColor: industry.color }}
         />
-        <span className="text-sm text-gray-900 dark:text-gray-100">{industry.name}</span>
+        <span className="text-sm text-gray-900 dark:text-gray-100">
+          {industry.name}
+        </span>
       </label>
       {showDeleteButton && (
         <button

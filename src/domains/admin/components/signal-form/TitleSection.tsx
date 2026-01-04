@@ -24,8 +24,16 @@ export function TitleSection({
 
   return (
     <MultilingualInput
-      labelDe={currentLanguage === 'de' ? t('admin.form.titleDe') : t('admin.form.titleDeEn')}
-      labelEn={currentLanguage === 'de' ? t('admin.form.titleEn') : t('admin.form.titleEnEn')}
+      labelDe={
+        currentLanguage === 'de'
+          ? t('admin.form.titleDe')
+          : t('admin.form.titleDeEn')
+      }
+      labelEn={
+        currentLanguage === 'de'
+          ? t('admin.form.titleEn')
+          : t('admin.form.titleEnEn')
+      }
       placeholderDe={
         currentLanguage === 'de'
           ? t('admin.form.titlePlaceholderDe')

@@ -12,21 +12,28 @@ import {
   Timestamp,
 } from 'firebase/firestore'
 import { db } from '../config'
-import type { Industry, IndustryDocument, MultilingualText } from '../../types/signal'
+import type {
+  Industry,
+  IndustryDocument,
+  MultilingualText,
+} from '../../types/signal'
 
 const INDUSTRIES_COLLECTION = 'industries'
 
 /**
  * Convert Firestore document to Industry
  */
-function firestoreToIndustry(docId: string, data: IndustryDocument, language: 'de' | 'en' = 'de'): Industry {
+function firestoreToIndustry(
+  docId: string,
+  data: IndustryDocument,
+  language: 'de' | 'en' = 'de'
+): Industry {
   return {
     id: docId,
     name: typeof data.name === 'string' ? data.name : data.name[language],
     color: data.color,
   }
 }
-
 
 /**
  * Create a new industry
@@ -36,7 +43,7 @@ export async function createIndustry(
   userId: string
 ): Promise<string> {
   const industryRef = doc(collection(db, INDUSTRIES_COLLECTION))
-  
+
   const firestoreData: Omit<IndustryDocument, 'id'> = {
     name: industryData.name,
     color: industryData.color,
@@ -58,7 +65,7 @@ export async function createIndustryWithId(
   userId: string
 ): Promise<void> {
   const industryRef = doc(db, INDUSTRIES_COLLECTION, industryId)
-  
+
   const firestoreData: Omit<IndustryDocument, 'id'> = {
     name: industryData.name,
     color: industryData.color,
@@ -78,7 +85,7 @@ export async function updateIndustry(
   updates: Partial<{ name: MultilingualText; color: string }>
 ): Promise<void> {
   const industryRef = doc(db, INDUSTRIES_COLLECTION, industryId)
-  
+
   const updateData: Partial<IndustryDocument> = {
     ...updates,
     updatedAt: Timestamp.now(),
@@ -98,10 +105,12 @@ export async function deleteIndustry(industryId: string): Promise<void> {
 /**
  * Get a single industry by ID
  */
-export async function getIndustry(industryId: string): Promise<IndustryDocument | null> {
+export async function getIndustry(
+  industryId: string
+): Promise<IndustryDocument | null> {
   const industryRef = doc(db, INDUSTRIES_COLLECTION, industryId)
   const snapshot = await getDoc(industryRef)
-  
+
   if (!snapshot.exists()) {
     return null
   }
@@ -115,7 +124,9 @@ export async function getIndustry(industryId: string): Promise<IndustryDocument 
 /**
  * Get all industries
  */
-export async function getAllIndustries(language: 'de' | 'en' = 'de'): Promise<Industry[]> {
+export async function getAllIndustries(
+  language: 'de' | 'en' = 'de'
+): Promise<Industry[]> {
   const industriesRef = collection(db, INDUSTRIES_COLLECTION)
   const q = query(industriesRef, orderBy('createdAt', 'asc'))
   const snapshot = await getDocs(q)
@@ -136,7 +147,7 @@ export async function getAllIndustries(language: 'de' | 'en' = 'de'): Promise<In
 export async function isIndustryInUse(industryId: string): Promise<boolean> {
   const signalsRef = collection(db, 'signals')
   const snapshot = await getDocs(signalsRef)
-  
+
   return snapshot.docs.some(doc => {
     const data = doc.data()
     const industryTags = data.industryTags || []
@@ -157,14 +168,14 @@ export function subscribeToIndustries(
 
   return onSnapshot(
     q,
-    (snapshot) => {
+    snapshot => {
       const industries = snapshot.docs.map(doc => {
         const data = doc.data() as Omit<IndustryDocument, 'id'>
         return firestoreToIndustry(doc.id, { id: doc.id, ...data }, language)
       })
       callback(industries)
     },
-    (error) => {
+    error => {
       if (onError) {
         onError(error as Error)
       }

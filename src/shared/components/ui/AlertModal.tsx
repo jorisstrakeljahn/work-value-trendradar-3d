@@ -90,7 +90,9 @@ export function AlertModal({
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{title}</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+              {title}
+            </h2>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
@@ -100,13 +102,22 @@ export function AlertModal({
             </button>
           </div>
 
-          <div className={`flex items-start gap-3 p-4 rounded-lg border ${styles.borderColor} ${styles.bgColor} mb-6`}>
-            <AlertCircle className={`w-5 h-5 flex-shrink-0 mt-0.5 ${styles.iconColor}`} />
+          <div
+            className={`flex items-start gap-3 p-4 rounded-lg border ${styles.borderColor} ${styles.bgColor} mb-6`}
+          >
+            <AlertCircle
+              className={`w-5 h-5 flex-shrink-0 mt-0.5 ${styles.iconColor}`}
+            />
             <p className="text-gray-700 dark:text-gray-300">{message}</p>
           </div>
 
           <div className="flex justify-end">
-            <Button type="button" onClick={onClose} variant="primary" className="min-w-[100px]">
+            <Button
+              type="button"
+              onClick={onClose}
+              variant="primary"
+              className="min-w-[100px]"
+            >
               {buttonText}
             </Button>
           </div>

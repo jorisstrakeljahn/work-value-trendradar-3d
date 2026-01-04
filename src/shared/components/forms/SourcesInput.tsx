@@ -39,7 +39,8 @@ export function SourcesInput({
   }
 
   // Button is only enabled when both fields are filled
-  const canAddSource = sourceName.trim().length > 0 && sourceUrl.trim().length > 0
+  const canAddSource =
+    sourceName.trim().length > 0 && sourceUrl.trim().length > 0
 
   const removeSource = (index: number) => {
     onSourcesChange(sources.filter((_, i) => i !== index))

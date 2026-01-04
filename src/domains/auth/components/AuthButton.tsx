@@ -25,7 +25,10 @@ export default function AuthButton() {
         <Button variant="primary" onClick={() => setShowLoginModal(true)}>
           {t('auth.login')}
         </Button>
-        <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+        />
       </>
     )
   }
@@ -34,7 +37,9 @@ export default function AuthButton() {
     <>
       <Dropdown
         trigger={
-          <Button variant="primary">{user.email?.split('@')[0] || t('auth.user')}</Button>
+          <Button variant="primary">
+            {user.email?.split('@')[0] || t('auth.user')}
+          </Button>
         }
         position="bottom"
         align="end"

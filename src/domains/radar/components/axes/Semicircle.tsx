@@ -27,7 +27,12 @@ export function Semicircle() {
                 itemSize={3}
               />
             </bufferGeometry>
-            <lineBasicMaterial color={RADAR_COLORS.AXIS.SECONDARY} opacity={0.3} transparent linewidth={4} />
+            <lineBasicMaterial
+              color={RADAR_COLORS.AXIS.SECONDARY}
+              opacity={0.3}
+              transparent
+              linewidth={4}
+            />
           </line>
         )
       })}

@@ -36,7 +36,9 @@ export default function ImageUpload({
     // Validate file size (5MB)
     const maxSize = 5 * 1024 * 1024
     if (file.size > maxSize) {
-      setError(t('admin.messages.uploadError') + ': ' + 'File too large (max 5MB)')
+      setError(
+        t('admin.messages.uploadError') + ': ' + 'File too large (max 5MB)'
+      )
       return
     }
 
@@ -45,19 +47,22 @@ export default function ImageUpload({
     reader.onloadend = () => {
       const dataUrl = reader.result as string
       setPreview(dataUrl)
-      
+
       // Upload to Firebase Storage if signalId is provided
       if (signalId) {
         setUploading(true)
         // Use the File directly for upload, not the data URL
         import('../../../firebase/services/imageService')
           .then(({ uploadSignalImage }) => uploadSignalImage(signalId, file))
-          .then((downloadURL) => {
+          .then(downloadURL => {
             onImageChange(downloadURL)
             setUploading(false)
           })
           .catch((err: unknown) => {
-            const errorMessage = err instanceof Error ? err.message : t('admin.messages.uploadError')
+            const errorMessage =
+              err instanceof Error
+                ? err.message
+                : t('admin.messages.uploadError')
             setError(errorMessage)
             setUploading(false)
             setPreview(currentImageUrl || null)
@@ -98,7 +103,8 @@ export default function ImageUpload({
     // Delete from Firebase Storage if we have a URL
     if (currentImageUrl && currentImageUrl.startsWith('http')) {
       try {
-        const { deleteSignalImage } = await import('../../../firebase/services/imageService')
+        const { deleteSignalImage } =
+          await import('../../../firebase/services/imageService')
         await deleteSignalImage(currentImageUrl)
       } catch (err) {
         console.warn('Error deleting image:', err)
@@ -147,7 +153,9 @@ export default function ImageUpload({
               ? 'opacity-50 cursor-not-allowed'
               : 'cursor-pointer hover:border-blue-500 dark:hover:border-blue-400'
           } transition-colors`}
-          onClick={() => !disabled && !uploading && fileInputRef.current?.click()}
+          onClick={() =>
+            !disabled && !uploading && fileInputRef.current?.click()
+          }
         >
           <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
           <p className="text-sm text-gray-600 dark:text-gray-400">

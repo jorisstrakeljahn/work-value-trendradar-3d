@@ -25,9 +25,15 @@ export function SummarySection({
   return (
     <MultilingualTextarea
       labelDe={
-        currentLanguage === 'de' ? t('admin.form.summaryDe') : t('admin.form.summaryDeEn')
+        currentLanguage === 'de'
+          ? t('admin.form.summaryDe')
+          : t('admin.form.summaryDeEn')
       }
-      labelEn={currentLanguage === 'de' ? t('admin.form.summaryEn') : t('admin.form.summaryEnEn')}
+      labelEn={
+        currentLanguage === 'de'
+          ? t('admin.form.summaryEn')
+          : t('admin.form.summaryEnEn')
+      }
       placeholderDe={
         currentLanguage === 'de'
           ? t('admin.form.summaryPlaceholderDe')

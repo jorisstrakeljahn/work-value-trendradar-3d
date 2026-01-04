@@ -55,7 +55,9 @@ export function ZAxis() {
               zIndexRange={[0, 100]}
               style={{ pointerEvents: 'none', zIndex: 10 }}
             >
-              <div className="text-gray-600 dark:text-gray-400 text-xs">{marker.label}</div>
+              <div className="text-gray-600 dark:text-gray-400 text-xs">
+                {marker.label}
+              </div>
             </Html>
           </Billboard>
         </group>

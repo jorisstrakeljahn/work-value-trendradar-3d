@@ -26,7 +26,10 @@ export function ValueDimensionsInput({
 }: ValueDimensionsInputProps) {
   const { t } = useTranslation()
 
-  const updateDimension = (dimension: keyof ValueDimensions, newValue: number) => {
+  const updateDimension = (
+    dimension: keyof ValueDimensions,
+    newValue: number
+  ) => {
     // Clamp value between 0 and 5
     const clampedValue = Math.max(0, Math.min(5, newValue))
     onChange({
@@ -93,9 +96,7 @@ export function ValueDimensionsInput({
 
   return (
     <div className={className}>
-      <Label>
-        {t('admin.form.valueDimensions')} (0 bis 5)
-      </Label>
+      <Label>{t('admin.form.valueDimensions')} (0 bis 5)</Label>
       <div className="grid grid-cols-4 gap-4">
         {renderDimensionInput('economic', t('admin.form.economic'))}
         {renderDimensionInput('social', t('admin.form.social'))}

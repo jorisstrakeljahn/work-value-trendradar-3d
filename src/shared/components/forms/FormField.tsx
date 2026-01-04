@@ -11,15 +11,17 @@ interface BaseFormFieldProps {
   className?: string
 }
 
-interface InputFormFieldProps extends BaseFormFieldProps, Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+interface InputFormFieldProps
+  extends
+    BaseFormFieldProps,
+    Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   type: 'input'
   inputType?: string
   multiline?: false
 }
 
 interface TextareaFormFieldProps
-  extends BaseFormFieldProps,
-    TextareaHTMLAttributes<HTMLTextAreaElement> {
+  extends BaseFormFieldProps, TextareaHTMLAttributes<HTMLTextAreaElement> {
   type: 'textarea'
   multiline: true
 }
@@ -31,10 +33,18 @@ type FormFieldProps = InputFormFieldProps | TextareaFormFieldProps
  * Reduces boilerplate in forms
  */
 export function FormField(props: FormFieldProps) {
-  const { label, error, required, disabled, className = '', ...inputProps } = props
+  const {
+    label,
+    error,
+    required,
+    disabled,
+    className = '',
+    ...inputProps
+  } = props
 
-  const fieldId = (inputProps as InputHTMLAttributes<HTMLInputElement>).id || 
-    (inputProps as InputHTMLAttributes<HTMLInputElement>).name || 
+  const fieldId =
+    (inputProps as InputHTMLAttributes<HTMLInputElement>).id ||
+    (inputProps as InputHTMLAttributes<HTMLInputElement>).name ||
     `field-${Math.random().toString(36).substr(2, 9)}`
 
   const fieldElement =
@@ -48,7 +58,11 @@ export function FormField(props: FormFieldProps) {
     ) : (
       <Input
         id={fieldId}
-        type={props.type === 'input' && 'inputType' in props ? props.inputType || 'text' : 'text'}
+        type={
+          props.type === 'input' && 'inputType' in props
+            ? props.inputType || 'text'
+            : 'text'
+        }
         error={!!error}
         disabled={disabled}
         {...(inputProps as InputHTMLAttributes<HTMLInputElement>)}
@@ -63,7 +77,11 @@ export function FormField(props: FormFieldProps) {
         </Label>
       )}
       {fieldElement}
-      {error && <div className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</div>}
+      {error && (
+        <div className="mt-1 text-sm text-red-600 dark:text-red-400">
+          {error}
+        </div>
+      )}
     </div>
   )
 }

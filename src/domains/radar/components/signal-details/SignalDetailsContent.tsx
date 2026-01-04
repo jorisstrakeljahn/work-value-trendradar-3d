@@ -50,7 +50,9 @@ export function SignalDetailsContent({
             <h4 className="font-medium text-sm text-gray-900 dark:text-gray-100">
               {t('signalDetails.industries')}
             </h4>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{industryNames}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {industryNames}
+            </p>
           </div>
         </div>
       )}

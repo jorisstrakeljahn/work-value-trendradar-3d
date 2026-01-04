@@ -17,8 +17,14 @@ type PanelId = 'filters' | 'weights' | 'legend' | null
 export default function RadarSection() {
   const { isAnyModalOpen } = useModalStore()
   const { selectedSignal, setSelectedSignal } = useRadarStore()
-  const { windows, openWindow, closeWindow, updateWindowPosition, updateWindowSize, bringToFront } =
-    useSignalWindowsStore()
+  const {
+    windows,
+    openWindow,
+    closeWindow,
+    updateWindowPosition,
+    updateWindowSize,
+    bringToFront,
+  } = useSignalWindowsStore()
   const [openPanel, setOpenPanel] = useState<PanelId>(null)
 
   // Open window when signal is selected
@@ -45,21 +51,29 @@ export default function RadarSection() {
         <div className="hidden md:absolute md:left-4 md:top-4 md:flex md:flex-col md:gap-4 z-30">
           <FiltersPanel
             isCollapsed={openPanel !== 'filters'}
-            onToggle={() => setOpenPanel(openPanel === 'filters' ? null : 'filters')}
+            onToggle={() =>
+              setOpenPanel(openPanel === 'filters' ? null : 'filters')
+            }
           />
           <WeightDimensionsPanel
             isCollapsed={openPanel !== 'weights'}
-            onToggle={() => setOpenPanel(openPanel === 'weights' ? null : 'weights')}
+            onToggle={() =>
+              setOpenPanel(openPanel === 'weights' ? null : 'weights')
+            }
           />
           <Legend
             isCollapsed={openPanel !== 'legend'}
-            onToggle={() => setOpenPanel(openPanel === 'legend' ? null : 'legend')}
+            onToggle={() =>
+              setOpenPanel(openPanel === 'legend' ? null : 'legend')
+            }
           />
         </div>
 
         {/* Center: Canvas - Full width on mobile, centered on desktop */}
         <div className="absolute left-0 right-0 md:left-[19rem] md:right-[21rem] top-0 bottom-0">
-          <div className={`relative w-full h-full ${isAnyModalOpen ? 'pointer-events-none opacity-0 invisible' : ''}`}>
+          <div
+            className={`relative w-full h-full ${isAnyModalOpen ? 'pointer-events-none opacity-0 invisible' : ''}`}
+          >
             <Canvas camera={{ position: [10, 3, 10], fov: 75 }}>
               <RadarScene />
             </Canvas>
@@ -79,20 +93,25 @@ export default function RadarSection() {
       {/* Signal Windows Container - Renders all open windows */}
       {/* Fixed container spanning full viewport, windows render on top */}
       {/* Use window bounds, not parent bounds, so windows can move freely */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
-        {windows.map((window) => (
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 9999 }}
+      >
+        {windows.map(window => (
           <div key={window.id} className="pointer-events-auto">
-                    <DraggableSignalWindow
-                      windowId={window.id}
-                      signalId={window.signalId}
-                      position={window.position}
-                      size={window.size}
-                      zIndex={window.zIndex}
-                      onClose={() => handleWindowClose(window.id)}
-                      onPositionChange={position => updateWindowPosition(window.id, position)}
-                      onSizeChange={size => updateWindowSize(window.id, size)}
-                      onFocus={() => bringToFront(window.id)}
-                    />
+            <DraggableSignalWindow
+              windowId={window.id}
+              signalId={window.signalId}
+              position={window.position}
+              size={window.size}
+              zIndex={window.zIndex}
+              onClose={() => handleWindowClose(window.id)}
+              onPositionChange={position =>
+                updateWindowPosition(window.id, position)
+              }
+              onSizeChange={size => updateWindowSize(window.id, size)}
+              onFocus={() => bringToFront(window.id)}
+            />
           </div>
         ))}
       </div>

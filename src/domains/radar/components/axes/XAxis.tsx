@@ -10,8 +10,16 @@ export function XAxis() {
   const { MAX_RADIUS } = RADAR_CONFIG
 
   const impactLines = [
-    { x: -MAX_RADIUS, label: 'Low Impact', color: RADAR_COLORS.IMPACT_LINES.LOW },
-    { x: MAX_RADIUS, label: 'High Impact', color: RADAR_COLORS.IMPACT_LINES.HIGH },
+    {
+      x: -MAX_RADIUS,
+      label: 'Low Impact',
+      color: RADAR_COLORS.IMPACT_LINES.LOW,
+    },
+    {
+      x: MAX_RADIUS,
+      label: 'High Impact',
+      color: RADAR_COLORS.IMPACT_LINES.HIGH,
+    },
   ]
 
   return (
@@ -22,16 +30,7 @@ export function XAxis() {
           <bufferAttribute
             attach="attributes-position"
             count={2}
-            array={
-              new Float32Array([
-                -MAX_RADIUS,
-                0,
-                0,
-                MAX_RADIUS,
-                0,
-                0,
-              ])
-            }
+            array={new Float32Array([-MAX_RADIUS, 0, 0, MAX_RADIUS, 0, 0])}
             itemSize={3}
           />
         </bufferGeometry>
@@ -63,11 +62,12 @@ export function XAxis() {
             zIndexRange={[0, 100]}
             style={{ pointerEvents: 'none', zIndex: 10 }}
           >
-            <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
+            <div className="text-gray-600 dark:text-gray-400 text-xs">
+              {line.label}
+            </div>
           </Html>
         </Billboard>
       ))}
-
     </group>
   )
 }

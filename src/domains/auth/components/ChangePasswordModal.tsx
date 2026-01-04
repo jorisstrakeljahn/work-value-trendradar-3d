@@ -1,7 +1,11 @@
 import { useState, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, Button } from '../../../shared/components/ui'
-import { ErrorAlert, SuccessAlert, PasswordField } from '../../../shared/components/forms'
+import {
+  ErrorAlert,
+  SuccessAlert,
+  PasswordField,
+} from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
 
 interface ChangePasswordModalProps {
@@ -9,7 +13,10 @@ interface ChangePasswordModalProps {
   onClose: () => void
 }
 
-export default function ChangePasswordModal({ isOpen, onClose }: ChangePasswordModalProps) {
+export default function ChangePasswordModal({
+  isOpen,
+  onClose,
+}: ChangePasswordModalProps) {
   const { t } = useTranslation()
   const { changePassword, errorCode, loading, setErrorCode } = useAuthStore()
   const [newPassword, setNewPassword] = useState('')
@@ -67,7 +74,11 @@ export default function ChangePasswordModal({ isOpen, onClose }: ChangePasswordM
   const displayError = validationError || errorMessage
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title={t('auth.changePasswordTitle')}>
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      title={t('auth.changePasswordTitle')}
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         {displayError && <ErrorAlert message={displayError} />}
         {success && <SuccessAlert message={t('auth.passwordChangedSuccess')} />}
@@ -102,7 +113,12 @@ export default function ChangePasswordModal({ isOpen, onClose }: ChangePasswordM
           >
             {t('auth.cancel')}
           </Button>
-          <Button type="submit" variant="primary" disabled={loading || success} className="flex-1">
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={loading || success}
+            className="flex-1"
+          >
             {loading ? t('auth.changingPassword') : t('auth.changePassword')}
           </Button>
         </div>

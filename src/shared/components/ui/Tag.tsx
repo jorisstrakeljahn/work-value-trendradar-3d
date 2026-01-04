@@ -15,4 +15,3 @@ export function Tag({ children, className = '' }: TagProps) {
     </span>
   )
 }
-

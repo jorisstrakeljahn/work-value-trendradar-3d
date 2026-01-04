@@ -34,7 +34,12 @@ export function useFilteredSignals() {
     // Map to positions using current weights
     return filtered.map(signal => ({
       ...signal,
-      position: mapSignalToPosition(signal, MAX_RADIUS, MAX_HEIGHT, valueWeights),
+      position: mapSignalToPosition(
+        signal,
+        MAX_RADIUS,
+        MAX_HEIGHT,
+        valueWeights
+      ),
     }))
   }, [signals, filters, valueWeights, MAX_RADIUS, MAX_HEIGHT])
 }

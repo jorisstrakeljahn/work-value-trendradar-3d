@@ -1,7 +1,10 @@
 import { InputHTMLAttributes } from 'react'
 import { Label } from './Label'
 
-interface RangeSliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+interface RangeSliderProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type'
+> {
   label?: string
   value: number
   min: number

@@ -65,8 +65,14 @@ function getInitialPosition(windowIndex: number): { x: number; y: number } {
 
   // Random positioning for windows beyond cascade limit
   return {
-    x: Math.max(20, Math.random() * (viewportWidth - DEFAULT_WINDOW_SIZE.width - 40)),
-    y: Math.max(topMargin, Math.random() * (viewportHeight - DEFAULT_WINDOW_SIZE.height - 80)),
+    x: Math.max(
+      20,
+      Math.random() * (viewportWidth - DEFAULT_WINDOW_SIZE.width - 40)
+    ),
+    y: Math.max(
+      topMargin,
+      Math.random() * (viewportHeight - DEFAULT_WINDOW_SIZE.height - 80)
+    ),
   }
 }
 
@@ -78,8 +84,14 @@ interface SignalWindowsState {
   nextZIndex: number
   openWindow: (signalId: string) => void
   closeWindow: (windowId: string) => void
-  updateWindowPosition: (windowId: string, position: { x: number; y: number }) => void
-  updateWindowSize: (windowId: string, size: { width: number; height: number }) => void
+  updateWindowPosition: (
+    windowId: string,
+    position: { x: number; y: number }
+  ) => void
+  updateWindowSize: (
+    windowId: string,
+    size: { width: number; height: number }
+  ) => void
   bringToFront: (windowId: string) => void
   closeAllWindows: () => void
 }
@@ -88,7 +100,9 @@ interface SignalWindowsState {
  * Helper function to get window by signal ID
  * Must be called from within a component using the hook
  */
-export function getWindowBySignalId(signalId: string): SignalWindow | undefined {
+export function getWindowBySignalId(
+  signalId: string
+): SignalWindow | undefined {
   const state = useSignalWindowsStore.getState()
   return state.windows.find(w => w.signalId === signalId)
 }
@@ -139,14 +153,20 @@ export const useSignalWindowsStore = create<SignalWindowsState>(set => ({
       windows: state.windows.filter(w => w.id !== windowId),
     })),
 
-  updateWindowPosition: (windowId: string, position: { x: number; y: number }) =>
+  updateWindowPosition: (
+    windowId: string,
+    position: { x: number; y: number }
+  ) =>
     set(state => ({
       windows: state.windows.map(w =>
         w.id === windowId ? { ...w, position } : w
       ),
     })),
 
-  updateWindowSize: (windowId: string, size: { width: number; height: number }) =>
+  updateWindowSize: (
+    windowId: string,
+    size: { width: number; height: number }
+  ) =>
     set(state => ({
       windows: state.windows.map(w => (w.id === windowId ? { ...w, size } : w)),
     })),

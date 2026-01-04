@@ -8,7 +8,9 @@ interface ValueDimensionsDisplayProps {
 /**
  * Value dimensions display component
  */
-export function ValueDimensionsDisplay({ valueDimensions }: ValueDimensionsDisplayProps) {
+export function ValueDimensionsDisplay({
+  valueDimensions,
+}: ValueDimensionsDisplayProps) {
   const { t } = useTranslation()
 
   const dimensions = [

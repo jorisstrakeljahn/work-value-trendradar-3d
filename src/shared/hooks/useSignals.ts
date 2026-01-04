@@ -1,6 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { subscribeToSignals, firestoreToSignal } from '../../firebase/services/signalsService'
+import {
+  subscribeToSignals,
+  firestoreToSignal,
+} from '../../firebase/services/signalsService'
 import type { Signal, SignalDocument } from '../../types/signal'
 import { calculateWorkValueIndex } from '../utils/mapping'
 import { useRadarStore } from '../../store/useRadarStore'
@@ -35,4 +38,3 @@ export function useSignals(): Signal[] {
       .filter((signal): signal is Signal => signal !== null)
   }, [firestoreSignals, language, valueWeights])
 }
-

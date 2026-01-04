@@ -18,7 +18,10 @@ interface ErrorBoundaryState {
  * React Error Boundary component for catching and handling errors
  * Provides domain-specific error handling and fallback UI
  */
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props)
     this.state = {
@@ -35,7 +38,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error(`Error in ${this.props.domain || 'component'}:`, error, errorInfo)
+    console.error(
+      `Error in ${this.props.domain || 'component'}:`,
+      error,
+      errorInfo
+    )
     this.props.onError?.(error, errorInfo)
   }
 
@@ -56,7 +63,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         <div className="flex flex-col items-center justify-center p-8 min-h-[200px] bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
           <AlertTriangle className="w-12 h-12 text-red-600 dark:text-red-400 mb-4" />
           <h2 className="text-lg font-semibold text-red-900 dark:text-red-100 mb-2">
-            {this.props.domain ? `Error in ${this.props.domain}` : 'Something went wrong'}
+            {this.props.domain
+              ? `Error in ${this.props.domain}`
+              : 'Something went wrong'}
           </h2>
           {process.env.NODE_ENV === 'development' && this.state.error && (
             <p className="text-sm text-red-700 dark:text-red-300 mb-4 text-center max-w-md">

@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { Modal } from '../../../shared/components/ui'
 import { ErrorAlert } from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
-import { createSignal, updateSignal } from '../../../firebase/services/signalsService'
+import {
+  createSignal,
+  updateSignal,
+} from '../../../firebase/services/signalsService'
 import { uploadSignalImage } from '../../../firebase/services/imageService'
 import { useSignalForm } from '../hooks/useSignalForm'
 import {
@@ -41,10 +44,8 @@ export default function SignalFormModal({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const { formData, updateFormData, updateValueDimensions, validateForm } = useSignalForm(
-    signal,
-    isOpen
-  )
+  const { formData, updateFormData, updateValueDimensions, validateForm } =
+    useSignalForm(signal, isOpen)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -97,7 +98,9 @@ export default function SignalFormModal({
 
         await updateSignal(
           signal.id,
-          { ...signalData, imageUrl: finalImageUrl } as Parameters<typeof updateSignal>[1],
+          { ...signalData, imageUrl: finalImageUrl } as Parameters<
+            typeof updateSignal
+          >[1],
           user.uid
         )
         onSuccess?.()
@@ -116,7 +119,11 @@ export default function SignalFormModal({
           const blob = await response.blob()
           const file = new File([blob], 'image.jpg', { type: blob.type })
           const uploadedUrl = await uploadSignalImage(newSignalId, file)
-          await updateSignal(newSignalId, { imageUrl: uploadedUrl || undefined }, user.uid)
+          await updateSignal(
+            newSignalId,
+            { imageUrl: uploadedUrl || undefined },
+            user.uid
+          )
         }
 
         onSuccess?.()

@@ -19,8 +19,14 @@ export function SignalInfo({ signal }: SignalInfoProps) {
 
   return (
     <div className="space-y-3 text-sm">
-      <InfoRow label={t('signalDetails.impact')} value={`${signal.xImpact}/100`} />
-      <InfoRow label={t('signalDetails.horizon')} value={`${signal.yHorizon}/100`} />
+      <InfoRow
+        label={t('signalDetails.impact')}
+        value={`${signal.xImpact}/100`}
+      />
+      <InfoRow
+        label={t('signalDetails.horizon')}
+        value={`${signal.yHorizon}/100`}
+      />
       <InfoRow
         label={t('signalDetails.workValue')}
         value={`${workValueIndex.toFixed(1)}`}

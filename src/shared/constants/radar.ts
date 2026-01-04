@@ -10,4 +10,3 @@ export const RADAR_CONFIG = {
     FOV: 75,
   },
 } as const
-

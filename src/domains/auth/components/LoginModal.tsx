@@ -1,7 +1,11 @@
 import { useState, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, Button } from '../../../shared/components/ui'
-import { ErrorAlert, FormField, PasswordField } from '../../../shared/components/forms'
+import {
+  ErrorAlert,
+  FormField,
+  PasswordField,
+} from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
 
 interface LoginModalProps {
@@ -80,7 +84,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           >
             {t('auth.cancel')}
           </Button>
-          <Button type="submit" variant="primary" disabled={loading} className="flex-1">
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={loading}
+            className="flex-1"
+          >
             {loading ? t('auth.loggingIn') : t('auth.login')}
           </Button>
         </div>

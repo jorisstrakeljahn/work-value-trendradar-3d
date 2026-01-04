@@ -16,5 +16,11 @@ export function SourcesSection({
   onSourcesChange,
   disabled = false,
 }: SourcesSectionProps) {
-  return <SourcesInput sources={sources} onSourcesChange={onSourcesChange} disabled={disabled} />
+  return (
+    <SourcesInput
+      sources={sources}
+      onSourcesChange={onSourcesChange}
+      disabled={disabled}
+    />
+  )
 }

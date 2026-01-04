@@ -8,7 +8,12 @@ interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 /**
  * Reusable label component with consistent styling
  */
-export function Label({ children, required = false, className = '', ...props }: LabelProps) {
+export function Label({
+  children,
+  required = false,
+  className = '',
+  ...props
+}: LabelProps) {
   return (
     <label
       className={`block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 ${className}`}

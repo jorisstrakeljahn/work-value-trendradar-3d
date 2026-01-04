@@ -17,11 +17,7 @@ export default function ThemeToggle() {
   }, [theme])
 
   return (
-    <Button
-      variant="icon"
-      onClick={toggleTheme}
-      aria-label="Toggle theme"
-    >
+    <Button variant="icon" onClick={toggleTheme} aria-label="Toggle theme">
       {theme === 'light' ? (
         <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
       ) : (

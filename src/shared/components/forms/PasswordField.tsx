@@ -3,7 +3,10 @@ import { Eye, EyeOff } from 'lucide-react'
 import { Label } from './Label'
 import { Input } from './Input'
 
-interface PasswordFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+interface PasswordFieldProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type'
+> {
   label?: string
   error?: string
   required?: boolean
@@ -31,7 +34,9 @@ export function PasswordField({
   const [showPassword, setShowPassword] = useState(false)
 
   const fieldId =
-    inputProps.id || inputProps.name || `password-${Math.random().toString(36).substr(2, 9)}`
+    inputProps.id ||
+    inputProps.name ||
+    `password-${Math.random().toString(36).substr(2, 9)}`
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -71,7 +76,11 @@ export function PasswordField({
           )}
         </button>
       </div>
-      {error && <div className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</div>}
+      {error && (
+        <div className="mt-1 text-sm text-red-600 dark:text-red-400">
+          {error}
+        </div>
+      )}
     </div>
   )
 }

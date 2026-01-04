@@ -18,7 +18,10 @@ const defaultWeights: ValueWeights = {
  * @param weights - Optional weights in percent (0-100). If not provided, uses default weights
  * @returns Work-Value-Index (0..100)
  */
-export function calculateWorkValueIndex(signal: Signal, weights?: ValueWeights): number {
+export function calculateWorkValueIndex(
+  signal: Signal,
+  weights?: ValueWeights
+): number {
   const { economic, social, subjective, political } = signal.valueDimensions
 
   // Use provided weights or default weights

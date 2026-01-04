@@ -17,4 +17,3 @@ export function Panel({ children, className = '' }: PanelProps) {
     </div>
   )
 }
-
