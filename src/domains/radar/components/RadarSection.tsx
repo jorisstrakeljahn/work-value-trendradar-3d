@@ -1,28 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import RadarScene from './RadarScene'
 import FiltersPanel from './FiltersPanel'
 import WeightDimensionsPanel from './WeightDimensionsPanel'
-import SignalDetailsPanel from './SignalDetailsPanel'
 import Legend from './Legend'
 import HoverTooltip from './HoverTooltip'
 import ResetViewButtonOverlay from './ResetViewButtonOverlay'
 import ScrollIndicator from './ScrollIndicator'
+import DraggableSignalWindow from './DraggableSignalWindow'
 import { useModalStore } from '../../../store/useModalStore'
 import { useRadarStore } from '../../../store/useRadarStore'
-import SignalFormModal from '../../admin/components/SignalFormModal'
-import DeleteSignalModal from '../../admin/components/DeleteSignalModal'
-import { deleteSignal } from '../../../firebase/services/signalsService'
+import { useSignalWindowsStore } from '../../../store/useSignalWindowsStore'
 
 type PanelId = 'filters' | 'weights' | 'legend' | null
 
 export default function RadarSection() {
   const { isAnyModalOpen } = useModalStore()
   const { selectedSignal } = useRadarStore()
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [deleting, setDeleting] = useState(false)
+  const { windows, openWindow, closeWindow, updateWindowPosition, updateWindowSize, bringToFront } =
+    useSignalWindowsStore()
   const [openPanel, setOpenPanel] = useState<PanelId>(null)
+
+  // Open window when signal is selected
+  useEffect(() => {
+    console.log('[RadarSection] useEffect triggered:', {
+      selectedSignal: selectedSignal ? { id: selectedSignal.id, title: selectedSignal.title } : null,
+      selectedSignalId: selectedSignal?.id,
+      windowsCount: windows.length,
+    })
+    if (selectedSignal) {
+      console.log('[RadarSection] Calling openWindow with signalId:', selectedSignal.id)
+      openWindow(selectedSignal.id)
+    } else {
+      console.log('[RadarSection] No selectedSignal, not opening window')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSignal?.id]) // Only depend on signal ID, not the entire signal object or function
+
+  useEffect(() => {
+    console.log('[RadarSection] Windows state changed:', {
+      windowsCount: windows.length,
+      windows: windows.map(w => ({ id: w.id, signalId: w.signalId, zIndex: w.zIndex })),
+    })
+  }, [windows])
 
   return (
     <section className="relative w-full h-[calc(100vh-5rem)] bg-apple-gray-50 dark:bg-[#1a1a1a] transition-colors duration-200 overflow-x-auto">
@@ -52,13 +72,9 @@ export default function RadarSection() {
           </div>
         </div>
 
-        {/* Right Sidebar: Reset Button + Signal Details - Hidden on mobile */}
+        {/* Right Sidebar: Reset Button - Hidden on mobile */}
         <div className="hidden md:absolute md:right-4 md:top-4 md:flex md:flex-col md:gap-4 z-30">
           <ResetViewButtonOverlay />
-          <SignalDetailsPanel
-            onEdit={() => setShowEditModal(true)}
-            onDelete={() => setShowDeleteModal(true)}
-          />
         </div>
 
         {/* HoverTooltip - Hidden on mobile (no hover on touch devices) */}
@@ -66,34 +82,26 @@ export default function RadarSection() {
         <ScrollIndicator />
       </div>
 
-      <SignalFormModal
-        isOpen={showEditModal}
-        onClose={() => setShowEditModal(false)}
-        signal={selectedSignal || undefined}
-        onSuccess={() => {
-          setShowEditModal(false)
-        }}
-      />
-
-      <DeleteSignalModal
-        isOpen={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-        signal={selectedSignal}
-        loading={deleting}
-        onConfirm={async () => {
-          if (!selectedSignal?.id) return
-          setDeleting(true)
-          try {
-            await deleteSignal(selectedSignal.id)
-            setShowDeleteModal(false)
-          } catch (error) {
-            console.error('Error deleting signal:', error)
-            throw error
-          } finally {
-            setDeleting(false)
-          }
-        }}
-      />
+      {/* Signal Windows Container - Renders all open windows */}
+      {/* Fixed container spanning full viewport, windows render on top */}
+      {/* Use window bounds, not parent bounds, so windows can move freely */}
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
+        {windows.map((window) => (
+          <div key={window.id} className="pointer-events-auto">
+            <DraggableSignalWindow
+              windowId={window.id}
+              signalId={window.signalId}
+              position={window.position}
+              size={window.size}
+              zIndex={window.zIndex}
+              onClose={() => closeWindow(window.id)}
+              onPositionChange={position => updateWindowPosition(window.id, position)}
+              onSizeChange={size => updateWindowSize(window.id, size)}
+              onFocus={() => bringToFront(window.id)}
+            />
+          </div>
+        ))}
+      </div>
     </section>
   )
 }

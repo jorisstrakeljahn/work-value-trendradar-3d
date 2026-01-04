@@ -172,6 +172,11 @@
     "political": "Political:",
     "tags": "Tags"
   },
+  "signalWindows": {
+    "close": "Close",
+    "bringToFront": "Bring to front",
+    "imageAlt": "Signal image"
+  },
   "scrollIndicator": {
     "learnMore": "Learn more"
   },

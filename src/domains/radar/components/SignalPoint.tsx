@@ -56,9 +56,20 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   })
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
-    if (isAnyModalOpen) return
+    console.log('[SignalPoint] Click detected:', {
+      signalId: signal.id,
+      signalTitle: signal.title,
+      isAnyModalOpen,
+      isSelected,
+    })
+    if (isAnyModalOpen) {
+      console.log('[SignalPoint] Modal is open, ignoring click')
+      return
+    }
     e.stopPropagation()
-    setSelectedSignal(isSelected ? null : signal)
+    const newSignal = isSelected ? null : signal
+    console.log('[SignalPoint] Setting selectedSignal:', newSignal ? newSignal.id : 'null')
+    setSelectedSignal(newSignal)
   }
 
   const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
