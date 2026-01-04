@@ -115,7 +115,14 @@
       "nameEnHint": "Optional - wird auf Deutsch angezeigt, wenn leer",
       "color": "Farbe",
       "colorFormat": "Hex-Farbcode (z.B. #3B82F6)",
-      "colorPreview": "Farbvorschau"
+      "colorPreview": "Farbvorschau",
+      "deleteTitle": "Branche löschen",
+      "delete": "Löschen",
+      "deleteConfirmTitle": "Branche löschen?",
+      "deleteConfirm": "Möchten Sie die Branche '{{name}}' wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteError": "Fehler beim Löschen der Branche. Bitte versuchen Sie es erneut.",
+      "deleteErrorTitle": "Branche kann nicht gelöscht werden",
+      "deleteErrorInUse": "Die Branche '{{name}}' kann nicht gelöscht werden, da sie noch von Signalen verwendet wird. Bitte entfernen Sie zuerst alle Verknüpfungen zu dieser Branche."
     },
     "list": {
       "noSignals": "Keine Signale gefunden",

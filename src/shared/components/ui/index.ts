@@ -7,4 +7,6 @@ export { Modal } from './Modal'
 export { Button } from './Button'
 export { InfoRow } from './InfoRow'
 export { Tag } from './Tag'
+export { ConfirmModal } from './ConfirmModal'
+export { AlertModal } from './AlertModal'
 

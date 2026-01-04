@@ -131,6 +131,20 @@ export async function getAllIndustries(language: 'de' | 'en' = 'de'): Promise<In
 }
 
 /**
+ * Check if an industry is being used by any signals
+ */
+export async function isIndustryInUse(industryId: string): Promise<boolean> {
+  const signalsRef = collection(db, 'signals')
+  const snapshot = await getDocs(signalsRef)
+  
+  return snapshot.docs.some(doc => {
+    const data = doc.data()
+    const industryTags = data.industryTags || []
+    return industryTags.includes(industryId)
+  })
+}
+
+/**
  * Subscribe to real-time updates of all industries
  */
 export function subscribeToIndustries(

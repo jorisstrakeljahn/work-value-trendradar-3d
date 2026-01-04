@@ -115,7 +115,14 @@
       "nameEnHint": "Optional - will display German name if empty",
       "color": "Color",
       "colorFormat": "Hex color code (e.g. #3B82F6)",
-      "colorPreview": "Color preview"
+      "colorPreview": "Color preview",
+      "deleteTitle": "Delete Industry",
+      "delete": "Delete",
+      "deleteConfirmTitle": "Delete Industry?",
+      "deleteConfirm": "Are you sure you want to delete the industry '{{name}}'? This action cannot be undone.",
+      "deleteError": "Error deleting industry. Please try again.",
+      "deleteErrorTitle": "Industry cannot be deleted",
+      "deleteErrorInUse": "The industry '{{name}}' cannot be deleted because it is still being used by signals. Please remove all links to this industry first."
     },
     "list": {
       "noSignals": "No signals found",
