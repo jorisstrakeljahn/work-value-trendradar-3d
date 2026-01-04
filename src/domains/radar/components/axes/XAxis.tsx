@@ -45,7 +45,8 @@ export function XAxis() {
         center
         transform
         distanceFactor={10}
-        style={{ pointerEvents: 'none' }}
+        zIndexRange={[0, 100]}
+        style={{ pointerEvents: 'none', zIndex: 10 }}
       >
         <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
           {t('legend.xAxisLabel')}
@@ -60,7 +61,8 @@ export function XAxis() {
           center
           transform
           distanceFactor={10}
-          style={{ pointerEvents: 'none' }}
+          zIndexRange={[0, 100]}
+          style={{ pointerEvents: 'none', zIndex: 10 }}
         >
           <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
         </Html>
