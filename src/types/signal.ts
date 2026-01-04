@@ -32,11 +32,40 @@ export interface Signal {
   sources: Source[]
   confidence: number // 1..5
   tags: string[]
+  imageUrl?: string
   position?: {
     x: number
     y: number
     z: number
   }
+}
+
+/**
+ * Multilingual fields for Firestore documents
+ */
+export interface MultilingualText {
+  de: string
+  en: string
+}
+
+/**
+ * Firestore document structure for signals (with multilingual fields)
+ */
+export interface SignalDocument {
+  id: string
+  title: MultilingualText
+  summary: MultilingualText
+  industryTags: string[]
+  xImpact: number
+  yHorizon: number
+  valueDimensions: ValueDimensions
+  sources: Source[]
+  confidence: number
+  tags: string[]
+  imageUrl?: string
+  createdAt: unknown // Firestore Timestamp
+  updatedAt: unknown // Firestore Timestamp
+  createdBy: string // User UID
 }
 
 /**

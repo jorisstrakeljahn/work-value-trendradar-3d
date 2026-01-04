@@ -43,7 +43,7 @@ export function Modal({ isOpen, onClose, title, children, className = '' }: Moda
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div
         ref={modalRef}
-        className={`glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col ${className}`}
+        className={`glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-full max-h-[90vh] overflow-hidden flex flex-col ${className || 'max-w-md'}`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-600/50">
@@ -53,8 +53,8 @@ export function Modal({ isOpen, onClose, title, children, className = '' }: Moda
           </Button>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">{children}</div>
+                {/* Content */}
+                <div className="flex-1 overflow-y-auto p-6 max-h-[calc(90vh-8rem)]">{children}</div>
       </div>
     </div>
   )

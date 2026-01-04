@@ -1,13 +1,22 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Panel, InfoRow, Tag } from '../shared/components/ui'
+import { Panel, InfoRow, Tag, Button } from '../shared/components/ui'
 import { useRadarStore } from '../store/useRadarStore'
+import { useAuthStore } from '../store/useAuthStore'
 import { useIndustries } from '../shared/hooks/useIndustries'
 import { calculateWorkValueIndex } from '../shared/utils/mapping'
+import SignalFormModal from './admin/SignalFormModal'
+import DeleteSignalModal from './admin/DeleteSignalModal'
+import { deleteSignal } from '../firebase/services/signalsService'
 
 export default function SignalDetailsPanel() {
   const { t } = useTranslation()
   const { selectedSignal } = useRadarStore()
+  const { user } = useAuthStore()
   const industries = useIndustries()
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   if (!selectedSignal) {
     return (
@@ -108,7 +117,58 @@ export default function SignalDetailsPanel() {
             </div>
           </div>
         )}
+
+        {/* Admin Actions */}
+        {user && selectedSignal && (
+          <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50 flex gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => setShowEditModal(true)}
+              className="flex-1"
+            >
+              {t('admin.edit')}
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => setShowDeleteModal(true)}
+              className="flex-1 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+            >
+              {t('admin.delete')}
+            </Button>
+          </div>
+        )}
       </div>
+
+      {/* Edit Modal */}
+      <SignalFormModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        signal={selectedSignal || undefined}
+        onSuccess={() => {
+          setShowEditModal(false)
+        }}
+      />
+
+      {/* Delete Modal */}
+      <DeleteSignalModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        signal={selectedSignal}
+        loading={deleting}
+        onConfirm={async () => {
+          if (!selectedSignal?.id) return
+          setDeleting(true)
+          try {
+            await deleteSignal(selectedSignal.id)
+            setShowDeleteModal(false)
+          } catch (error) {
+            console.error('Error deleting signal:', error)
+            throw error
+          } finally {
+            setDeleting(false)
+          }
+        }}
+      />
     </Panel>
   )
 }
