@@ -34,7 +34,6 @@ export function firestoreToSignal(
     zWorkValue: 0, // Will be calculated from valueDimensions
     valueDimensions: docData.valueDimensions,
     sources: docData.sources,
-    tags: docData.tags,
     imageUrl: docData.imageUrl,
   }
 }
@@ -59,7 +58,6 @@ export function signalToFirestore(
       political: 0,
     },
     sources: signal.sources || [],
-    tags: signal.tags || [],
     updatedAt: now,
   }
 

@@ -6,7 +6,6 @@ import {
   SignalHeader,
   SignalInfo,
   ValueDimensionsDisplay,
-  SignalTags,
   SignalActions,
 } from './signal-details'
 
@@ -42,7 +41,6 @@ export default function SignalDetailsPanel({
         <SignalHeader signal={selectedSignal} />
         <SignalInfo signal={selectedSignal} />
         <ValueDimensionsDisplay valueDimensions={selectedSignal.valueDimensions} />
-        <SignalTags tags={selectedSignal.tags} />
 
         {user && onEdit && onDelete && (
           <SignalActions

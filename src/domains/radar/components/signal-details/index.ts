@@ -1,7 +1,6 @@
 export { SignalHeader } from './SignalHeader'
 export { SignalInfo } from './SignalInfo'
 export { ValueDimensionsDisplay } from './ValueDimensionsDisplay'
-export { SignalTags } from './SignalTags'
 export { SignalActions } from './SignalActions'
 export { SignalImage } from './SignalImage'
 export { SignalDetailsContent } from './SignalDetailsContent'

@@ -5,7 +5,6 @@ import type { Signal } from '../../../../types/signal'
 import { SignalHeader } from './SignalHeader'
 import { SignalInfo } from './SignalInfo'
 import { ValueDimensionsDisplay } from './ValueDimensionsDisplay'
-import { SignalTags } from './SignalTags'
 import { SignalActions } from './SignalActions'
 
 interface SignalDetailsContentProps {
@@ -58,9 +57,6 @@ export function SignalDetailsContent({
 
       {/* Value Dimensions */}
       <ValueDimensionsDisplay valueDimensions={signal.valueDimensions} />
-
-      {/* Tags */}
-      <SignalTags tags={signal.tags} />
 
       {/* Admin Actions */}
       {user && onEdit && onDelete && (

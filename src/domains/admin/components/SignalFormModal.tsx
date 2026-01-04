@@ -14,7 +14,6 @@ import {
   ImpactHorizonSection,
   ValueDimensionsSection,
   SourcesSection,
-  TagsSection,
   ImageSection,
 } from './signal-form'
 import type { Signal } from '../../../types/signal'
@@ -83,7 +82,6 @@ export default function SignalFormModal({
         yHorizon: formData.yHorizon,
         valueDimensions: formData.valueDimensions,
         sources: formData.sources,
-        tags: formData.tags,
         imageUrl: formData.imageUrl || undefined,
       }
 
@@ -192,12 +190,6 @@ export default function SignalFormModal({
         <SourcesSection
           sources={formData.sources}
           onSourcesChange={value => updateFormData('sources', value)}
-          disabled={loading}
-        />
-
-        <TagsSection
-          tags={formData.tags}
-          onTagsChange={value => updateFormData('tags', value)}
           disabled={loading}
         />
 

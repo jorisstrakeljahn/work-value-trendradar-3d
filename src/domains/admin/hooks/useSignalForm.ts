@@ -12,7 +12,6 @@ export interface SignalFormData {
   yHorizon: number
   valueDimensions: ValueDimensions
   sources: Source[]
-  tags: string[]
   imageUrl: string | null
 }
 
@@ -31,7 +30,6 @@ const defaultFormData: SignalFormData = {
     political: 0,
   },
   sources: [],
-  tags: [],
   imageUrl: null,
 }
 
@@ -62,7 +60,6 @@ export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean
               yHorizon: signal.yHorizon,
               valueDimensions: signal.valueDimensions,
               sources: signal.sources || [],
-              tags: signal.tags || [],
               imageUrl: signal.imageUrl || null,
             })
           } else {
@@ -77,7 +74,6 @@ export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean
               yHorizon: signal.yHorizon,
               valueDimensions: signal.valueDimensions,
               sources: signal.sources || [],
-              tags: signal.tags || [],
               imageUrl: signal.imageUrl || null,
             })
           }
@@ -95,7 +91,6 @@ export function useSignalForm(signal: Signal | null | undefined, isOpen: boolean
               yHorizon: signal.yHorizon,
               valueDimensions: signal.valueDimensions,
               sources: signal.sources || [],
-              tags: signal.tags || [],
               imageUrl: signal.imageUrl || null,
             })
           setIsInitialized(true)

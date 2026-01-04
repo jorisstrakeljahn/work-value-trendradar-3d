@@ -17,7 +17,6 @@ export interface SignalFormData {
   yHorizon: number
   valueDimensions: ValueDimensions
   sources: Source[]
-  tags: string[]
   imageUrl: string | null
 }
 

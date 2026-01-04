@@ -83,8 +83,6 @@
       "sourceUrl": "URL",
       "sourceName": "Name",
       "removeSource": "Remove",
-      "tags": "Tags",
-      "addTag": "Add Tag",
       "image": "Image",
       "uploadImage": "Upload Image",
       "removeImage": "Remove Image",
@@ -167,8 +165,7 @@
     "economic": "Economic:",
     "social": "Social:",
     "subjective": "Subjective:",
-    "political": "Political:",
-    "tags": "Tags"
+    "political": "Political:"
   },
   "signalWindows": {
     "close": "Close",
