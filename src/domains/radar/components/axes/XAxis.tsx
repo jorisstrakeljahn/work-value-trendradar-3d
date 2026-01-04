@@ -1,4 +1,4 @@
-import { Html } from '@react-three/drei'
+import { Html, Billboard } from '@react-three/drei'
 import { useTranslation } from 'react-i18next'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
 
@@ -40,32 +40,33 @@ export function XAxis() {
       </line>
 
       {/* X-axis label at the end */}
-      <Html
-        position={[MAX_RADIUS + 1.5, -1.2, 0]}
-        center
-        transform
-        distanceFactor={10}
-        zIndexRange={[0, 100]}
-        style={{ pointerEvents: 'none', zIndex: 10 }}
-      >
-        <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
-          {t('legend.xAxisLabel')}
-        </div>
-      </Html>
-
-      {/* X-axis labels */}
-      {impactLines.map((line, i) => (
+      <Billboard position={[MAX_RADIUS + 1.5, -1.2, 0]}>
         <Html
-          key={i}
-          position={[line.x, -0.5, 0]}
           center
           transform
           distanceFactor={10}
           zIndexRange={[0, 100]}
           style={{ pointerEvents: 'none', zIndex: 10 }}
         >
-          <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
+          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
+            {t('legend.xAxisLabel')}
+          </div>
         </Html>
+      </Billboard>
+
+      {/* X-axis labels */}
+      {impactLines.map((line, i) => (
+        <Billboard key={i} position={[line.x, -0.5, 0]}>
+          <Html
+            center
+            transform
+            distanceFactor={10}
+            zIndexRange={[0, 100]}
+            style={{ pointerEvents: 'none', zIndex: 10 }}
+          >
+            <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
+          </Html>
+        </Billboard>
       ))}
 
       {/* X-axis markers */}

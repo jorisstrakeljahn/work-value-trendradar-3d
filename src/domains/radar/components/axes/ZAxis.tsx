@@ -1,4 +1,4 @@
-import { Html } from '@react-three/drei'
+import { Html, Billboard } from '@react-three/drei'
 import { useTranslation } from 'react-i18next'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
 
@@ -30,18 +30,19 @@ export function ZAxis() {
       </line>
 
       {/* Z-axis label at the end */}
-      <Html
-        position={[0.3, -1.2, MAX_HEIGHT + 0.5]}
-        center
-        transform
-        distanceFactor={10}
-        zIndexRange={[0, 100]}
-        style={{ pointerEvents: 'none', zIndex: 10 }}
-      >
-        <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
-          {t('legend.zAxisLabel')}
-        </div>
-      </Html>
+      <Billboard position={[0.3, -1.2, MAX_HEIGHT + 0.5]}>
+        <Html
+          center
+          transform
+          distanceFactor={10}
+          zIndexRange={[0, 100]}
+          style={{ pointerEvents: 'none', zIndex: 10 }}
+        >
+          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
+            {t('legend.zAxisLabel')}
+          </div>
+        </Html>
+      </Billboard>
 
       {/* Z-axis markers */}
       {markers.map((marker, i) => (
@@ -50,16 +51,17 @@ export function ZAxis() {
             <boxGeometry args={[0.05, 0.05, 0.05]} />
             <meshStandardMaterial color={RADAR_COLORS.AXIS.PRIMARY} />
           </mesh>
-          <Html
-            position={[0.5, 0, marker.z]}
-            center
-            transform
-            distanceFactor={10}
-            zIndexRange={[0, 100]}
-            style={{ pointerEvents: 'none', zIndex: 10 }}
-          >
-            <div className="text-gray-600 dark:text-gray-400 text-xs">{marker.label}</div>
-          </Html>
+          <Billboard position={[0.5, 0, marker.z]}>
+            <Html
+              center
+              transform
+              distanceFactor={10}
+              zIndexRange={[0, 100]}
+              style={{ pointerEvents: 'none', zIndex: 10 }}
+            >
+              <div className="text-gray-600 dark:text-gray-400 text-xs">{marker.label}</div>
+            </Html>
+          </Billboard>
         </group>
       ))}
     </group>

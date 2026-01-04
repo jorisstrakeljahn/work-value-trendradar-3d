@@ -1,4 +1,4 @@
-import { Html } from '@react-three/drei'
+import { Html, Billboard } from '@react-three/drei'
 import { useTranslation } from 'react-i18next'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
 
@@ -31,18 +31,19 @@ export function YAxis() {
       </line>
 
       {/* Y-axis label at the end */}
-      <Html
-        position={[-1.2, MAX_RADIUS + 1.5, 0]}
-        center
-        transform
-        distanceFactor={10}
-        zIndexRange={[0, 100]}
-        style={{ pointerEvents: 'none', zIndex: 10 }}
-      >
-        <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
-          {t('legend.yAxisLabel')}
-        </div>
-      </Html>
+      <Billboard position={[-1.2, MAX_RADIUS + 1.5, 0]}>
+        <Html
+          center
+          transform
+          distanceFactor={10}
+          zIndexRange={[0, 100]}
+          style={{ pointerEvents: 'none', zIndex: 10 }}
+        >
+          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
+            {t('legend.yAxisLabel')}
+          </div>
+        </Html>
+      </Billboard>
 
       {/* Y-axis lines (vertical, from 0 to maxRadius) */}
       {timeLines.map((line, i) => (
@@ -60,16 +61,17 @@ export function YAxis() {
           </line>
 
           {/* Y-axis labels */}
-          <Html
-            position={[-0.5, line.y, 0]}
-            center
-            transform
-            distanceFactor={10}
-            zIndexRange={[0, 100]}
-            style={{ pointerEvents: 'none', zIndex: 10 }}
-          >
-            <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
-          </Html>
+          <Billboard position={[-0.5, line.y, 0]}>
+            <Html
+              center
+              transform
+              distanceFactor={10}
+              zIndexRange={[0, 100]}
+              style={{ pointerEvents: 'none', zIndex: 10 }}
+            >
+              <div className="text-gray-600 dark:text-gray-400 text-xs">{line.label}</div>
+            </Html>
+          </Billboard>
 
           {/* Y-axis markers */}
           <mesh position={[0, line.y, 0.05]}>
