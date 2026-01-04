@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { Mesh } from 'three'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { useRadarStore } from '../store/useRadarStore'
+import { useModalStore } from '../store/useModalStore'
 import { useIndustries } from '../shared/hooks/useIndustries'
 import type { Signal } from '../types/signal'
 
@@ -13,6 +14,7 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   const meshRef = useRef<Mesh>(null)
   const { selectedSignal, hoveredSignal, setSelectedSignal, setHoveredSignal } =
     useRadarStore()
+  const { isAnyModalOpen } = useModalStore()
   const [hovered, setHovered] = useState(false)
   const industries = useIndustries()
 
@@ -54,17 +56,20 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   })
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
+    if (isAnyModalOpen) return
     e.stopPropagation()
     setSelectedSignal(isSelected ? null : signal)
   }
 
   const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
+    if (isAnyModalOpen) return
     e.stopPropagation()
     setHovered(true)
     setHoveredSignal(signal)
   }
 
   const handlePointerOut = () => {
+    if (isAnyModalOpen) return
     setHovered(false)
     if (hoveredSignal?.id === signal.id) {
       setHoveredSignal(null)

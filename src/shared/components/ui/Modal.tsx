@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { useClickOutside } from '../../hooks/useClickOutside'
 import { X } from 'lucide-react'
 import { Button } from './Button'
+import { useModalStore } from '../../../store/useModalStore'
 
 interface ModalProps {
   isOpen: boolean
@@ -18,12 +19,25 @@ interface ModalProps {
  */
 export function Modal({ isOpen, onClose, title, children, className = '' }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null)
+  const { openModal, closeModal } = useModalStore()
 
   useClickOutside(modalRef, () => {
     if (isOpen) {
       onClose()
     }
   })
+
+  // Track modal state globally
+  useEffect(() => {
+    if (isOpen) {
+      openModal()
+    } else {
+      closeModal()
+    }
+    return () => {
+      closeModal()
+    }
+  }, [isOpen, openModal, closeModal])
 
   // Prevent body scroll when modal is open
   useEffect(() => {

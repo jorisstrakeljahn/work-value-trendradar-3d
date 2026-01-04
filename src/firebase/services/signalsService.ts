@@ -62,8 +62,12 @@ export function signalToFirestore(
     sources: signal.sources || [],
     confidence: signal.confidence ?? 1,
     tags: signal.tags || [],
-    imageUrl: signal.imageUrl,
     updatedAt: now,
+  }
+
+  // Only include imageUrl if it's defined (Firestore doesn't support undefined)
+  if (signal.imageUrl !== undefined && signal.imageUrl !== null) {
+    baseData.imageUrl = signal.imageUrl
   }
 
   // Handle multilingual fields

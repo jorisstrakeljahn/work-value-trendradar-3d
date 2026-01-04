@@ -129,10 +129,6 @@ export default function SignalFormModal({
     return industry ? industry.name : industryId
   }
 
-  const isCustomIndustry = (industryId: string): boolean => {
-    return !industries.some(ind => ind.id === industryId)
-  }
-
   const addTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
       setTags(prev => [...prev, newTag.trim()])
@@ -183,7 +179,7 @@ export default function SignalFormModal({
         en: summaryEn.trim() || summaryDe.trim(),
       }
 
-      const signalData: Partial<Signal & { title?: { de: string; en: string }; summary?: { de: string; en: string } }> = {
+      const signalData = {
         title: multilingualTitle,
         summary: multilingualSummary,
         industryTags,
@@ -199,11 +195,14 @@ export default function SignalFormModal({
         tags,
         confidence,
         imageUrl: imageUrl || undefined,
+      } as Partial<Signal> & {
+        title?: { de: string; en: string }
+        summary?: { de: string; en: string }
       }
 
       if (isEditMode && signal?.id) {
         // Handle image upload if we have a new image (data URL)
-        let finalImageUrl = imageUrl
+        let finalImageUrl: string | undefined = imageUrl || undefined
         if (imageUrl && imageUrl.startsWith('data:')) {
           // Convert data URL to File and upload
           const response = await fetch(imageUrl)
@@ -216,7 +215,7 @@ export default function SignalFormModal({
         onSuccess?.()
       } else {
         // Create new signal - image will be uploaded after creation
-        const newSignalId = await createSignal(signalData, user.uid)
+        const newSignalId = await createSignal(signalData as Parameters<typeof createSignal>[0], user.uid)
 
         // Upload image if provided
         if (imageUrl && imageUrl.startsWith('data:')) {

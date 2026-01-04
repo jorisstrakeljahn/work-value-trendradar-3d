@@ -19,7 +19,10 @@ import type { Signal } from '../types/signal'
 function convertToMultilingual(
   signalDe: Signal,
   signalEn: Signal | undefined
-): Partial<Signal & { title: { de: string; en: string }; summary: { de: string; en: string } }> {
+): Partial<Signal> & {
+  title: { de: string; en: string }
+  summary: { de: string; en: string }
+} {
   return {
     title: {
       de: signalDe.title,
@@ -37,6 +40,9 @@ function convertToMultilingual(
     confidence: signalDe.confidence,
     tags: signalDe.tags,
     imageUrl: signalDe.imageUrl,
+  } as Partial<Signal> & {
+    title: { de: string; en: string }
+    summary: { de: string; en: string }
   }
 }
 
@@ -72,7 +78,7 @@ export async function migrateSignalsToFirestore(
       const signalEn = signalsEnMap.get(signalDe.id)
       const multilingualSignal = convertToMultilingual(signalDe, signalEn)
 
-      await createSignal(multilingualSignal, userId, signalDe.id)
+      await createSignal(multilingualSignal as Parameters<typeof createSignal>[0], userId, signalDe.id)
       successCount++
       console.log(`✓ Migrated signal: ${signalDe.id} - ${signalDe.title}`)
     } catch (error: unknown) {
