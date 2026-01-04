@@ -1,7 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, Button } from '../../../shared/components/ui'
-import { ErrorAlert, FormField } from '../../../shared/components/forms'
+import { ErrorAlert, FormField, PasswordField } from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
 
 interface LoginModalProps {
@@ -61,10 +61,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           disabled={loading}
         />
 
-        <FormField
-          type="input"
+        <PasswordField
           label={t('auth.password')}
-          inputType="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           placeholder={t('auth.passwordPlaceholder')}

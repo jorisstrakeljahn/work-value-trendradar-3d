@@ -1,7 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Modal, Button } from '../../../shared/components/ui'
-import { ErrorAlert, SuccessAlert, FormField } from '../../../shared/components/forms'
+import { ErrorAlert, SuccessAlert, PasswordField } from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
 
 interface ChangePasswordModalProps {
@@ -72,10 +72,8 @@ export default function ChangePasswordModal({ isOpen, onClose }: ChangePasswordM
         {displayError && <ErrorAlert message={displayError} />}
         {success && <SuccessAlert message={t('auth.passwordChangedSuccess')} />}
 
-        <FormField
-          type="input"
+        <PasswordField
           label={t('auth.newPassword')}
-          inputType="password"
           value={newPassword}
           onChange={e => setNewPassword(e.target.value)}
           placeholder={t('auth.newPasswordPlaceholder')}
@@ -84,10 +82,8 @@ export default function ChangePasswordModal({ isOpen, onClose }: ChangePasswordM
           disabled={loading || success}
         />
 
-        <FormField
-          type="input"
+        <PasswordField
           label={t('auth.confirmPassword')}
-          inputType="password"
           value={confirmPassword}
           onChange={e => setConfirmPassword(e.target.value)}
           placeholder={t('auth.confirmPasswordPlaceholder')}
