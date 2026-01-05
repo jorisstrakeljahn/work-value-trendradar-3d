@@ -15,11 +15,11 @@ export function SignalImage({ imageUrl }: SignalImageProps) {
 
   return (
     <div className="mb-4">
-      <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+      <div className="relative w-full aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
         <img
           src={imageUrl}
           alt={t('signalWindows.imageAlt')}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover"
         />
       </div>
     </div>
