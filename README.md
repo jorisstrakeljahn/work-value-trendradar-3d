@@ -1,11 +1,6 @@
 # Work Value Trend Radar 3D
 
-> Interactive 3D trend radar for mapping weak signals of AI/robotics and their impact on the value of work across industries. Built with TypeScript, React, and Three.js.
-
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18-blue)](https://react.dev/)
-[![Three.js](https://img.shields.io/badge/Three.js-0.160-black)](https://threejs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.0-purple)](https://vitejs.dev/)
+Interactive 3D trend radar for mapping weak signals of AI/robotics and their impact on the value of work across industries. Built with TypeScript, React, and Three.js.
 
 ## 🚀 Tech Stack
 
