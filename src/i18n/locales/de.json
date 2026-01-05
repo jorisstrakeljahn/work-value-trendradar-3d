@@ -49,6 +49,12 @@
     "edit": "Bearbeiten",
     "create": "Erstellen",
     "form": {
+      "categories": {
+        "basicInfo": "Grundinformationen",
+        "classification": "Klassifikation",
+        "valueDimensions": "Wert-Dimensionen",
+        "sources": "Quellen & Medien"
+      },
       "title": "Titel",
       "titleDe": "Titel (Deutsch)",
       "titleDeEn": "Title (German)",
@@ -74,6 +80,15 @@
       "xImpact": "Impact",
       "yHorizon": "Reifegrad",
       "valueDimensions": "Wert-Dimensionen",
+      "valueDimensionsJustification": "Begründung",
+      "justificationMode": "Modus",
+      "freetextMode": "Freitext",
+      "perDimensionMode": "Pro Dimension",
+      "justificationTextDe": "Begründung (Deutsch)",
+      "justificationTextDeEn": "Begründung (Deutsch)",
+      "justificationTextEn": "Begründung (Englisch)",
+      "justificationTextEnEn": "Begründung (English)",
+      "dimensionJustification": "Begründung",
       "economic": "Economic",
       "social": "Social",
       "subjective": "Subjective",
@@ -165,7 +180,10 @@
     "economic": "Economic:",
     "social": "Social:",
     "subjective": "Subjective:",
-    "political": "Political:"
+    "political": "Political:",
+    "justification": "Begründung",
+    "dimensionJustification": "Dimension-Begründung",
+    "sources": "Quellen"
   },
   "signalWindows": {
     "close": "Schließen",

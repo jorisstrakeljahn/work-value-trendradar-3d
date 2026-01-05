@@ -49,6 +49,12 @@
     "edit": "Edit",
     "create": "Create",
     "form": {
+      "categories": {
+        "basicInfo": "Basic Information",
+        "classification": "Classification",
+        "valueDimensions": "Value Dimensions",
+        "sources": "Sources & Media"
+      },
       "title": "Title",
       "titleDe": "Title (German)",
       "titleDeEn": "Titel (Deutsch)",
@@ -74,6 +80,15 @@
       "xImpact": "Impact",
       "yHorizon": "Maturity",
       "valueDimensions": "Value Dimensions",
+      "valueDimensionsJustification": "Justification",
+      "justificationMode": "Mode",
+      "freetextMode": "Freetext",
+      "perDimensionMode": "Per Dimension",
+      "justificationTextDe": "Justification (German)",
+      "justificationTextDeEn": "Justification (German)",
+      "justificationTextEn": "Justification (English)",
+      "justificationTextEnEn": "Justification (English)",
+      "dimensionJustification": "Justification",
       "economic": "Economic",
       "social": "Social",
       "subjective": "Subjective",
@@ -165,7 +180,10 @@
     "economic": "Economic:",
     "social": "Social:",
     "subjective": "Subjective:",
-    "political": "Political:"
+    "political": "Political:",
+    "justification": "Justification",
+    "dimensionJustification": "Dimension Justification",
+    "sources": "Sources"
   },
   "signalWindows": {
     "close": "Close",

@@ -61,7 +61,10 @@ export function SignalDetailsContent({
       <SignalInfo signal={signal} />
 
       {/* Value Dimensions */}
-      <ValueDimensionsDisplay valueDimensions={signal.valueDimensions} />
+      <ValueDimensionsDisplay
+        valueDimensions={signal.valueDimensions}
+        valueDimensionsJustification={signal.valueDimensionsJustification}
+      />
 
       {/* Admin Actions */}
       {user && onEdit && onDelete && (

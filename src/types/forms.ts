@@ -2,7 +2,7 @@
  * Type definitions for form components and data structures
  */
 
-import type { ValueDimensions, Source } from './signal'
+import type { ValueDimensions, Source, ValueDimensionsJustification } from './signal'
 
 /**
  * Form data structure for signal forms
@@ -16,6 +16,7 @@ export interface SignalFormData {
   xImpact: number
   yHorizon: number
   valueDimensions: ValueDimensions
+  valueDimensionsJustification?: ValueDimensionsJustification
   sources: Source[]
   imageUrl: string | null
 }

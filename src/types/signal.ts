@@ -33,6 +33,29 @@ export interface ValueWeights {
 }
 
 /**
+ * Justification for a single value dimension
+ */
+export interface DimensionJustification {
+  text: MultilingualText
+  sources: Source[]
+}
+
+/**
+ * Justification for value dimensions
+ * Supports two modes: freetext (single multilingual text) or perDimension (one justification per dimension with sources)
+ */
+export interface ValueDimensionsJustification {
+  mode: 'freetext' | 'perDimension'
+  freetext?: MultilingualText
+  perDimension?: {
+    economic: DimensionJustification
+    social: DimensionJustification
+    subjective: DimensionJustification
+    political: DimensionJustification
+  }
+}
+
+/**
  * Weak Signal representing a trend or development
  */
 export interface Signal {
@@ -44,6 +67,7 @@ export interface Signal {
   yHorizon: number // 0..100 (Time Horizon / Maturity: 0 = now, 100 = far future)
   zWorkValue: number // 0..100 (0 = no value change, 100 = maximum value gain)
   valueDimensions: ValueDimensions
+  valueDimensionsJustification?: ValueDimensionsJustification
   sources: Source[]
   imageUrl?: string
   position?: {
@@ -72,6 +96,7 @@ export interface SignalDocument {
   xImpact: number
   yHorizon: number
   valueDimensions: ValueDimensions
+  valueDimensionsJustification?: ValueDimensionsJustification
   sources: Source[]
   imageUrl?: string
   createdAt: unknown // Firestore Timestamp

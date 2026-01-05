@@ -1,19 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getSignal } from '../../../firebase/services/signalsService'
-import type { Signal, Source, ValueDimensions } from '../../../types/signal'
-
-export interface SignalFormData {
-  titleDe: string
-  titleEn: string
-  summaryDe: string
-  summaryEn: string
-  industryTags: string[]
-  xImpact: number
-  yHorizon: number
-  valueDimensions: ValueDimensions
-  sources: Source[]
-  imageUrl: string | null
-}
+import type { Signal, ValueDimensions } from '../../../types/signal'
+import type { SignalFormData } from '../../../types/forms'
 
 const defaultFormData: SignalFormData = {
   titleDe: '',
@@ -28,6 +16,15 @@ const defaultFormData: SignalFormData = {
     social: 0,
     subjective: 0,
     political: 0,
+  },
+  valueDimensionsJustification: {
+    mode: 'perDimension',
+    perDimension: {
+      economic: { text: { de: '', en: '' }, sources: [] },
+      social: { text: { de: '', en: '' }, sources: [] },
+      subjective: { text: { de: '', en: '' }, sources: [] },
+      political: { text: { de: '', en: '' }, sources: [] },
+    },
   },
   sources: [],
   imageUrl: null,
@@ -62,6 +59,7 @@ export function useSignalForm(
               xImpact: signal.xImpact,
               yHorizon: signal.yHorizon,
               valueDimensions: signal.valueDimensions,
+              valueDimensionsJustification: signal.valueDimensionsJustification,
               sources: signal.sources || [],
               imageUrl: signal.imageUrl || null,
             })
@@ -93,6 +91,7 @@ export function useSignalForm(
             xImpact: signal.xImpact,
             yHorizon: signal.yHorizon,
             valueDimensions: signal.valueDimensions,
+            valueDimensionsJustification: signal.valueDimensionsJustification,
             sources: signal.sources || [],
             imageUrl: signal.imageUrl || null,
           })

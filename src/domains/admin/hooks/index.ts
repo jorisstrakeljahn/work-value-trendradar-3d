@@ -1,1 +1,1 @@
-export { useSignalForm, type SignalFormData } from './useSignalForm'
+export { useSignalForm } from './useSignalForm'

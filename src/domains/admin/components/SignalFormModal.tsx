@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal } from '../../../shared/components/ui'
+import { Modal, FormSection } from '../../../shared/components/ui'
 import { ErrorAlert } from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
 import {
@@ -82,6 +82,7 @@ export default function SignalFormModal({
         xImpact: formData.xImpact,
         yHorizon: formData.yHorizon,
         valueDimensions: formData.valueDimensions,
+        valueDimensionsJustification: formData.valueDimensionsJustification,
         sources: formData.sources,
         imageUrl: formData.imageUrl || undefined,
       }
@@ -155,57 +156,73 @@ export default function SignalFormModal({
       title={isEditMode ? t('admin.editSignal') : t('admin.createSignal')}
       className="max-w-5xl"
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {error && <ErrorAlert message={error} />}
 
-        <TitleSection
-          titleDe={formData.titleDe}
-          titleEn={formData.titleEn}
-          onTitleDeChange={value => updateFormData('titleDe', value)}
-          onTitleEnChange={value => updateFormData('titleEn', value)}
-          disabled={loading}
-        />
+        {/* Basic Information */}
+        <FormSection title={t('admin.form.categories.basicInfo')}>
+          <TitleSection
+            titleDe={formData.titleDe}
+            titleEn={formData.titleEn}
+            onTitleDeChange={value => updateFormData('titleDe', value)}
+            onTitleEnChange={value => updateFormData('titleEn', value)}
+            disabled={loading}
+          />
 
-        <SummarySection
-          summaryDe={formData.summaryDe}
-          summaryEn={formData.summaryEn}
-          onSummaryDeChange={value => updateFormData('summaryDe', value)}
-          onSummaryEnChange={value => updateFormData('summaryEn', value)}
-          disabled={loading}
-        />
+          <SummarySection
+            summaryDe={formData.summaryDe}
+            summaryEn={formData.summaryEn}
+            onSummaryDeChange={value => updateFormData('summaryDe', value)}
+            onSummaryEnChange={value => updateFormData('summaryEn', value)}
+            disabled={loading}
+          />
+        </FormSection>
 
-        <IndustrySection
-          selectedIndustryIds={formData.industryTags}
-          onSelectionChange={value => updateFormData('industryTags', value)}
-          disabled={loading}
-        />
+        {/* Classification */}
+        <FormSection title={t('admin.form.categories.classification')}>
+          <IndustrySection
+            selectedIndustryIds={formData.industryTags}
+            onSelectionChange={value => updateFormData('industryTags', value)}
+            disabled={loading}
+          />
 
-        <ImpactHorizonSection
-          xImpact={formData.xImpact}
-          yHorizon={formData.yHorizon}
-          onXImpactChange={value => updateFormData('xImpact', value)}
-          onYHorizonChange={value => updateFormData('yHorizon', value)}
-          disabled={loading}
-        />
+          <ImpactHorizonSection
+            xImpact={formData.xImpact}
+            yHorizon={formData.yHorizon}
+            onXImpactChange={value => updateFormData('xImpact', value)}
+            onYHorizonChange={value => updateFormData('yHorizon', value)}
+            disabled={loading}
+          />
+        </FormSection>
 
-        <ValueDimensionsSection
-          valueDimensions={formData.valueDimensions}
-          onValueDimensionsChange={updateValueDimensions}
-          disabled={loading}
-        />
+        {/* Value Dimensions */}
+        <FormSection title={t('admin.form.categories.valueDimensions')}>
+          <ValueDimensionsSection
+            valueDimensions={formData.valueDimensions}
+            onValueDimensionsChange={updateValueDimensions}
+            valueDimensionsJustification={formData.valueDimensionsJustification}
+            onValueDimensionsJustificationChange={value =>
+              updateFormData('valueDimensionsJustification', value)
+            }
+            disabled={loading}
+          />
+        </FormSection>
 
-        <SourcesSection
-          sources={formData.sources}
-          onSourcesChange={value => updateFormData('sources', value)}
-          disabled={loading}
-        />
+        {/* Sources & Media */}
+        <FormSection title={t('admin.form.categories.sources')}>
+          <SourcesSection
+            sources={formData.sources}
+            onSourcesChange={value => updateFormData('sources', value)}
+            disabled={loading}
+          />
 
-        <ImageSection
-          imageUrl={formData.imageUrl}
-          onImageChange={value => updateFormData('imageUrl', value)}
-          signalId={signal?.id}
-          disabled={loading}
-        />
+          <ImageSection
+            imageUrl={formData.imageUrl}
+            onImageChange={value => updateFormData('imageUrl', value)}
+            signalId={signal?.id}
+            disabled={loading}
+          />
+        </FormSection>
 
         <FormActions
           onCancel={handleClose}
