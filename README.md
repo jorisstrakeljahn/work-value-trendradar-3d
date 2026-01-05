@@ -29,7 +29,7 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/work-value-trendradar-3d.git
+git clone https://github.com/jorisstrakeljahn/work-value-trendradar-3d.git
 cd work-value-trendradar-3d
 ```
 
