@@ -24,9 +24,21 @@ const defaultWeights: ValueWeights = {
  * Calculates the Work-Value-Index from 4 sub-values
  * Aggregates: economic, social, subjective, political (0..5)
  *
+ * Formula: Weighted average of normalized dimension values
+ * - Each dimension is normalized from 0..5 to 0..100
+ * - Weights are normalized from 0..100 to 0..1
+ * - Final index is clamped between 0 and 100
+ *
  * @param signal - The signal with valueDimensions
  * @param weights - Optional weights in percent (0-100). If not provided, uses default weights
  * @returns Work-Value-Index (0..100)
+ *
+ * @example
+ * ```typescript
+ * const signal = { valueDimensions: { economic: 4, social: 3, subjective: 2, political: 1 } }
+ * const index = calculateWorkValueIndex(signal)
+ * // Returns: weighted average of normalized values
+ * ```
  */
 export function calculateWorkValueIndex(
   signal: Signal,
@@ -65,7 +77,9 @@ export function calculateWorkValueIndex(
  *
  * Coordinate system (classic trend radar):
  * - X-axis: Impact / Relevance (0..100) → -maxRadius to +maxRadius
+ *   - 0 = negative impact, 50 = neutral, 100 = positive impact
  * - Y-axis: Time Horizon / Maturity (0..100) → 0 to +maxRadius (semicircle)
+ *   - 0 = now/short-term, 100 = long-term
  * - Z-axis: Work-Value-Index (aggregated from 4 sub-values) → Height (0..maxHeight)
  *   - Only positive heights (devaluation = low height, not negative)
  *
@@ -74,6 +88,17 @@ export function calculateWorkValueIndex(
  * @param maxHeight - Maximum height for z-axis (default: 3)
  * @param weights - Optional weights for value dimensions. If not provided, uses default weights
  * @returns 3D position {x, y, z} in cartesian coordinates
+ *
+ * @example
+ * ```typescript
+ * const signal = {
+ *   xImpact: 75,
+ *   yHorizon: 50,
+ *   valueDimensions: { economic: 4, social: 3, subjective: 2, political: 1 }
+ * }
+ * const position = mapSignalToPosition(signal, 5, 3)
+ * // Returns: { x: 2.5, y: 2.5, z: calculated_height }
+ * ```
  */
 export function mapSignalToPosition(
   signal: Signal,

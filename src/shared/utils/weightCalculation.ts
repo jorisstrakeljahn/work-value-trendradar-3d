@@ -14,10 +14,29 @@ const ALL_DIMENSIONS: DimensionKey[] = [
  * Auto-equalize algorithm: adjusts non-locked dimensions proportionally
  * to maintain sum of 100%
  *
+ * This algorithm ensures that when one dimension weight is changed, the other
+ * non-locked dimensions are adjusted proportionally to maintain a total sum of 100%.
+ *
+ * Algorithm:
+ * 1. Calculate available budget (100 - sum of locked dimensions)
+ * 2. Set changed dimension to new value (clamped to available budget)
+ * 3. Distribute remaining budget proportionally among other non-locked dimensions
+ * 4. Round values and adjust for rounding errors to ensure exact sum of 100
+ *
  * @param newWeights - Partial weights object with the changed dimension
  * @param currentWeights - Current weight values
  * @param lockedDimensions - Array of locked dimension keys (max 2)
  * @returns Adjusted weights with sum exactly equal to 100
+ *
+ * @example
+ * ```typescript
+ * const current = { economic: 30, social: 25, subjective: 25, political: 20 }
+ * const newWeights = { economic: 40 }
+ * const locked = ['political']
+ * const result = calculateAdjustedWeights(newWeights, current, locked)
+ * // Result: { economic: 40, social: 20, subjective: 20, political: 20 }
+ * // Sum = 100, political remains locked, others adjusted proportionally
+ * ```
  */
 export function calculateAdjustedWeights(
   newWeights: Partial<ValueWeights>,

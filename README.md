@@ -1,35 +1,65 @@
 # Work Value Trend Radar 3D
 
-Interactive 3D trend radar for mapping weak signals of AI/robotics and their impact on the value of work across industries. Built with TypeScript and Three.js.
+> Interactive 3D trend radar for mapping weak signals of AI/robotics and their impact on the value of work across industries. Built with TypeScript, React, and Three.js.
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18-blue)](https://react.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-0.160-black)](https://threejs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-purple)](https://vitejs.dev/)
 
 ## 🚀 Tech Stack
 
 - **Frontend Framework**: React 18 + TypeScript
 - **Build Tool**: Vite
-- **3D Rendering**: Three.js + @react-three/fiber
+- **3D Rendering**: Three.js + @react-three/fiber + @react-three/drei
 - **Styling**: TailwindCSS
-- **Code Quality**: ESLint + Prettier
+- **State Management**: Zustand
+- **Backend**: Firebase (Firestore, Auth, Storage)
+- **i18n**: react-i18next
+- **Code Quality**: ESLint + Prettier + TypeScript strict mode
 
 ## 🛠️ Setup & Installation
 
 ### Prerequisites
 
 - Node.js 18+ and npm/yarn/pnpm
+- Firebase project (for backend functionality)
 
 ### Installation
 
+1. **Clone the repository**
 ```bash
-# Install dependencies
+git clone https://github.com/yourusername/work-value-trendradar-3d.git
+cd work-value-trendradar-3d
+```
+
+2. **Install dependencies**
+```bash
 npm install
+```
 
-# Start development server
+3. **Set up environment variables**
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env and add your Firebase credentials
+# Get these from: Firebase Console > Project Settings > General > Your apps
+```
+
+4. **Configure Firebase**
+   - Set up Firestore Security Rules (see [Firebase Setup](#-firebase-setup))
+   - Set up Storage Rules (see [Firebase Setup](#-firebase-setup))
+
+5. **Start development server**
+```bash
 npm run dev
+```
 
-# Build for production
+6. **Build for production**
+```bash
 npm run build
-
-# Preview production build
-npm preview
+npm run preview
 ```
 
 ### Code Quality
@@ -47,20 +77,77 @@ npm run format:check
 
 ## 🎯 Features
 
-- ✅ 3D Radar Visualization with classic trend radar design
-- ✅ Interactive signal points with hover and click
-- ✅ Industry-based filtering
-- ✅ Collapsible filter and legend panels
-- ✅ Work Value Index calculated from 4 value dimensions
-- ✅ Responsive UI with TailwindCSS
+### Core Functionality
+- ✅ **3D Radar Visualization** - Interactive 3D trend radar with classic design
+- ✅ **Real-time Updates** - Firebase Firestore subscriptions for live data
+- ✅ **Signal Management** - Create, edit, and delete signals with rich metadata
+- ✅ **Industry Filtering** - Filter signals by industry with multi-select
+- ✅ **Work Value Index** - Calculated from 4 value dimensions (economic, social, subjective, political)
+- ✅ **Dynamic Weighting** - Adjustable weights for value dimensions with auto-equalization
+
+### User Experience
+- ✅ **Interactive 3D Scene** - Orbit controls, zoom, and smooth camera movements
+- ✅ **Signal Windows** - Draggable and resizable detail windows
+- ✅ **Hover Tooltips** - Quick information on signal hover
+- ✅ **Responsive Design** - Works on desktop and mobile devices
+- ✅ **Dark Mode** - Full dark mode support with theme persistence
+- ✅ **Internationalization** - German and English language support
+
+### Technical Features
+- ✅ **Performance Optimized** - Code splitting, lazy loading, React.memo, useMemo
+- ✅ **Type Safety** - Comprehensive TypeScript with type guards
+- ✅ **Error Handling** - Centralized error logging and user-friendly error messages
+- ✅ **Image Management** - Upload, preview, and delete signal images
+- ✅ **Form Validation** - Comprehensive form validation with error messages
 
 ## 📝 Development
 
-The project uses:
-- **TypeScript** for type safety
-- **React Three Fiber** for declarative 3D graphics
-- **Zustand** for simple state management
-- **TailwindCSS** for fast styling
+### Project Structure
+
+The project follows a **domain-driven architecture**:
+
+```
+src/
+├── domains/              # Feature-based domains
+│   ├── admin/           # Admin functionality (CRUD operations)
+│   ├── auth/            # Authentication
+│   ├── radar/           # 3D radar visualization
+│   ├── explanation/      # Explanation section
+│   └── layout/          # Layout components (Header, etc.)
+├── shared/              # Shared utilities & components
+│   ├── components/     # Reusable UI components
+│   ├── hooks/          # Shared React hooks
+│   ├── utils/          # Utility functions
+│   └── constants/      # App-wide constants
+├── firebase/            # Firebase services
+│   └── services/       # Organized by entity (signals, industries)
+├── store/              # Zustand state management
+└── types/              # TypeScript type definitions
+```
+
+### Key Design Decisions
+
+- **Domain-Driven Design**: Code organized by business domains for better maintainability
+- **Type Safety**: Comprehensive TypeScript with type guards and strict mode
+- **Performance**: React.memo, useMemo, useCallback, and code splitting
+- **Error Handling**: Centralized error logging with context-aware messages
+- **Code Organization**: Services split into converters, queries, mutations, subscriptions
+
+### Development Scripts
+
+```bash
+# Development
+npm run dev              # Start dev server
+
+# Code Quality
+npm run lint            # Run ESLint
+npm run format          # Format code with Prettier
+npm run format:check    # Check formatting
+
+# Build
+npm run build           # Production build
+npm run preview         # Preview production build
+```
 
 ## 🔥 Firebase Setup
 
@@ -101,9 +188,53 @@ If you want to upload images, Storage Rules must also be configured. The `storag
 
 ## 🚢 Deployment
 
-The project can be easily deployed on Vercel or Netlify:
+The project can be deployed on any static hosting service:
+
+### Vercel / Netlify
 
 1. Push repository to GitHub/GitLab
-2. Import in Vercel/Netlify
-3. Build command: `npm run build`
-4. Output directory: `dist`
+2. Import project in Vercel/Netlify
+3. Configure environment variables in dashboard
+4. Build command: `npm run build`
+5. Output directory: `dist`
+
+### Environment Variables
+
+Make sure to set all Firebase environment variables in your hosting platform:
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_STORAGE_BUCKET`
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`
+- `VITE_FIREBASE_APP_ID`
+- `VITE_FIREBASE_MEASUREMENT_ID`
+
+## 🏗️ Architecture Highlights
+
+### Performance Optimizations
+- **Code Splitting**: Lazy loading for RadarSection and ExplanationSection
+- **Memoization**: React.memo for expensive components, useMemo for calculations
+- **Bundle Optimization**: Manual chunks for vendor libraries (Three.js, Firebase, etc.)
+- **Image Preloading**: Images preloaded on hover for instant display
+
+### Error Handling
+- Centralized error logging with context
+- User-friendly error messages with i18n support
+- Error boundaries for graceful error recovery
+- Type guards for runtime type safety
+
+### State Management
+- Zustand for lightweight state management
+- Domain-specific stores (auth, radar, modals, windows, theme)
+- Optimized re-renders with selective subscriptions
+
+## 📚 Additional Resources
+
+- [Three.js Documentation](https://threejs.org/docs/)
+- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+
+## 📄 License
+
+MIT License - see LICENSE file for details

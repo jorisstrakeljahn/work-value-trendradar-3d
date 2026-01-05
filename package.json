@@ -8,8 +8,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,json,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,json,css}\""
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,json,css}\"",
+    "type-check": "tsc --noEmit",
+    "validate": "npm run type-check && npm run lint && npm run format:check"
   },
   "dependencies": {
     "@react-three/drei": "^9.92.7",
