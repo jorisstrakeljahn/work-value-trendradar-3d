@@ -35,6 +35,7 @@ export function SignalDetailsContent({
           const industry = industries.find(ind => ind.id === tag)
           return industry?.name || tag
         })
+        .filter(name => name.trim().length > 0)
         .join(', ')
     : ''
 
@@ -43,8 +44,8 @@ export function SignalDetailsContent({
       {/* Header with image, title, and summary */}
       <SignalHeader signal={signal} />
 
-      {/* Industries - only show if industries exist */}
-      {hasIndustries && industryNames && (
+      {/* Industries - only show if industries exist and names are available */}
+      {hasIndustries && industryNames.trim().length > 0 && (
         <div className="pt-4 border-t border-gray-200/50 dark:border-gray-600/50">
           <div className="space-y-2">
             <h4 className="font-medium text-sm text-gray-900 dark:text-gray-100">

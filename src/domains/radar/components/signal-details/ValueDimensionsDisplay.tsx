@@ -33,9 +33,11 @@ export function ValueDimensionsDisplay({
       </h4>
       <div className="space-y-2 text-xs mb-4">
         {dimensions.map(({ key, label }) => (
-          <div key={key} className="flex items-center justify-between">
-            <span className="text-gray-600 dark:text-gray-400">{label}</span>
-            <span className="text-gray-900 dark:text-gray-100 font-medium">
+          <div key={key} className="flex items-center gap-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300 min-w-[80px]">
+              {label}
+            </span>
+            <span className="text-gray-900 dark:text-gray-100">
               {valueDimensions[key]}
             </span>
           </div>

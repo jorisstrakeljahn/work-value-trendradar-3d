@@ -29,7 +29,7 @@ export function SignalInfo({ signal }: SignalInfoProps) {
       />
       <InfoRow
         label={t('signalDetails.workValue')}
-        value={`${workValueIndex.toFixed(1)}`}
+        value={`${Math.round(workValueIndex)}/100`}
       />
     </div>
   )
