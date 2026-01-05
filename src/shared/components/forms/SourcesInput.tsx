@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Label } from './Label'
 import { Input } from './Input'
@@ -17,6 +17,7 @@ interface SourcesInputProps {
  * List of sources (Name + URL)
  * Input fields to add sources
  * Remove button for each source
+ * Automatically saves pending source when URL field loses focus (onBlur)
  */
 export function SourcesInput({
   sources,
@@ -27,14 +28,44 @@ export function SourcesInput({
   const { t } = useTranslation()
   const [sourceName, setSourceName] = useState('')
   const [sourceUrl, setSourceUrl] = useState('')
+  const urlInputRef = useRef<HTMLInputElement>(null)
 
   const addSource = () => {
     const trimmedName = sourceName.trim()
     const trimmedUrl = sourceUrl.trim()
     if (trimmedName && trimmedUrl) {
-      onSourcesChange([...sources, { name: trimmedName, url: trimmedUrl }])
-      setSourceName('')
-      setSourceUrl('')
+      // Check if source already exists
+      const sourceExists = sources.some(
+        s => s.name === trimmedName && s.url === trimmedUrl
+      )
+      
+      if (!sourceExists) {
+        onSourcesChange([...sources, { name: trimmedName, url: trimmedUrl }])
+        setSourceName('')
+        setSourceUrl('')
+      }
+    }
+  }
+
+  // Auto-add source when URL field loses focus (if both fields are filled)
+  // This ensures that if user fills in both fields and clicks away or submits,
+  // the source is automatically saved
+  const handleUrlBlur = () => {
+    const trimmedName = sourceName.trim()
+    const trimmedUrl = sourceUrl.trim()
+    
+    // Only auto-add if both fields have values
+    if (trimmedName && trimmedUrl) {
+      // Check if source already exists
+      const sourceExists = sources.some(
+        s => s.name === trimmedName && s.url === trimmedUrl
+      )
+      
+      if (!sourceExists) {
+        onSourcesChange([...sources, { name: trimmedName, url: trimmedUrl }])
+        setSourceName('')
+        setSourceUrl('')
+      }
     }
   }
 
@@ -44,6 +75,13 @@ export function SourcesInput({
 
   const removeSource = (index: number) => {
     onSourcesChange(sources.filter((_, i) => i !== index))
+  }
+
+  const updateSource = (index: number, field: 'name' | 'url', value: string) => {
+    const updatedSources = sources.map((source, i) =>
+      i === index ? { ...source, [field]: value } : source
+    )
+    onSourcesChange(updatedSources)
   }
 
   return (
@@ -56,14 +94,16 @@ export function SourcesInput({
               <Input
                 type="text"
                 value={source.name}
-                readOnly
-                className="bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                onChange={e => updateSource(index, 'name', e.target.value)}
+                disabled={disabled}
+                className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
               />
               <Input
-                type="text"
+                type="url"
                 value={source.url}
-                readOnly
-                className="bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                onChange={e => updateSource(index, 'url', e.target.value)}
+                disabled={disabled}
+                className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
               />
             </div>
             <Button
@@ -87,9 +127,11 @@ export function SourcesInput({
             className="flex-1"
           />
           <Input
+            ref={urlInputRef}
             type="url"
             value={sourceUrl}
             onChange={e => setSourceUrl(e.target.value)}
+            onBlur={handleUrlBlur}
             placeholder={t('admin.form.sourceUrl')}
             disabled={disabled}
             className="flex-1"
