@@ -15,7 +15,7 @@ export function useFilteredSignals() {
   const { MAX_RADIUS, MAX_HEIGHT } = RADAR_CONFIG
 
   return useMemo(() => {
-    let filtered = [...signals] as Signal[]
+    let filtered = [...signals]
 
     // Filter by industries
     if (filters.industries && filters.industries.length > 0) {

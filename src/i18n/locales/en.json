@@ -196,7 +196,8 @@
   "signalWindows": {
     "close": "Close",
     "bringToFront": "Bring to front",
-    "imageAlt": "Signal image"
+    "imageAlt": "Signal image",
+    "imageLoadError": "Image could not be loaded"
   },
   "scrollIndicator": {
     "learnMore": "Learn more"
@@ -266,5 +267,10 @@
     "about": "About This Project",
     "aboutDesc1": "This 3D Trend Radar is designed to help researchers, policymakers, and industry professionals understand how emerging AI and robotics technologies might reshape the value of work. By visualizing weak signals in three dimensions, we can better anticipate future changes and prepare for the evolving landscape of work.",
     "aboutDesc2": "The data presented here represents a curated collection of trends and signals observed across multiple industries. Each signal is evaluated based on its potential impact, time horizon, and effect on work value across economic, social, subjective, and political dimensions."
+  },
+  "errors": {
+    "genericError": "Something went wrong",
+    "domainError": "Error in {{domain}}",
+    "tryAgain": "Try again"
   }
 }

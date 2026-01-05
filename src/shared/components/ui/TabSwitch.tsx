@@ -1,3 +1,5 @@
+import { logWarning } from '../../utils/errorLogger'
+
 interface TabSwitchProps<T extends string> {
   options: Array<{ value: T; label: string }>
   value: T
@@ -18,7 +20,10 @@ export function TabSwitch<T extends string>({
   className = '',
 }: TabSwitchProps<T>) {
   if (options.length !== 2) {
-    console.warn('TabSwitch expects exactly 2 options')
+    logWarning('TabSwitch expects exactly 2 options', {
+      component: 'TabSwitch',
+      additionalData: { optionsCount: options.length },
+    })
   }
 
   return (

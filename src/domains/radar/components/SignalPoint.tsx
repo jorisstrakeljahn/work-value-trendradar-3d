@@ -1,17 +1,18 @@
-import { useRef, useState, useMemo } from 'react'
+import React, { useRef, useState, useMemo, useCallback, useEffect } from 'react'
 import { Mesh } from 'three'
 import { useFrame, ThreeEvent } from '@react-three/fiber'
 import { useRadarStore } from '../../../store/useRadarStore'
 import { useModalStore } from '../../../store/useModalStore'
 import { useSignalWindowsStore } from '../../../store/useSignalWindowsStore'
 import { useIndustries } from '../../../shared/hooks/useIndustries'
+import { preloadImage } from '../../../shared/utils/imagePreloader'
 import type { Signal } from '../../../types/signal'
 
 interface SignalPointProps {
   signal: Signal
 }
 
-export default function SignalPoint({ signal }: SignalPointProps) {
+function SignalPoint({ signal }: SignalPointProps) {
   const meshRef = useRef<Mesh>(null)
   const { hoveredSignal, setSelectedSignal, setHoveredSignal } = useRadarStore()
   const { isAnyModalOpen } = useModalStore()
@@ -44,6 +45,15 @@ export default function SignalPoint({ signal }: SignalPointProps) {
   // Fixed size for all points (uniform, larger for better clickability)
   const baseSize = 0.22
 
+  // Preload image when signal is hovered (for instant display when window opens)
+  useEffect(() => {
+    if (isHovered && signal.imageUrl) {
+      preloadImage(signal.imageUrl).catch(() => {
+        // Silently fail - image will load when window opens
+      })
+    }
+  }, [isHovered, signal.imageUrl])
+
   useFrame(() => {
     if (meshRef.current) {
       // Pulsing effect for points with open windows
@@ -58,40 +68,46 @@ export default function SignalPoint({ signal }: SignalPointProps) {
     }
   })
 
-  const handleClick = (e: ThreeEvent<MouseEvent>) => {
-    if (isAnyModalOpen) {
-      return
-    }
-    e.stopPropagation()
-
-    // If window is already open, close it
-    if (hasOpenWindow) {
-      const windowToClose = windows.find(w => w.signalId === signal.id)
-      if (windowToClose) {
-        closeWindow(windowToClose.id)
-        setSelectedSignal(null) // Clear selection
+  const handleClick = useCallback(
+    (e: ThreeEvent<MouseEvent>) => {
+      if (isAnyModalOpen) {
+        return
       }
-    } else {
-      // Open window for this signal
-      setSelectedSignal(signal)
-      openWindow(signal.id)
-    }
-  }
+      e.stopPropagation()
 
-  const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
-    if (isAnyModalOpen) return
-    e.stopPropagation()
-    setHovered(true)
-    setHoveredSignal(signal)
-  }
+      // If window is already open, close it
+      if (hasOpenWindow) {
+        const windowToClose = windows.find(w => w.signalId === signal.id)
+        if (windowToClose) {
+          closeWindow(windowToClose.id)
+          setSelectedSignal(null) // Clear selection
+        }
+      } else {
+        // Open window for this signal
+        setSelectedSignal(signal)
+        openWindow(signal.id)
+      }
+    },
+    [isAnyModalOpen, hasOpenWindow, windows, signal, closeWindow, setSelectedSignal, openWindow]
+  )
 
-  const handlePointerOut = () => {
+  const handlePointerOver = useCallback(
+    (e: ThreeEvent<PointerEvent>) => {
+      if (isAnyModalOpen) return
+      e.stopPropagation()
+      setHovered(true)
+      setHoveredSignal(signal)
+    },
+    [isAnyModalOpen, setHoveredSignal, signal]
+  )
+
+  const handlePointerOut = useCallback(() => {
     if (isAnyModalOpen) return
     setHovered(false)
     if (hoveredSignal?.id === signal.id) {
       setHoveredSignal(null)
     }
-  }
+  }, [isAnyModalOpen, hoveredSignal, signal, setHoveredSignal])
 
   if (!signal.position) return null
 
@@ -114,3 +130,19 @@ export default function SignalPoint({ signal }: SignalPointProps) {
     </mesh>
   )
 }
+
+// Memoize component to prevent unnecessary re-renders
+// Only re-render if signal properties change
+export default React.memo(SignalPoint, (prevProps, nextProps) => {
+  // Custom comparison: only re-render if signal id or position changes
+  return (
+    prevProps.signal.id === nextProps.signal.id &&
+    prevProps.signal.position?.x === nextProps.signal.position?.x &&
+    prevProps.signal.position?.y === nextProps.signal.position?.y &&
+    prevProps.signal.position?.z === nextProps.signal.position?.z &&
+    prevProps.signal.industryTags.length === nextProps.signal.industryTags.length &&
+    prevProps.signal.industryTags.every(
+      (tag, i) => tag === nextProps.signal.industryTags[i]
+    )
+  )
+})

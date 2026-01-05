@@ -126,18 +126,14 @@ export default function SignalFormModal({
 
         await updateSignal(
           signal.id,
-          { ...signalData, imageUrl: finalImageUrl } as Parameters<
-            typeof updateSignal
-          >[1],
+          { ...signalData, imageUrl: finalImageUrl },
           user.uid
         )
         onSuccess?.()
       } else {
         // Create new signal - image will be uploaded after creation
-        // Type assertion needed: createSignal accepts title/summary as string | MultilingualText
-        // Using unknown intermediate cast to handle union type compatibility
         const newSignalId = await createSignal(
-          signalData as unknown as Parameters<typeof createSignal>[0],
+          signalData,
           user.uid
         )
 

@@ -5,6 +5,8 @@ import {
   deleteObject,
 } from 'firebase/storage'
 import { storage } from '../config'
+import { logErrorWithContext } from '../../shared/utils/errorLogger'
+import { getFirebaseErrorMessage } from '../../shared/utils/errorHandling'
 
 /**
  * Upload an image for a signal
@@ -44,31 +46,15 @@ export async function uploadSignalImage(
 
     return downloadURL
   } catch (error: unknown) {
-    // Provide more specific error messages
-    const errorObj = error as {
-      code?: string
-      message?: string
-      stack?: string
-    }
-
-    if (
-      errorObj.code === 'storage/unauthorized' ||
-      errorObj.code === 'storage/permission-denied'
-    ) {
-      throw new Error(
-        'Storage permission denied. Please check Firebase Storage Rules in the Firebase Console.'
-      )
-    }
-
-    if (errorObj.code === 'storage/unauthenticated') {
-      throw new Error('Unauthorized. Please make sure you are logged in.')
-    }
-
-    if (error instanceof Error) {
-      throw error
-    }
-
-    throw new Error('Failed to upload image. Please try again.')
+    logErrorWithContext(
+      error instanceof Error ? error : new Error(String(error)),
+      'imageService',
+      'uploadSignalImage',
+      { signalId, fileName: file.name }
+    )
+    throw new Error(
+      `Failed to upload image: ${getFirebaseErrorMessage(error)}`
+    )
   }
 }
 
@@ -94,8 +80,13 @@ export async function deleteSignalImage(imageUrl: string): Promise<void> {
 
     await deleteObject(storageRef)
   } catch (error) {
-    // If image doesn't exist, that's okay
-    console.warn('Error deleting image:', error)
+    // If image doesn't exist, that's okay - log as warning
+    logErrorWithContext(
+      error instanceof Error ? error : new Error(String(error)),
+      'imageService',
+      'deleteSignalImage',
+      { imageUrl }
+    )
     throw error
   }
 }

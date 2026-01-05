@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Rnd, RndDragCallback, RndResizeCallback } from 'react-rnd'
 import { X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -8,6 +8,7 @@ import { SignalDetailsContent } from './signal-details/SignalDetailsContent'
 import SignalFormModal from '../../admin/components/SignalFormModal'
 import DeleteSignalModal from '../../admin/components/DeleteSignalModal'
 import { deleteSignal } from '../../../firebase/services/signalsService'
+import { logErrorWithContext } from '../../../shared/utils/errorLogger'
 import type { Signal } from '../../../types/signal'
 
 interface DraggableSignalWindowProps {
@@ -42,7 +43,11 @@ export default function DraggableSignalWindow({
 
   // Always get signal from signals array (which is updated with current language)
   // This ensures that when language changes, the signal content is updated
-  const signal = signals.find((s: Signal) => s.id === signalId)
+  // Memoize to prevent unnecessary re-renders
+  const signal = useMemo(
+    () => signals.find((s: Signal) => s.id === signalId),
+    [signals, signalId]
+  )
 
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -135,7 +140,12 @@ export default function DraggableSignalWindow({
       setShowDeleteModal(false)
       onClose() // Close window after deletion
     } catch (error) {
-      console.error('Error deleting signal:', error)
+      logErrorWithContext(
+        error instanceof Error ? error : new Error(String(error)),
+        'DraggableSignalWindow',
+        'handleDeleteConfirm',
+        { signalId: signal?.id }
+      )
       throw error
     } finally {
       setDeleting(false)

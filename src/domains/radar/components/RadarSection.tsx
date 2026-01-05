@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Canvas } from '@react-three/fiber'
 import RadarScene from './RadarScene'
 import FiltersPanel from './FiltersPanel'
@@ -36,13 +36,16 @@ export default function RadarSection() {
   }, [selectedSignal?.id]) // Only depend on signal ID, not the entire signal object or function
 
   // Handle window close: clear selectedSignal if it's the signal that was closed
-  const handleWindowClose = (windowId: string) => {
-    const windowToClose = windows.find(w => w.id === windowId)
-    if (windowToClose && selectedSignal?.id === windowToClose.signalId) {
-      setSelectedSignal(null)
-    }
-    closeWindow(windowId)
-  }
+  const handleWindowClose = useCallback(
+    (windowId: string) => {
+      const windowToClose = windows.find(w => w.id === windowId)
+      if (windowToClose && selectedSignal?.id === windowToClose.signalId) {
+        setSelectedSignal(null)
+      }
+      closeWindow(windowId)
+    },
+    [windows, selectedSignal, setSelectedSignal, closeWindow]
+  )
 
   return (
     <section className="relative w-full h-[calc(100vh-5rem)] bg-apple-gray-50 dark:bg-[#1a1a1a] transition-colors duration-200 overflow-x-auto">

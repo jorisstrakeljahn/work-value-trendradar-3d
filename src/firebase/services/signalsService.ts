@@ -19,6 +19,9 @@ import type {
   SignalDocument,
   MultilingualText,
 } from '../../types/signal'
+import { logErrorWithContext } from '../../shared/utils/errorLogger'
+import { getFirebaseErrorMessage } from '../../shared/utils/errorHandling'
+import { isSignalDocument, isMultilingualText } from '../../shared/utils/typeGuards'
 
 /**
  * Convert Firestore document to Signal interface
@@ -84,9 +87,9 @@ export function signalToFirestore(
 
   // Handle multilingual fields
   if (signal.title) {
-    if (typeof signal.title === 'object' && 'de' in signal.title) {
+    if (isMultilingualText(signal.title)) {
       // Already in multilingual format
-      baseData.title = signal.title as MultilingualText
+      baseData.title = signal.title
     } else {
       // Single string - convert to multilingual
       baseData.title = {
@@ -97,9 +100,9 @@ export function signalToFirestore(
   }
 
   if (signal.summary) {
-    if (typeof signal.summary === 'object' && 'de' in signal.summary) {
+    if (isMultilingualText(signal.summary)) {
       // Already in multilingual format
-      baseData.summary = signal.summary as MultilingualText
+      baseData.summary = signal.summary
     } else {
       // Single string - convert to multilingual
       baseData.summary = {
@@ -123,28 +126,74 @@ export function signalToFirestore(
 export async function getSignal(
   signalId: string
 ): Promise<SignalDocument | null> {
-  const signalRef = doc(db, 'signals', signalId)
-  const signalSnap = await getDoc(signalRef)
+  try {
+    const signalRef = doc(db, 'signals', signalId)
+    const signalSnap = await getDoc(signalRef)
 
-  if (!signalSnap.exists()) {
+    if (!signalSnap.exists()) {
+      return null
+    }
+
+    const data = { id: signalSnap.id, ...signalSnap.data() }
+    if (isSignalDocument(data)) {
+      return data
+    }
+
+    logErrorWithContext(
+      new Error('Invalid signal document structure'),
+      'signalsService',
+      'getSignal',
+      { signalId }
+    )
     return null
+  } catch (error) {
+    logErrorWithContext(
+      error instanceof Error ? error : new Error(String(error)),
+      'signalsService',
+      'getSignal',
+      { signalId }
+    )
+    throw new Error(
+      `Failed to get signal: ${getFirebaseErrorMessage(error)}`
+    )
   }
-
-  return { id: signalSnap.id, ...signalSnap.data() } as SignalDocument
 }
 
 /**
  * Get all signals
  */
 export async function getAllSignals(): Promise<SignalDocument[]> {
-  const signalsRef = collection(db, 'signals')
-  const q = query(signalsRef, orderBy('createdAt', 'desc'))
-  const querySnapshot = await getDocs(q)
+  try {
+    const signalsRef = collection(db, 'signals')
+    const q = query(signalsRef, orderBy('createdAt', 'desc'))
+    const querySnapshot = await getDocs(q)
 
-  return querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as SignalDocument[]
+    const signals: SignalDocument[] = []
+    for (const docSnapshot of querySnapshot.docs) {
+      const data = { id: docSnapshot.id, ...docSnapshot.data() }
+      if (isSignalDocument(data)) {
+        signals.push(data)
+      } else {
+        logErrorWithContext(
+          new Error('Invalid signal document structure'),
+          'signalsService',
+          'getAllSignals',
+          { signalId: docSnapshot.id }
+        )
+      }
+    }
+
+    return signals
+  } catch (error) {
+    logErrorWithContext(
+      error instanceof Error ? error : new Error(String(error)),
+      'signalsService',
+      'getAllSignals'
+    )
+    throw new Error(
+      `Failed to get signals: ${getFirebaseErrorMessage(error)}`
+    )
+  }
 }
 
 /**
@@ -160,17 +209,29 @@ export async function createSignal(
   userId: string,
   customId?: string
 ): Promise<string> {
-  const firestoreData = signalToFirestore(signalData, userId, false)
+  try {
+    const firestoreData = signalToFirestore(signalData, userId, false)
 
-  if (customId) {
-    // Use custom ID (for migration)
-    const docRef = doc(db, 'signals', customId)
-    await setDoc(docRef, firestoreData)
-    return customId
-  } else {
-    const signalsRef = collection(db, 'signals')
-    const docRef = await addDoc(signalsRef, firestoreData)
-    return docRef.id
+    if (customId) {
+      // Use custom ID (for migration)
+      const docRef = doc(db, 'signals', customId)
+      await setDoc(docRef, firestoreData)
+      return customId
+    } else {
+      const signalsRef = collection(db, 'signals')
+      const docRef = await addDoc(signalsRef, firestoreData)
+      return docRef.id
+    }
+  } catch (error) {
+    logErrorWithContext(
+      error instanceof Error ? error : new Error(String(error)),
+      'signalsService',
+      'createSignal',
+      { userId, hasCustomId: !!customId }
+    )
+    throw new Error(
+      `Failed to create signal: ${getFirebaseErrorMessage(error)}`
+    )
   }
 }
 
@@ -187,18 +248,42 @@ export async function updateSignal(
   >,
   userId: string
 ): Promise<void> {
-  const signalRef = doc(db, 'signals', signalId)
-  const firestoreData = signalToFirestore(signalData, userId, true)
+  try {
+    const signalRef = doc(db, 'signals', signalId)
+    const firestoreData = signalToFirestore(signalData, userId, true)
 
-  await updateDoc(signalRef, firestoreData)
+    await updateDoc(signalRef, firestoreData)
+  } catch (error) {
+    logErrorWithContext(
+      error instanceof Error ? error : new Error(String(error)),
+      'signalsService',
+      'updateSignal',
+      { signalId, userId }
+    )
+    throw new Error(
+      `Failed to update signal: ${getFirebaseErrorMessage(error)}`
+    )
+  }
 }
 
 /**
  * Delete a signal
  */
 export async function deleteSignal(signalId: string): Promise<void> {
-  const signalRef = doc(db, 'signals', signalId)
-  await deleteDoc(signalRef)
+  try {
+    const signalRef = doc(db, 'signals', signalId)
+    await deleteDoc(signalRef)
+  } catch (error) {
+    logErrorWithContext(
+      error instanceof Error ? error : new Error(String(error)),
+      'signalsService',
+      'deleteSignal',
+      { signalId }
+    )
+    throw new Error(
+      `Failed to delete signal: ${getFirebaseErrorMessage(error)}`
+    )
+  }
 }
 
 /**
@@ -211,13 +296,33 @@ export function subscribeToSignals(
   const signalsRef = collection(db, 'signals')
   const q = query(signalsRef, orderBy('createdAt', 'desc'))
 
-  return onSnapshot(q, snapshot => {
-    const signals = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as SignalDocument[]
-    callback(signals)
-  })
+  return onSnapshot(
+    q,
+    snapshot => {
+      const signals: SignalDocument[] = []
+      for (const docSnapshot of snapshot.docs) {
+        const data = { id: docSnapshot.id, ...docSnapshot.data() }
+        if (isSignalDocument(data)) {
+          signals.push(data)
+        } else {
+          logErrorWithContext(
+            new Error('Invalid signal document structure'),
+            'signalsService',
+            'subscribeToSignals',
+            { signalId: docSnapshot.id }
+          )
+        }
+      }
+      callback(signals)
+    },
+    error => {
+      logErrorWithContext(
+        error instanceof Error ? error : new Error(String(error)),
+        'signalsService',
+        'subscribeToSignals'
+      )
+    }
+  )
 }
 
 /**
@@ -229,13 +334,34 @@ export function subscribeToSignal(
 ): Unsubscribe {
   const signalRef = doc(db, 'signals', signalId)
 
-  return onSnapshot(signalRef, snapshot => {
-    if (!snapshot.exists()) {
-      callback(null)
-      return
-    }
+  return onSnapshot(
+    signalRef,
+    snapshot => {
+      if (!snapshot.exists()) {
+        callback(null)
+        return
+      }
 
-    const signal = { id: snapshot.id, ...snapshot.data() } as SignalDocument
-    callback(signal)
-  })
+      const data = { id: snapshot.id, ...snapshot.data() }
+      if (isSignalDocument(data)) {
+        callback(data)
+      } else {
+        logErrorWithContext(
+          new Error('Invalid signal document structure'),
+          'signalsService',
+          'subscribeToSignal',
+          { signalId }
+        )
+        callback(null)
+      }
+    },
+    error => {
+      logErrorWithContext(
+        error instanceof Error ? error : new Error(String(error)),
+        'signalsService',
+        'subscribeToSignal',
+        { signalId }
+      )
+    }
+  )
 }

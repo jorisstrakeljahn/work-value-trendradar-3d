@@ -1,7 +1,18 @@
+import { lazy, Suspense } from 'react'
 import Header from './domains/layout/components/Header'
-import RadarSection from './domains/radar/components/RadarSection'
-import ExplanationSection from './domains/explanation/components/ExplanationSection'
 import { ErrorBoundary } from './shared/components/ErrorBoundary'
+import { LoadingSpinner } from './shared/components/ui'
+
+// Lazy load heavy components for better code splitting
+const RadarSection = lazy(() => import('./domains/radar/components/RadarSection'))
+const ExplanationSection = lazy(() => import('./domains/explanation/components/ExplanationSection'))
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-[400px]">
+    <LoadingSpinner />
+  </div>
+)
 
 function App() {
   return (
@@ -10,10 +21,14 @@ function App() {
         <Header />
       </ErrorBoundary>
       <ErrorBoundary domain="Radar">
-        <RadarSection />
+        <Suspense fallback={<LoadingFallback />}>
+          <RadarSection />
+        </Suspense>
       </ErrorBoundary>
       <ErrorBoundary domain="Explanation">
-        <ExplanationSection />
+        <Suspense fallback={<LoadingFallback />}>
+          <ExplanationSection />
+        </Suspense>
       </ErrorBoundary>
     </div>
   )

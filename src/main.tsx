@@ -3,14 +3,10 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import './i18n/config'
+import { initializeTheme } from './shared/utils/themeUtils'
 
 // Initialize theme from localStorage before rendering
-const storedTheme = localStorage.getItem('radar-theme')
-if (storedTheme === 'dark') {
-  document.documentElement.classList.add('dark')
-} else {
-  document.documentElement.classList.remove('dark')
-}
+initializeTheme()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

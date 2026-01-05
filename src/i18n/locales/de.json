@@ -196,7 +196,8 @@
   "signalWindows": {
     "close": "Schließen",
     "bringToFront": "Nach vorne bringen",
-    "imageAlt": "Signal Bild"
+    "imageAlt": "Signal Bild",
+    "imageLoadError": "Bild konnte nicht geladen werden"
   },
   "scrollIndicator": {
     "learnMore": "Mehr erfahren"
@@ -266,5 +267,10 @@
     "about": "Über dieses Projekt",
     "aboutDesc1": "Dieses 3D Trend Radar wurde entwickelt, um Forschern, Politikern und Branchenexperten zu helfen zu verstehen, wie aufkommende KI- und Robotiktechnologien den Wert der Arbeit neu gestalten könnten. Durch die Visualisierung schwacher Signale in drei Dimensionen können wir zukünftige Veränderungen besser antizipieren und uns auf die sich entwickelnde Arbeitslandschaft vorbereiten.",
     "aboutDesc2": "Die hier präsentierten Daten repräsentieren eine kuratierte Sammlung von Trends und Signalen, die in mehreren Branchen beobachtet wurden. Jedes Signal wird basierend auf seinem potenziellen Impact, Zeithorizont und Effekt auf den Arbeitswert über wirtschaftliche, soziale, subjektive und politische Dimensionen bewertet."
+  },
+  "errors": {
+    "genericError": "Etwas ist schiefgelaufen",
+    "domainError": "Fehler in {{domain}}",
+    "tryAgain": "Erneut versuchen"
   }
 }

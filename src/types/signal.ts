@@ -1,3 +1,5 @@
+import type { Timestamp } from 'firebase/firestore'
+
 /**
  * Source reference for a signal
  */
@@ -99,8 +101,8 @@ export interface SignalDocument {
   valueDimensionsJustification?: ValueDimensionsJustification
   sources: Source[]
   imageUrl?: string
-  createdAt: unknown // Firestore Timestamp
-  updatedAt: unknown // Firestore Timestamp
+  createdAt: Timestamp
+  updatedAt: Timestamp
   createdBy: string // User UID
 }
 
@@ -120,7 +122,7 @@ export interface IndustryDocument {
   id: string
   name: MultilingualText
   color: string
-  createdAt: unknown // Firestore Timestamp
-  updatedAt: unknown // Firestore Timestamp
+  createdAt: Timestamp
+  updatedAt: Timestamp
   createdBy: string // User UID
 }

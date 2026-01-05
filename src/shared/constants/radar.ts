@@ -9,4 +9,7 @@ export const RADAR_CONFIG = {
     ANGLE: Math.PI / 12, // 15 degrees (more frontal, less from above)
     FOV: 75,
   },
+  // Default values for position mapping
+  DEFAULT_MAX_RADIUS: 5,
+  DEFAULT_MAX_HEIGHT: 3,
 } as const

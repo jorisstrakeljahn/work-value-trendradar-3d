@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Upload, X, Loader2 } from 'lucide-react'
+import { logWarning } from '../../../shared/utils/errorLogger'
 
 interface ImageUploadProps {
   currentImageUrl?: string
@@ -120,7 +121,11 @@ export default function ImageUpload({
           await import('../../../firebase/services/imageService')
         await deleteSignalImage(currentImageUrl)
       } catch (err) {
-        console.warn('Error deleting image:', err)
+        logWarning('Error deleting image', {
+          component: 'ImageUpload',
+          function: 'handleImageChange',
+          additionalData: { error: err },
+        })
       }
     }
   }

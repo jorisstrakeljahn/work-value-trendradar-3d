@@ -1,4 +1,9 @@
 import { create } from 'zustand'
+import {
+  getStoredTheme,
+  setTheme as setThemeUtil,
+  applyThemeToDocument,
+} from '../shared/utils/themeUtils'
 
 type Theme = 'light' | 'dark'
 
@@ -14,45 +19,22 @@ interface ThemeState {
  */
 export const useThemeStore = create<ThemeState>(set => {
   // Initialize from localStorage or default to light
-  const storedTheme = localStorage.getItem('radar-theme') as Theme | null
-  const initialTheme = storedTheme === 'dark' ? 'dark' : 'light'
+  const storedTheme = getStoredTheme()
+  const initialTheme = storedTheme || 'light'
 
   // Apply theme to document on initialization
-  if (typeof document !== 'undefined') {
-    const root = document.documentElement
-    if (initialTheme === 'dark') {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
-  }
+  applyThemeToDocument(initialTheme)
 
   return {
     theme: initialTheme,
     toggleTheme: () =>
       set(state => {
         const newTheme = state.theme === 'light' ? 'dark' : 'light'
-        localStorage.setItem('radar-theme', newTheme)
-        if (typeof document !== 'undefined') {
-          const root = document.documentElement
-          if (newTheme === 'dark') {
-            root.classList.add('dark')
-          } else {
-            root.classList.remove('dark')
-          }
-        }
+        setThemeUtil(newTheme)
         return { theme: newTheme }
       }),
     setTheme: theme => {
-      localStorage.setItem('radar-theme', theme)
-      if (typeof document !== 'undefined') {
-        const root = document.documentElement
-        if (theme === 'dark') {
-          root.classList.add('dark')
-        } else {
-          root.classList.remove('dark')
-        }
-      }
+      setThemeUtil(theme)
       set({ theme })
     },
   }

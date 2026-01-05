@@ -1,6 +1,16 @@
 import type { Signal, ValueWeights } from '../../types/signal'
 
 /**
+ * Constants for value dimension calculations
+ */
+const NORMALIZATION_FACTOR = 100
+const DIMENSION_MAX = 5
+const IMPACT_CENTER_OFFSET = 0.5
+const IMPACT_SCALE_FACTOR = 2
+const MIN_WORK_VALUE_INDEX = 0
+const MAX_WORK_VALUE_INDEX = 100
+
+/**
  * Default weights (for backward compatibility)
  */
 const defaultWeights: ValueWeights = {
@@ -29,17 +39,17 @@ export function calculateWorkValueIndex(
 
   // Normalize percent weights (0-100) to decimal weights (0.0-1.0)
   const normalizedWeights = {
-    economic: weightValues.economic / 100,
-    social: weightValues.social / 100,
-    subjective: weightValues.subjective / 100,
-    political: weightValues.political / 100,
+    economic: weightValues.economic / NORMALIZATION_FACTOR,
+    social: weightValues.social / NORMALIZATION_FACTOR,
+    subjective: weightValues.subjective / NORMALIZATION_FACTOR,
+    political: weightValues.political / NORMALIZATION_FACTOR,
   }
 
   // Normalize from 0..5 to 0..100
-  const normalizedEconomic = (economic / 5) * 100
-  const normalizedSocial = (social / 5) * 100
-  const normalizedSubjective = (subjective / 5) * 100
-  const normalizedPolitical = (political / 5) * 100
+  const normalizedEconomic = (economic / DIMENSION_MAX) * NORMALIZATION_FACTOR
+  const normalizedSocial = (social / DIMENSION_MAX) * NORMALIZATION_FACTOR
+  const normalizedSubjective = (subjective / DIMENSION_MAX) * NORMALIZATION_FACTOR
+  const normalizedPolitical = (political / DIMENSION_MAX) * NORMALIZATION_FACTOR
 
   const workValueIndex =
     normalizedEconomic * normalizedWeights.economic +
@@ -47,7 +57,7 @@ export function calculateWorkValueIndex(
     normalizedSubjective * normalizedWeights.subjective +
     normalizedPolitical * normalizedWeights.political
 
-  return Math.max(0, Math.min(100, workValueIndex))
+  return Math.max(MIN_WORK_VALUE_INDEX, Math.min(MAX_WORK_VALUE_INDEX, workValueIndex))
 }
 
 /**
@@ -73,11 +83,11 @@ export function mapSignalToPosition(
 ): { x: number; y: number; z: number } {
   // X: Impact / Relevance (0..100) → -maxRadius to +maxRadius
   // Normalize to -1..1, then scale
-  const x = (signal.xImpact / 100 - 0.5) * 2 * maxRadius
+  const x = (signal.xImpact / NORMALIZATION_FACTOR - IMPACT_CENTER_OFFSET) * IMPACT_SCALE_FACTOR * maxRadius
 
   // Y: Time Horizon / Maturity (0..100) → 0 to +maxRadius (semicircle)
   // 0 = now/short-term, 100 = long-term
-  const y = (signal.yHorizon / 100) * maxRadius
+  const y = (signal.yHorizon / NORMALIZATION_FACTOR) * maxRadius
 
   // Z: Work-Value-Index (aggregated from 4 sub-values)
   // Calculate Work-Value-Index from valueDimensions with optional weights
@@ -87,7 +97,7 @@ export function mapSignalToPosition(
   // Normalize from 0..100 to 0..maxHeight
   // All dimensions 0 → z = 0 (on X-axis plane)
   // All dimensions 5 → z = maxHeight (maximum height)
-  const z = (workValueIndex / 100) * maxHeight
+  const z = (workValueIndex / NORMALIZATION_FACTOR) * maxHeight
 
   return { x, y, z }
 }

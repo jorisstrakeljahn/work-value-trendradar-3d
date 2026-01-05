@@ -51,16 +51,21 @@ function calculateAdjustedWeights(
   lockedDimensions: DimensionKey[]
 ): ValueWeights {
   const result = { ...currentWeights, ...newWeights }
-  const changedDimension = Object.keys(newWeights)[0] as DimensionKey
+  const changedDimensionKey = Object.keys(newWeights)[0]
+  if (!changedDimensionKey || !['economic', 'social', 'subjective', 'political'].includes(changedDimensionKey)) {
+    return result
+  }
+  const changedDimension = changedDimensionKey as DimensionKey
 
   // Calculate available budget (100 - sum of locked dimensions)
   const lockedSum = lockedDimensions.reduce((sum, key) => sum + result[key], 0)
   const availableBudget = 100 - lockedSum
 
   // Get non-locked dimensions (excluding the changed one)
-  const nonLockedDimensions = (
-    ['economic', 'social', 'subjective', 'political'] as DimensionKey[]
-  ).filter(key => !lockedDimensions.includes(key) && key !== changedDimension)
+  const allDimensions: DimensionKey[] = ['economic', 'social', 'subjective', 'political']
+  const nonLockedDimensions = allDimensions.filter(
+    key => !lockedDimensions.includes(key) && key !== changedDimension
+  )
 
   if (nonLockedDimensions.length === 0) {
     // All other dimensions are locked, adjust changed dimension to fit

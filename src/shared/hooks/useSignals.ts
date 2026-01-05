@@ -7,6 +7,7 @@ import {
 import type { Signal, SignalDocument } from '../../types/signal'
 import { calculateWorkValueIndex } from '../utils/mapping'
 import { useRadarStore } from '../../store/useRadarStore'
+import { isLanguage } from '../utils/typeGuards'
 
 /**
  * Hook to load signals from Firestore with real-time updates
@@ -14,7 +15,7 @@ import { useRadarStore } from '../../store/useRadarStore'
  */
 export function useSignals(): Signal[] {
   const { i18n } = useTranslation()
-  const language = (i18n.language === 'de' ? 'de' : 'en') as 'de' | 'en'
+  const language = isLanguage(i18n.language) ? i18n.language : 'en'
   const [firestoreSignals, setFirestoreSignals] = useState<SignalDocument[]>([])
   const { valueWeights } = useRadarStore()
 

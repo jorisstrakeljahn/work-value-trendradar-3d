@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useIndustries } from '../../../../shared/hooks/useIndustries'
 import { useAuthStore } from '../../../../store/useAuthStore'
@@ -13,12 +14,15 @@ interface SignalDetailsContentProps {
   onDelete?: () => void
 }
 
+import React from 'react'
+
 /**
  * Signal details content component
  * Displays all signal information in a structured layout
  * Used inside draggable windows (no Panel wrapper)
+ * Memoized to prevent unnecessary re-renders
  */
-export function SignalDetailsContent({
+export const SignalDetailsContent = React.memo(function SignalDetailsContent({
   signal,
   onEdit,
   onDelete,
@@ -27,17 +31,20 @@ export function SignalDetailsContent({
   const { user } = useAuthStore()
   const industries = useIndustries()
 
-  // Get industry names for display (only if industries exist)
-  const hasIndustries = signal.industryTags.length > 0
-  const industryNames = hasIndustries
-    ? signal.industryTags
-        .map(tag => {
-          const industry = industries.find(ind => ind.id === tag)
-          return industry?.name || tag
-        })
-        .filter(name => name.trim().length > 0)
-        .join(', ')
-    : ''
+  // Memoize industry names calculation to prevent unnecessary recalculations
+  const { hasIndustries, industryNames } = useMemo(() => {
+    const hasIndustries = signal.industryTags.length > 0
+    const names = hasIndustries
+      ? signal.industryTags
+          .map(tag => {
+            const industry = industries.find(ind => ind.id === tag)
+            return industry?.name || tag
+          })
+          .filter(name => name.trim().length > 0)
+          .join(', ')
+      : ''
+    return { hasIndustries, industryNames: names }
+  }, [signal.industryTags, industries])
 
   return (
     <div className="px-6 pt-6 pb-8 space-y-5">
@@ -75,4 +82,4 @@ export function SignalDetailsContent({
       )}
     </div>
   )
-}
+})
