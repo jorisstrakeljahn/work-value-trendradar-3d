@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Upload, X, Loader2 } from 'lucide-react'
 
@@ -21,8 +21,20 @@ export default function ImageUpload({
   const { t } = useTranslation()
   const [uploading, setUploading] = useState(false)
   const [preview, setPreview] = useState<string | null>(currentImageUrl || null)
+  const [imageLoading, setImageLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Update preview when currentImageUrl changes (e.g., when modal opens with existing signal)
+  useEffect(() => {
+    if (currentImageUrl) {
+      setPreview(currentImageUrl)
+      setImageLoading(true)
+    } else {
+      setPreview(null)
+      setImageLoading(false)
+    }
+  }, [currentImageUrl])
 
   const handleFileSelect = async (file: File) => {
     setError(null)
@@ -47,6 +59,7 @@ export default function ImageUpload({
     reader.onloadend = () => {
       const dataUrl = reader.result as string
       setPreview(dataUrl)
+      setImageLoading(false) // Data URL is immediately available
 
       // Upload to Firebase Storage if signalId is provided
       if (signalId) {
@@ -120,17 +133,30 @@ export default function ImageUpload({
 
       {preview ? (
         <div className="relative">
-          <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+          <div className="relative w-full aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+            {imageLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                <Loader2 className="w-6 h-6 animate-spin text-gray-400 dark:text-gray-500" />
+              </div>
+            )}
             <img
               src={preview}
               alt={t('admin.form.imagePreview')}
-              className="w-full h-full object-contain"
+              className={`w-full h-full object-cover transition-opacity duration-200 ${
+                imageLoading ? 'opacity-0' : 'opacity-100'
+              }`}
+              onLoad={() => setImageLoading(false)}
+              onError={() => {
+                setImageLoading(false)
+                setError(t('admin.messages.uploadError') + ': ' + 'Failed to load image')
+              }}
+              loading="eager"
             />
             {!disabled && (
               <button
                 type="button"
                 onClick={handleRemove}
-                className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-10"
                 aria-label={t('admin.form.removeImage')}
               >
                 <X className="w-4 h-4" />
