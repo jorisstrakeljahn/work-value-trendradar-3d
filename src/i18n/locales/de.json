@@ -91,6 +91,7 @@
       "dimensionJustification": "Begründung",
       "modeChangeWarningTitle": "Modus ändern?",
       "modeChangeWarningMessage": "Wenn Sie den Modus ändern, gehen alle eingegebenen Daten in diesem Bereich verloren. Möchten Sie fortfahren?",
+      "modeSwitchInfo": "Zwei Möglichkeiten zur Beschreibung: 'Freitext' für eine allgemeine Begründung oder 'Pro Dimension' für detaillierte, wissenschaftliche Begründungen mit Quellen pro Dimension.",
       "economic": "Economic",
       "social": "Social",
       "subjective": "Subjective",

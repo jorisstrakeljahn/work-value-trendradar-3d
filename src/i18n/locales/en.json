@@ -91,6 +91,7 @@
       "dimensionJustification": "Justification",
       "modeChangeWarningTitle": "Change mode?",
       "modeChangeWarningMessage": "If you change the mode, all entered data in this section will be lost. Do you want to continue?",
+      "modeSwitchInfo": "Two description options: 'Freetext' for a general justification or 'Per Dimension' for detailed, scientific justifications with sources per dimension.",
       "economic": "Economic",
       "social": "Social",
       "subjective": "Subjective",

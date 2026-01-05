@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Info } from 'lucide-react'
 import { Label } from './Label'
 import { MultilingualTextarea } from './MultilingualTextarea'
 import { SourcesInput } from './SourcesInput'
@@ -184,8 +185,8 @@ export function ValueDimensionsJustificationInput({
       <div className={className}>
         <Label>{t('admin.form.valueDimensionsJustification')}</Label>
 
-      {/* Mode Tab Switch */}
-      <div className="mb-4">
+      {/* Mode Tab Switch with Info Icon */}
+      <div className="mb-4 flex items-center gap-3">
         <TabSwitch
           options={[
             { value: 'freetext', label: t('admin.form.freetextMode') },
@@ -195,6 +196,13 @@ export function ValueDimensionsJustificationInput({
           onChange={handleModeChange}
           disabled={disabled}
         />
+        <div className="relative group">
+          <Info className="w-4 h-4 text-gray-400 dark:text-gray-500 cursor-help" />
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-10 w-64 p-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded shadow-lg pointer-events-none">
+            {t('admin.form.modeSwitchInfo')}
+            <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+          </div>
+        </div>
       </div>
 
       {/* Freetext Mode */}
@@ -232,7 +240,7 @@ export function ValueDimensionsJustificationInput({
               const label = dimensionLabels[dimension]
 
               return (
-                <div key={dimension} className="space-y-4">
+                <div key={dimension} className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-700 first:border-t-0 first:pt-0">
                   <h5 className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     {currentLanguage === 'de' ? label.de : label.en}
                   </h5>
