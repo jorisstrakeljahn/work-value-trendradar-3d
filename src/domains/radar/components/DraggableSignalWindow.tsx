@@ -4,7 +4,6 @@ import { X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useSignals } from '../../../shared/hooks/useSignals'
 import { useAuthStore } from '../../../store/useAuthStore'
-import { useRadarStore } from '../../../store/useRadarStore'
 import { SignalDetailsContent } from './signal-details/SignalDetailsContent'
 import SignalFormModal from '../../admin/components/SignalFormModal'
 import DeleteSignalModal from '../../admin/components/DeleteSignalModal'
@@ -40,14 +39,10 @@ export default function DraggableSignalWindow({
   const { t } = useTranslation()
   const signals = useSignals()
   const { user } = useAuthStore()
-  const { selectedSignal } = useRadarStore()
 
-  // Try to get signal from selectedSignal first (if it matches), then from signals array
-  // This avoids the double-click issue when signals are still loading
-  const signal =
-    selectedSignal?.id === signalId
-      ? selectedSignal
-      : signals.find((s: Signal) => s.id === signalId)
+  // Always get signal from signals array (which is updated with current language)
+  // This ensures that when language changes, the signal content is updated
+  const signal = signals.find((s: Signal) => s.id === signalId)
 
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
