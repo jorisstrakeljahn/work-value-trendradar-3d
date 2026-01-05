@@ -74,7 +74,7 @@ export function ConfirmModal({
 
   return createPortal(
     <div 
-      className="fixed inset-0 z-[110] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-[10010] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
       onClick={(e) => e.stopPropagation()}
       onMouseDown={(e) => e.stopPropagation()}
     >

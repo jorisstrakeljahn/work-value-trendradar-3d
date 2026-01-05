@@ -82,7 +82,7 @@ export function AlertModal({
   const styles = variantStyles[variant]
 
   return createPortal(
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div
         ref={modalRef}
         className="bg-white dark:bg-[#1a1a1a] rounded-xl shadow-xl max-w-md w-full max-h-[calc(90vh-8rem)] overflow-y-auto"
