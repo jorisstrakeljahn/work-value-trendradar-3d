@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Label } from './Label'
 import { MultilingualTextarea } from './MultilingualTextarea'
 import { SourcesInput } from './SourcesInput'
 import { TabSwitch } from '../ui/TabSwitch'
+import { ConfirmModal } from '../ui/ConfirmModal'
 import type { ValueDimensionsJustification, DimensionKey } from '../../../types/signal'
 
 interface ValueDimensionsJustificationInputProps {
@@ -44,10 +46,28 @@ export function ValueDimensionsJustificationInput({
   }
 
   const justification = getDefaultJustification()
+  const [showModeChangeWarning, setShowModeChangeWarning] = useState(false)
+  const [pendingMode, setPendingMode] = useState<'freetext' | 'perDimension' | null>(null)
 
-  const handleModeChange = (newMode: 'freetext' | 'perDimension') => {
-    if (newMode === mode) return
+  // Check if current mode has any data
+  const hasDataInCurrentMode = (): boolean => {
+    if (mode === 'freetext') {
+      const freetext = justification.freetext
+      return !!(freetext?.de?.trim() || freetext?.en?.trim())
+    } else {
+      // perDimension mode
+      if (!justification.perDimension) return false
+      const dimensions = ['economic', 'social', 'subjective', 'political'] as DimensionKey[]
+      return dimensions.some(dim => {
+        const dimJust = justification.perDimension![dim]
+        const hasText = !!(dimJust.text.de?.trim() || dimJust.text.en?.trim())
+        const hasSources = dimJust.sources.length > 0
+        return hasText || hasSources
+      })
+    }
+  }
 
+  const performModeChange = (newMode: 'freetext' | 'perDimension') => {
     if (newMode === 'freetext') {
       onChange({
         mode: 'freetext',
@@ -64,6 +84,33 @@ export function ValueDimensionsJustificationInput({
         },
       })
     }
+  }
+
+  const handleModeChange = (newMode: 'freetext' | 'perDimension') => {
+    if (newMode === mode) return
+
+    // Check if there's data in the current mode
+    if (hasDataInCurrentMode()) {
+      // Show warning modal
+      setPendingMode(newMode)
+      setShowModeChangeWarning(true)
+    } else {
+      // No data, safe to change immediately
+      performModeChange(newMode)
+    }
+  }
+
+  const handleConfirmModeChange = () => {
+    if (pendingMode) {
+      performModeChange(pendingMode)
+      setPendingMode(null)
+    }
+    setShowModeChangeWarning(false)
+  }
+
+  const handleCancelModeChange = () => {
+    setPendingMode(null)
+    setShowModeChangeWarning(false)
   }
 
   const handleFreetextChange = (textDe: string, textEn: string) => {
@@ -133,8 +180,9 @@ export function ValueDimensionsJustificationInput({
   }
 
   return (
-    <div className={className}>
-      <Label>{t('admin.form.valueDimensionsJustification')}</Label>
+    <>
+      <div className={className}>
+        <Label>{t('admin.form.valueDimensionsJustification')}</Label>
 
       {/* Mode Tab Switch */}
       <div className="mb-4">
@@ -225,6 +273,19 @@ export function ValueDimensionsJustificationInput({
           )}
         </div>
       )}
-    </div>
+      </div>
+
+      {/* Mode Change Warning Modal */}
+      <ConfirmModal
+        isOpen={showModeChangeWarning}
+        onClose={handleCancelModeChange}
+        onConfirm={handleConfirmModeChange}
+        title={t('admin.form.modeChangeWarningTitle')}
+        message={t('admin.form.modeChangeWarningMessage')}
+        confirmText={t('common.continue')}
+        cancelText={t('admin.cancel')}
+        variant="default"
+      />
+    </>
   )
 }

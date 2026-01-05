@@ -62,6 +62,7 @@ export function Modal({
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div
         ref={modalRef}
+        data-modal-overlay
         className={`glass rounded-2xl shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 w-full max-h-[90vh] overflow-hidden flex flex-col ${className || 'max-w-md'}`}
         style={{ colorScheme: 'light dark' }}
       >

@@ -89,6 +89,8 @@
       "justificationTextEn": "Begründung (Englisch)",
       "justificationTextEnEn": "Begründung (English)",
       "dimensionJustification": "Begründung",
+      "modeChangeWarningTitle": "Modus ändern?",
+      "modeChangeWarningMessage": "Wenn Sie den Modus ändern, gehen alle eingegebenen Daten in diesem Bereich verloren. Möchten Sie fortfahren?",
       "economic": "Economic",
       "social": "Social",
       "subjective": "Subjective",
@@ -213,7 +215,8 @@
     "cancel": "Abbrechen",
     "create": "Erstellen",
     "creating": "Wird erstellt...",
-    "close": "Schließen"
+    "close": "Schließen",
+    "continue": "Fortfahren"
   },
   "explanation": {
     "title": "Das 3D Trend Radar verstehen",

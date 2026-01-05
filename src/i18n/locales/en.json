@@ -89,6 +89,8 @@
       "justificationTextEn": "Justification (English)",
       "justificationTextEnEn": "Justification (English)",
       "dimensionJustification": "Justification",
+      "modeChangeWarningTitle": "Change mode?",
+      "modeChangeWarningMessage": "If you change the mode, all entered data in this section will be lost. Do you want to continue?",
       "economic": "Economic",
       "social": "Social",
       "subjective": "Subjective",
@@ -213,7 +215,8 @@
     "cancel": "Cancel",
     "create": "Create",
     "creating": "Creating...",
-    "close": "Close"
+    "close": "Close",
+    "continue": "Continue"
   },
   "explanation": {
     "title": "Understanding the 3D Trend Radar",
