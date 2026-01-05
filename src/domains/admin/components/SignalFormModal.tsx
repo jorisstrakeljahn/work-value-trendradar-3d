@@ -3,12 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { Modal, FormSection, ConfirmModal } from '../../../shared/components/ui'
 import { ErrorAlert } from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
-import {
-  createSignal,
-  updateSignal,
-} from '../../../firebase/services/signalsService'
-import { uploadSignalImage } from '../../../firebase/services/imageService'
 import { useSignalForm } from '../hooks/useSignalForm'
+import { useSignalFormSubmit } from '../hooks/useSignalFormSubmit'
 import {
   FormActions,
   TitleSection,
@@ -41,8 +37,6 @@ export default function SignalFormModal({
   const { t } = useTranslation()
   const { user } = useAuthStore()
   const isEditMode = !!signal
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [showCloseWarning, setShowCloseWarning] = useState(false)
   const initialFormDataRef = useRef<string | null>(null)
 
@@ -53,6 +47,16 @@ export default function SignalFormModal({
     validateForm,
     isInitialized,
   } = useSignalForm(signal, isOpen)
+
+  const { loading, error, submitForm, clearError } = useSignalFormSubmit({
+    signal,
+    userUid: user?.uid || '',
+    onSuccess: () => {
+      // Reset initial data reference after successful save
+      initialFormDataRef.current = null
+      onClose()
+    },
+  })
 
   // Store initial form data when modal opens and form is initialized
   useEffect(() => {
@@ -76,101 +80,26 @@ export default function SignalFormModal({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setError(null)
+    clearError()
 
     const validationError = validateForm()
     if (validationError) {
-      setError(t('admin.messages.validationError'))
       return
     }
 
     if (!user) {
-      setError('User not authenticated')
       return
     }
 
-    setLoading(true)
-
     try {
-      // Prepare multilingual data
-      const multilingualTitle = {
-        de: formData.titleDe.trim(),
-        en: formData.titleEn.trim() || formData.titleDe.trim(),
-      }
-      const multilingualSummary = {
-        de: formData.summaryDe.trim(),
-        en: formData.summaryEn.trim() || formData.summaryDe.trim(),
-      }
-
-      const signalData = {
-        title: multilingualTitle,
-        summary: multilingualSummary,
-        industryTags: formData.industryTags,
-        xImpact: formData.xImpact,
-        yHorizon: formData.yHorizon,
-        valueDimensions: formData.valueDimensions,
-        valueDimensionsJustification: formData.valueDimensionsJustification,
-        sources: formData.sources,
-        imageUrl: formData.imageUrl || undefined,
-      }
-
-      if (isEditMode && signal?.id) {
-        // Handle image upload if we have a new image (data URL)
-        let finalImageUrl: string | undefined = formData.imageUrl || undefined
-        if (formData.imageUrl && formData.imageUrl.startsWith('data:')) {
-          const response = await fetch(formData.imageUrl)
-          const blob = await response.blob()
-          const file = new File([blob], 'image.jpg', { type: blob.type })
-          finalImageUrl = await uploadSignalImage(signal.id, file)
-        }
-
-        await updateSignal(
-          signal.id,
-          { ...signalData, imageUrl: finalImageUrl },
-          user.uid
-        )
-        onSuccess?.()
-      } else {
-        // Create new signal - image will be uploaded after creation
-        const newSignalId = await createSignal(
-          signalData,
-          user.uid
-        )
-
-        // Upload image if provided
-        if (formData.imageUrl && formData.imageUrl.startsWith('data:')) {
-          const response = await fetch(formData.imageUrl)
-          const blob = await response.blob()
-          const file = new File([blob], 'image.jpg', { type: blob.type })
-          const uploadedUrl = await uploadSignalImage(newSignalId, file)
-          await updateSignal(
-            newSignalId,
-            { imageUrl: uploadedUrl || undefined },
-            user.uid
-          )
-        }
-
-        onSuccess?.()
-      }
-
-      // Reset initial data reference after successful save
-      initialFormDataRef.current = null
-      onClose()
-    } catch (err: unknown) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : isEditMode
-            ? t('admin.messages.updateError')
-            : t('admin.messages.createError')
-      setError(errorMessage)
-    } finally {
-      setLoading(false)
+      await submitForm(formData)
+    } catch {
+      // Error is already handled by the hook
     }
   }
 
   const handleClose = () => {
-    setError(null)
+    clearError()
     // Check for unsaved changes
     if (hasUnsavedChanges()) {
       setShowCloseWarning(true)
@@ -181,7 +110,7 @@ export default function SignalFormModal({
 
   const handleConfirmClose = () => {
     setShowCloseWarning(false)
-    setError(null)
+    clearError()
     initialFormDataRef.current = null
     onClose()
   }

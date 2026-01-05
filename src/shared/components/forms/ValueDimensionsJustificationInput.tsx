@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Info } from 'lucide-react'
 import { Label } from './Label'
-import { MultilingualTextarea } from './MultilingualTextarea'
-import { SourcesInput } from './SourcesInput'
-import { TabSwitch } from '../ui/TabSwitch'
 import { ConfirmModal } from '../ui/ConfirmModal'
+import {
+  JustificationModeSwitch,
+  FreetextJustificationInput,
+  PerDimensionJustificationInput,
+} from './justification'
 import type {
   ValueDimensionsJustification,
   DimensionKey,
@@ -28,8 +29,7 @@ export function ValueDimensionsJustificationInput({
   disabled = false,
   className = '',
 }: ValueDimensionsJustificationInputProps) {
-  const { t, i18n } = useTranslation()
-  const currentLanguage = i18n.language === 'de' ? 'de' : 'en'
+  const { t } = useTranslation()
 
   // Default to perDimension mode if no value provided
   const mode = value?.mode || 'perDimension'
@@ -55,20 +55,20 @@ export function ValueDimensionsJustificationInput({
     'freetext' | 'perDimension' | null
   >(null)
 
-  // Check if current mode has any data
-  const hasDataInCurrentMode = (): boolean => {
+  // Check if current mode has any data (memoized)
+  const hasDataInCurrentMode = useMemo((): boolean => {
     if (mode === 'freetext') {
       const freetext = justification.freetext
       return !!(freetext?.de?.trim() || freetext?.en?.trim())
     } else {
       // perDimension mode
       if (!justification.perDimension) return false
-      const dimensions = [
+      const dimensions: DimensionKey[] = [
         'economic',
         'social',
         'subjective',
         'political',
-      ] as DimensionKey[]
+      ]
       return dimensions.some(dim => {
         const dimJust = justification.perDimension![dim]
         const hasText = !!(dimJust.text.de?.trim() || dimJust.text.en?.trim())
@@ -76,7 +76,7 @@ export function ValueDimensionsJustificationInput({
         return hasText || hasSources
       })
     }
-  }
+  }, [mode, justification])
 
   const performModeChange = (newMode: 'freetext' | 'perDimension') => {
     if (newMode === 'freetext') {
@@ -101,7 +101,7 @@ export function ValueDimensionsJustificationInput({
     if (newMode === mode) return
 
     // Check if there's data in the current mode
-    if (hasDataInCurrentMode()) {
+    if (hasDataInCurrentMode) {
       // Show warning modal
       setPendingMode(newMode)
       setShowModeChangeWarning(true)
@@ -171,144 +171,34 @@ export function ValueDimensionsJustificationInput({
     })
   }
 
-  const dimensionLabels: Record<DimensionKey, { de: string; en: string }> = {
-    economic: {
-      de: t('admin.form.economic'),
-      en: t('admin.form.economic'),
-    },
-    social: {
-      de: t('admin.form.social'),
-      en: t('admin.form.social'),
-    },
-    subjective: {
-      de: t('admin.form.subjective'),
-      en: t('admin.form.subjective'),
-    },
-    political: {
-      de: t('admin.form.political'),
-      en: t('admin.form.political'),
-    },
-  }
-
   return (
     <>
       <div className={className}>
         <Label>{t('admin.form.valueDimensionsJustification')}</Label>
 
-        {/* Mode Tab Switch with Info Icon */}
-        <div className="mb-4 flex items-center gap-3">
-          <TabSwitch
-            options={[
-              { value: 'freetext', label: t('admin.form.freetextMode') },
-              {
-                value: 'perDimension',
-                label: t('admin.form.perDimensionMode'),
-              },
-            ]}
-            value={mode}
-            onChange={handleModeChange}
-            disabled={disabled}
-          />
-          <div className="relative group">
-            <Info className="w-4 h-4 text-gray-400 dark:text-gray-500 cursor-help" />
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-10 w-64 p-2 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded shadow-lg pointer-events-none">
-              {t('admin.form.modeSwitchInfo')}
-              <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
-            </div>
-          </div>
-        </div>
+        <JustificationModeSwitch
+          mode={mode}
+          onModeChange={handleModeChange}
+          disabled={disabled}
+        />
 
         {/* Freetext Mode */}
-        {mode === 'freetext' && (
-          <MultilingualTextarea
-            labelDe={
-              currentLanguage === 'de'
-                ? t('admin.form.justificationTextDe')
-                : t('admin.form.justificationTextDeEn')
-            }
-            labelEn={
-              currentLanguage === 'de'
-                ? t('admin.form.justificationTextEn')
-                : t('admin.form.justificationTextEnEn')
-            }
-            valueDe={justification.freetext?.de || ''}
-            valueEn={justification.freetext?.en || ''}
-            onChangeDe={textDe =>
-              handleFreetextChange(textDe, justification.freetext?.en || '')
-            }
-            onChangeEn={textEn =>
-              handleFreetextChange(justification.freetext?.de || '', textEn)
-            }
-            rows={4}
+        {mode === 'freetext' && justification.freetext && (
+          <FreetextJustificationInput
+            value={justification.freetext}
+            onChange={handleFreetextChange}
             disabled={disabled}
           />
         )}
 
         {/* Per-Dimension Mode */}
         {mode === 'perDimension' && justification.perDimension && (
-          <div className="space-y-6">
-            {(
-              [
-                'economic',
-                'social',
-                'subjective',
-                'political',
-              ] as DimensionKey[]
-            ).map(dimension => {
-              const dimJustification = justification.perDimension![dimension]
-              const label = dimensionLabels[dimension]
-
-              return (
-                <div
-                  key={dimension}
-                  className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-700 first:border-t-0 first:pt-0"
-                >
-                  <h5 className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {currentLanguage === 'de' ? label.de : label.en}
-                  </h5>
-
-                  <MultilingualTextarea
-                    labelDe={
-                      currentLanguage === 'de'
-                        ? t('admin.form.dimensionJustification')
-                        : t('admin.form.dimensionJustification')
-                    }
-                    labelEn={
-                      currentLanguage === 'de'
-                        ? t('admin.form.dimensionJustification')
-                        : t('admin.form.dimensionJustification')
-                    }
-                    valueDe={dimJustification.text.de}
-                    valueEn={dimJustification.text.en}
-                    onChangeDe={textDe =>
-                      handleDimensionTextChange(
-                        dimension,
-                        textDe,
-                        dimJustification.text.en
-                      )
-                    }
-                    onChangeEn={textEn =>
-                      handleDimensionTextChange(
-                        dimension,
-                        dimJustification.text.de,
-                        textEn
-                      )
-                    }
-                    rows={3}
-                    disabled={disabled}
-                  />
-
-                  <SourcesInput
-                    sources={dimJustification.sources}
-                    onSourcesChange={sources =>
-                      handleDimensionSourcesChange(dimension, sources)
-                    }
-                    disabled={disabled}
-                  />
-                </div>
-              )
-            })}
-          </div>
+          <PerDimensionJustificationInput
+            justification={justification}
+            onDimensionTextChange={handleDimensionTextChange}
+            onDimensionSourcesChange={handleDimensionSourcesChange}
+            disabled={disabled}
+          />
         )}
       </div>
 

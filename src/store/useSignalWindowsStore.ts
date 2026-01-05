@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { SIGNAL_WINDOW_CONFIG } from '../shared/constants/radar'
 
 /**
  * Window state for a signal detail window
@@ -15,8 +16,8 @@ export interface SignalWindow {
  * Default window size
  */
 const DEFAULT_WINDOW_SIZE = {
-  width: 400,
-  height: 600,
+  width: SIGNAL_WINDOW_CONFIG.DEFAULT_WIDTH,
+  height: SIGNAL_WINDOW_CONFIG.DEFAULT_HEIGHT,
 }
 
 /**
@@ -113,7 +114,7 @@ export function getWindowBySignalId(
  */
 export const useSignalWindowsStore = create<SignalWindowsState>(set => ({
   windows: [],
-  nextZIndex: 1000,
+  nextZIndex: SIGNAL_WINDOW_CONFIG.BASE_Z_INDEX,
 
   openWindow: (signalId: string) => {
     set(state => {

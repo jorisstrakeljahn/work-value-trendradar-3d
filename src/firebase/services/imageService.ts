@@ -7,6 +7,7 @@ import {
 import { storage } from '../config'
 import { logErrorWithContext } from '../../shared/utils/errorLogger'
 import { getFirebaseErrorMessage } from '../../shared/utils/errorHandling'
+import { FILE_UPLOAD_CONFIG } from '../../shared/constants/fileUpload'
 
 /**
  * Upload an image for a signal
@@ -26,8 +27,7 @@ export async function uploadSignalImage(
     }
 
     // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024 // 5MB
-    if (file.size > maxSize) {
+    if (file.size > FILE_UPLOAD_CONFIG.MAX_FILE_SIZE) {
       throw new Error('Image size must be less than 5MB')
     }
 

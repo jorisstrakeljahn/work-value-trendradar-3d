@@ -1,19 +1,5 @@
 import { logError, logErrorWithContext } from './errorLogger'
-
-/**
- * Type guard to check if an error is a Firebase error
- */
-export function isFirebaseError(error: unknown): error is {
-  code?: string
-  message?: string
-  stack?: string
-} {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    ('code' in error || 'message' in error)
-  )
-}
+import { isFirebaseError } from './typeGuards'
 
 /**
  * Type guard to check if an error is a standard Error object

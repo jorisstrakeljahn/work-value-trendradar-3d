@@ -1,14 +1,14 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Rnd, RndDragCallback, RndResizeCallback } from 'react-rnd'
-import { X } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 import { useSignals } from '../../../shared/hooks/useSignals'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { SignalDetailsContent } from './signal-details/SignalDetailsContent'
+import { SignalWindowHeader, SignalWindowLoading } from './signal-window'
 import SignalFormModal from '../../admin/components/SignalFormModal'
 import DeleteSignalModal from '../../admin/components/DeleteSignalModal'
 import { deleteSignal } from '../../../firebase/services/signalsService'
 import { logErrorWithContext } from '../../../shared/utils/errorLogger'
+import { SIGNAL_WINDOW_CONFIG } from '../../../shared/constants/radar'
 import type { Signal } from '../../../types/signal'
 
 interface DraggableSignalWindowProps {
@@ -37,7 +37,6 @@ export default function DraggableSignalWindow({
   onSizeChange,
   onFocus,
 }: DraggableSignalWindowProps) {
-  const { t } = useTranslation()
   const signals = useSignals()
   const { user } = useAuthStore()
 
@@ -68,34 +67,12 @@ export default function DraggableSignalWindow({
     // If signals haven't loaded yet, show loading state
     if (signals.length === 0) {
       return (
-        <Rnd
-          size={{ width: size.width, height: size.height }}
-          position={{ x: position.x, y: position.y }}
-          minWidth={300}
-          minHeight={400}
-          style={{
-            zIndex,
-            position: 'absolute',
-          }}
-          className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden flex flex-col"
-        >
-          <div className="window-header flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#252525] border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate flex-1 mr-2">
-              Loading...
-            </h3>
-            <button
-              onClick={onClose}
-              className="flex-shrink-0 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-            >
-              <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-            </button>
-          </div>
-          <div className="flex-1 flex items-center justify-center p-6">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Loading signal...
-            </p>
-          </div>
-        </Rnd>
+        <SignalWindowLoading
+          position={position}
+          size={size}
+          zIndex={zIndex}
+          onClose={onClose}
+        />
       )
     }
     // Signal not found after signals loaded - return null (useEffect will close)
@@ -154,17 +131,21 @@ export default function DraggableSignalWindow({
 
   // Calculate max size (90% of viewport)
   const maxWidth =
-    typeof window !== 'undefined' ? window.innerWidth * 0.9 : 1200
+    typeof window !== 'undefined'
+      ? window.innerWidth * SIGNAL_WINDOW_CONFIG.MAX_SIZE_RATIO
+      : SIGNAL_WINDOW_CONFIG.FALLBACK_MAX_WIDTH
   const maxHeight =
-    typeof window !== 'undefined' ? window.innerHeight * 0.9 : 800
+    typeof window !== 'undefined'
+      ? window.innerHeight * SIGNAL_WINDOW_CONFIG.MAX_SIZE_RATIO
+      : SIGNAL_WINDOW_CONFIG.FALLBACK_MAX_HEIGHT
 
   return (
     <>
       <Rnd
         size={{ width: size.width, height: size.height }}
         position={{ x: position.x, y: position.y }}
-        minWidth={300}
-        minHeight={400}
+        minWidth={SIGNAL_WINDOW_CONFIG.MIN_WIDTH}
+        minHeight={SIGNAL_WINDOW_CONFIG.MIN_HEIGHT}
         maxWidth={maxWidth}
         maxHeight={maxHeight}
         bounds="window"
@@ -191,20 +172,7 @@ export default function DraggableSignalWindow({
         }}
         className="shadow-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] overflow-hidden"
       >
-        {/* Header Bar */}
-        <div className="window-header flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-[#252525] border-b border-gray-200 dark:border-gray-700 cursor-move flex-shrink-0">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate flex-1 mr-2">
-            {signal.title}
-          </h3>
-          <button
-            onClick={onClose}
-            className="flex-shrink-0 p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-            aria-label={t('signalWindows.close')}
-            title={t('signalWindows.close')}
-          >
-            <X className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-          </button>
-        </div>
+        <SignalWindowHeader title={signal.title} onClose={onClose} />
 
         {/* Content Area - scrollable */}
         <div
