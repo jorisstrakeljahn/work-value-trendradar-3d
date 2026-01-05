@@ -73,7 +73,10 @@ export function ValueDimensionsDisplay({
                     dimJustification.text.de ||
                     dimJustification.text.en
 
-                  if (!justificationText && dimJustification.sources.length === 0) {
+                  if (
+                    !justificationText &&
+                    dimJustification.sources.length === 0
+                  ) {
                     return null
                   }
 

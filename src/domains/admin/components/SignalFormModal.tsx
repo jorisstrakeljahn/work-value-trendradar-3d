@@ -46,8 +46,13 @@ export default function SignalFormModal({
   const [showCloseWarning, setShowCloseWarning] = useState(false)
   const initialFormDataRef = useRef<string | null>(null)
 
-  const { formData, updateFormData, updateValueDimensions, validateForm, isInitialized } =
-    useSignalForm(signal, isOpen)
+  const {
+    formData,
+    updateFormData,
+    updateValueDimensions,
+    validateForm,
+    isInitialized,
+  } = useSignalForm(signal, isOpen)
 
   // Store initial form data when modal opens and form is initialized
   useEffect(() => {
@@ -64,7 +69,7 @@ export default function SignalFormModal({
   // Check if form has unsaved changes
   const hasUnsavedChanges = (): boolean => {
     if (!initialFormDataRef.current || !isInitialized) return false
-    
+
     const currentFormDataString = JSON.stringify(formData)
     return initialFormDataRef.current !== currentFormDataString
   }

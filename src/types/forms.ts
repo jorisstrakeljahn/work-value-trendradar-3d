@@ -2,7 +2,11 @@
  * Type definitions for form components and data structures
  */
 
-import type { ValueDimensions, Source, ValueDimensionsJustification } from './signal'
+import type {
+  ValueDimensions,
+  Source,
+  ValueDimensionsJustification,
+} from './signal'
 
 /**
  * Form data structure for signal forms

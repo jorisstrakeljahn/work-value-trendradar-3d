@@ -38,7 +38,7 @@ export function SourcesInput({
       const sourceExists = sources.some(
         s => s.name === trimmedName && s.url === trimmedUrl
       )
-      
+
       if (!sourceExists) {
         onSourcesChange([...sources, { name: trimmedName, url: trimmedUrl }])
         setSourceName('')
@@ -53,14 +53,14 @@ export function SourcesInput({
   const handleUrlBlur = () => {
     const trimmedName = sourceName.trim()
     const trimmedUrl = sourceUrl.trim()
-    
+
     // Only auto-add if both fields have values
     if (trimmedName && trimmedUrl) {
       // Check if source already exists
       const sourceExists = sources.some(
         s => s.name === trimmedName && s.url === trimmedUrl
       )
-      
+
       if (!sourceExists) {
         onSourcesChange([...sources, { name: trimmedName, url: trimmedUrl }])
         setSourceName('')
@@ -77,7 +77,11 @@ export function SourcesInput({
     onSourcesChange(sources.filter((_, i) => i !== index))
   }
 
-  const updateSource = (index: number, field: 'name' | 'url', value: string) => {
+  const updateSource = (
+    index: number,
+    field: 'name' | 'url',
+    value: string
+  ) => {
     const updatedSources = sources.map((source, i) =>
       i === index ? { ...source, [field]: value } : source
     )

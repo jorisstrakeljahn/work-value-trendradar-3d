@@ -73,18 +73,18 @@ export function ConfirmModal({
       : 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500/20'
 
   return createPortal(
-    <div 
+    <div
       className="fixed inset-0 z-[10010] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
-      onClick={(e) => e.stopPropagation()}
-      onMouseDown={(e) => e.stopPropagation()}
+      onClick={e => e.stopPropagation()}
+      onMouseDown={e => e.stopPropagation()}
     >
       <div
         ref={modalRef}
         data-modal-overlay
         className="bg-white dark:bg-[#1a1a1a] rounded-xl shadow-xl max-w-md w-full max-h-[calc(90vh-8rem)] overflow-y-auto"
         style={{ colorScheme: 'light dark' }}
-        onClick={(e) => e.stopPropagation()}
-        onMouseDown={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
+        onMouseDown={e => e.stopPropagation()}
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
@@ -92,12 +92,12 @@ export function ConfirmModal({
               {title}
             </h2>
             <button
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault()
                 e.stopPropagation()
                 onClose()
               }}
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault()
                 e.stopPropagation()
               }}
@@ -114,12 +114,12 @@ export function ConfirmModal({
           <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-600">
             <Button
               type="button"
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault()
                 e.stopPropagation()
                 onClose()
               }}
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault()
                 e.stopPropagation()
               }}
@@ -131,12 +131,12 @@ export function ConfirmModal({
             </Button>
             <Button
               type="button"
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault()
                 e.stopPropagation()
                 onConfirm()
               }}
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault()
                 e.stopPropagation()
               }}
