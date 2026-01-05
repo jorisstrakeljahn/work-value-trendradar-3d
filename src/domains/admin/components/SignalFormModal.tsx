@@ -1,6 +1,6 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Modal, FormSection } from '../../../shared/components/ui'
+import { Modal, FormSection, ConfirmModal } from '../../../shared/components/ui'
 import { ErrorAlert } from '../../../shared/components/forms'
 import { useAuthStore } from '../../../store/useAuthStore'
 import {
@@ -43,9 +43,31 @@ export default function SignalFormModal({
   const isEditMode = !!signal
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showCloseWarning, setShowCloseWarning] = useState(false)
+  const initialFormDataRef = useRef<string | null>(null)
 
-  const { formData, updateFormData, updateValueDimensions, validateForm } =
+  const { formData, updateFormData, updateValueDimensions, validateForm, isInitialized } =
     useSignalForm(signal, isOpen)
+
+  // Store initial form data when modal opens and form is initialized
+  useEffect(() => {
+    if (isOpen && isInitialized && !initialFormDataRef.current) {
+      // Store initial form data as JSON string for comparison
+      initialFormDataRef.current = JSON.stringify(formData)
+    } else if (!isOpen) {
+      // Reset when modal closes
+      initialFormDataRef.current = null
+      setShowCloseWarning(false)
+    }
+  }, [isOpen, isInitialized, formData])
+
+  // Check if form has unsaved changes
+  const hasUnsavedChanges = (): boolean => {
+    if (!initialFormDataRef.current || !isInitialized) return false
+    
+    const currentFormDataString = JSON.stringify(formData)
+    return initialFormDataRef.current !== currentFormDataString
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -130,6 +152,8 @@ export default function SignalFormModal({
         onSuccess?.()
       }
 
+      // Reset initial data reference after successful save
+      initialFormDataRef.current = null
       onClose()
     } catch (err: unknown) {
       const errorMessage =
@@ -146,7 +170,23 @@ export default function SignalFormModal({
 
   const handleClose = () => {
     setError(null)
+    // Check for unsaved changes
+    if (hasUnsavedChanges()) {
+      setShowCloseWarning(true)
+    } else {
+      onClose()
+    }
+  }
+
+  const handleConfirmClose = () => {
+    setShowCloseWarning(false)
+    setError(null)
+    initialFormDataRef.current = null
     onClose()
+  }
+
+  const handleCancelClose = () => {
+    setShowCloseWarning(false)
   }
 
   return (
@@ -230,6 +270,18 @@ export default function SignalFormModal({
           submitLabel={isEditMode ? t('admin.save') : t('admin.create')}
         />
       </form>
+
+      {/* Unsaved Changes Warning Modal */}
+      <ConfirmModal
+        isOpen={showCloseWarning}
+        onClose={handleCancelClose}
+        onConfirm={handleConfirmClose}
+        title={t('admin.messages.unsavedChangesTitle')}
+        message={t('admin.messages.unsavedChangesMessage')}
+        confirmText={t('admin.messages.unsavedChangesDiscard')}
+        cancelText={t('admin.messages.unsavedChangesCancel')}
+        variant="default"
+      />
     </Modal>
   )
 }

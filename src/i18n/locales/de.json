@@ -120,7 +120,12 @@
       "uploadSuccess": "Bild erfolgreich hochgeladen",
       "uploading": "Wird hochgeladen...",
       "validationError": "Bitte füllen Sie alle erforderlichen Felder aus",
-      "nameDeRequired": "Der deutsche Name ist erforderlich"
+      "nameDeRequired": "Der deutsche Name ist erforderlich",
+      "unsavedChangesTitle": "Nicht gespeicherte Änderungen",
+      "unsavedChangesMessage": "Sie haben nicht gespeicherte Änderungen. Möchten Sie wirklich schließen?",
+      "unsavedChangesSave": "Speichern",
+      "unsavedChangesDiscard": "Verwerfen",
+      "unsavedChangesCancel": "Abbrechen"
     },
     "industries": {
       "createTitle": "Neue Branche erstellen",

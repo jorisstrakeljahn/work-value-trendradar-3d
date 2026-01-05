@@ -120,7 +120,12 @@
       "uploadSuccess": "Image uploaded successfully",
       "uploading": "Uploading...",
       "validationError": "Please fill in all required fields",
-      "nameDeRequired": "German name is required"
+      "nameDeRequired": "German name is required",
+      "unsavedChangesTitle": "Unsaved Changes",
+      "unsavedChangesMessage": "You have unsaved changes. Do you really want to close?",
+      "unsavedChangesSave": "Save",
+      "unsavedChangesDiscard": "Discard",
+      "unsavedChangesCancel": "Cancel"
     },
     "industries": {
       "createTitle": "Create New Industry",
