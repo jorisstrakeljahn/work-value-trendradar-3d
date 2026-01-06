@@ -18,9 +18,9 @@ interface ThemeState {
  * Persists theme preference to localStorage
  */
 export const useThemeStore = create<ThemeState>(set => {
-  // Initialize from localStorage or default to light
+  // Initialize from localStorage or default to dark
   const storedTheme = getStoredTheme()
-  const initialTheme = storedTheme || 'light'
+  const initialTheme = storedTheme || 'dark'
 
   // Apply theme to document on initialization
   applyThemeToDocument(initialTheme)

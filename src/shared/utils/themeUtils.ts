@@ -55,11 +55,11 @@ export function storeTheme(theme: Theme): void {
 
 /**
  * Initialize theme from localStorage and apply to document
- * @returns The initialized theme (defaults to 'light' if not stored)
+ * @returns The initialized theme (defaults to 'dark' if not stored)
  */
 export function initializeTheme(): Theme {
   const storedTheme = getStoredTheme()
-  const theme = storedTheme || 'light'
+  const theme = storedTheme || 'dark'
   applyThemeToDocument(theme)
   return theme
 }
