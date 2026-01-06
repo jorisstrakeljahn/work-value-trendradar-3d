@@ -18,7 +18,7 @@ interface DimensionJustificationItemProps {
  * Displays text input and sources for one dimension
  */
 export function DimensionJustificationItem({
-  dimension,
+  dimension: _dimension,
   justification,
   label,
   onTextChange,

@@ -28,21 +28,11 @@ export default function ImageUpload({
     error,
     handleFileSelect,
     handleRemove,
-    clearError,
   } = useImageUpload({
     currentImageUrl,
     signalId,
     onImageChange,
   })
-
-  // Handle image load/error events
-  const handleImageLoad = () => {
-    // Image loaded successfully - state is managed by the hook
-  }
-
-  const handleImageError = () => {
-    // Error is handled by the hook's error state
-  }
 
   return (
     <div className="space-y-2">

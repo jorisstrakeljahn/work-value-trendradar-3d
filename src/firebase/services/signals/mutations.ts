@@ -1,9 +1,6 @@
 import { doc, collection, addDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../../config'
-import type {
-  Signal,
-  SignalDocument,
-} from '../../../types/signal'
+import type { Signal } from '../../../types/signal'
 import { logErrorWithContext } from '../../../shared/utils/errorLogger'
 import { getFirebaseErrorMessage } from '../../../shared/utils/errorHandling'
 import { signalToFirestore } from './converters'

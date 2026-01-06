@@ -2,7 +2,6 @@ import { Timestamp } from 'firebase/firestore'
 import type {
   Signal,
   SignalDocument,
-  MultilingualText,
 } from '../../../types/signal'
 import { isMultilingualText } from '../../../shared/utils/typeGuards'
 

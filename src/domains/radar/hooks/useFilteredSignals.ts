@@ -3,7 +3,6 @@ import { useSignals } from '../../../shared/hooks/useSignals'
 import { useRadarStore } from '../../../store/useRadarStore'
 import { mapSignalToPosition } from '../../../shared/utils/mapping'
 import { RADAR_CONFIG } from '../../../shared/constants'
-import type { Signal } from '../../../types/signal'
 
 /**
  * Hook to filter signals and map them to 3D positions

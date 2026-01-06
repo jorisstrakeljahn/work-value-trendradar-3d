@@ -32,7 +32,7 @@ export default function SignalFormModal({
   isOpen,
   onClose,
   signal,
-  onSuccess,
+  onSuccess: _onSuccess,
 }: SignalFormModalProps) {
   const { t } = useTranslation()
   const { user } = useAuthStore()
@@ -54,6 +54,7 @@ export default function SignalFormModal({
     onSuccess: () => {
       // Reset initial data reference after successful save
       initialFormDataRef.current = null
+      _onSuccess?.()
       onClose()
     },
   })

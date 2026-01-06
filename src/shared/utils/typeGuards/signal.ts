@@ -5,7 +5,7 @@ import type {
   Source,
   ValueDimensionsJustification,
 } from '../../../types/signal'
-import { isMultilingualText, isLanguage } from './common'
+import { isMultilingualText } from './common'
 
 /**
  * Type guard to check if a value is a ValueDimensions object
