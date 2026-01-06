@@ -12,8 +12,8 @@ export function ZAxis() {
   const { showAxisLabels, showHelperLabels } = useRadarStore()
 
   const markers = [
-    { z: MAX_HEIGHT / 2, label: 'Medium Value' },
-    { z: MAX_HEIGHT, label: 'High Value' },
+    { z: MAX_HEIGHT / 2, labelKey: 'helperLabelMediumValue' },
+    { z: MAX_HEIGHT, labelKey: 'helperLabelHighValue' },
   ]
 
   return (
@@ -61,7 +61,7 @@ export function ZAxis() {
               style={{ pointerEvents: 'none', zIndex: 10 }}
             >
               <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
-                {marker.label}
+                {t(`grid.${marker.labelKey}`)}
             </div>
           </Html>
         </Billboard>

@@ -12,8 +12,8 @@ export function YAxis() {
   const { showAxisLabels, showHelperLabels } = useRadarStore()
 
   const timeLines = [
-    { y: MAX_RADIUS * 0.5, label: 'Next', color: RADAR_COLORS.TIME_LINES.NEXT },
-    { y: MAX_RADIUS, label: 'Far', color: RADAR_COLORS.TIME_LINES.FAR },
+    { y: MAX_RADIUS * 0.5, labelKey: 'helperLabelNext', color: RADAR_COLORS.TIME_LINES.NEXT },
+    { y: MAX_RADIUS, labelKey: 'helperLabelFar', color: RADAR_COLORS.TIME_LINES.FAR },
   ]
 
   return (
@@ -78,7 +78,7 @@ export function YAxis() {
                 style={{ pointerEvents: 'none', zIndex: 10 }}
               >
                 <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
-                  {line.label}
+                  {t(`grid.${line.labelKey}`)}
                 </div>
               </Html>
             </Billboard>

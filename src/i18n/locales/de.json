@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "3D Trend Radar",
-    "subtitle": "Schwache Signale von KI/Robotik und deren Auswirkung auf den Wert der Arbeit kartieren"
+    "subtitle": "Weak Signals von KI/Robotik und deren Auswirkung auf den Wert der Arbeit kartieren"
   },
   "auth": {
     "login": "Anmelden",
@@ -214,7 +214,13 @@
     "axisLabels": "Achsen-Beschriftungen",
     "axisLabelsDesc": "Impact, Reifegrad, Work-Value-Index",
     "helperLabels": "Hilfsbeschriftungen",
-    "helperLabelsDesc": "Low Impact, High Impact, Next, Far, Medium Value, High Value"
+    "helperLabelsDesc": "Niedrig Impact, Hoch Impact, Nächste, Weit, Mittlerer Wert, Hoher Wert",
+    "helperLabelLowImpact": "Niedrig Impact",
+    "helperLabelHighImpact": "Hoch Impact",
+    "helperLabelNext": "Nächste",
+    "helperLabelFar": "Weit",
+    "helperLabelMediumValue": "Mittlerer Wert",
+    "helperLabelHighValue": "Hoher Wert"
   },
   "weights": {
     "title": "Gewichtungen",
@@ -238,7 +244,7 @@
   },
   "explanation": {
     "title": "Das 3D Trend Radar verstehen",
-    "intro": "Diese interaktive 3D-Visualisierung kartiert schwache Signale von KI- und Robotiktechnologien und deren potenzielle Auswirkung auf den Wert der Arbeit in verschiedenen Branchen. Jeder Punkt repräsentiert einen Trend oder ein Signal, positioniert im dreidimensionalen Raum basierend auf seinen Eigenschaften.",
+    "intro": "Diese interaktive 3D-Visualisierung kartiert Weak Signals von KI- und Robotiktechnologien und deren potenzielle Auswirkung auf den Wert der Arbeit in verschiedenen Branchen. Jeder Punkt repräsentiert einen Trend oder ein Signal, positioniert im dreidimensionalen Raum basierend auf seinen Eigenschaften.",
     "threeDimensions": "Die drei Dimensionen",
     "xAxisTitle": "X-Achse: Impact",
     "xAxisDesc": "Misst, wie signifikant die Auswirkung dieses Trends auf die Branche ist. Punkte weiter rechts zeigen höhere Impact und Relevanz. Diese Dimension hilft zu identifizieren, welche Signale am wahrscheinlichsten Arbeitspraktiken transformieren werden.",
@@ -295,7 +301,7 @@
     "thematicSegmentsLabel": "Thematische Segmente",
     "thematicSegmentsDesc": "Das Radar ist in Segmente unterteilt, die verschiedene thematische Cluster repräsentieren und Ihnen helfen zu verstehen, wie Trends miteinander zusammenhängen.",
     "about": "Über dieses Projekt",
-    "aboutDesc1": "Dieses 3D Trend Radar wurde entwickelt, um Forschern, Politikern und Branchenexperten zu helfen zu verstehen, wie aufkommende KI- und Robotiktechnologien den Wert der Arbeit neu gestalten könnten. Durch die Visualisierung schwacher Signale in drei Dimensionen können wir zukünftige Veränderungen besser antizipieren und uns auf die sich entwickelnde Arbeitslandschaft vorbereiten.",
+    "aboutDesc1": "Dieses 3D Trend Radar wurde entwickelt, um Forschern, Politikern und Branchenexperten zu helfen zu verstehen, wie aufkommende KI- und Robotiktechnologien den Wert der Arbeit neu gestalten könnten. Durch die Visualisierung von Weak Signals in drei Dimensionen können wir zukünftige Veränderungen besser antizipieren und uns auf die sich entwickelnde Arbeitslandschaft vorbereiten.",
     "aboutDesc2": "Die hier präsentierten Daten repräsentieren eine kuratierte Sammlung von Trends und Signalen, die in mehreren Branchen beobachtet wurden. Jedes Signal wird basierend auf seinem potenziellen Impact, Zeithorizont und Effekt auf den Arbeitswert über wirtschaftliche, soziale, subjektive und politische Dimensionen bewertet."
   },
   "errors": {

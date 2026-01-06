@@ -14,12 +14,12 @@ export function XAxis() {
   const impactLines = [
     {
       x: -MAX_RADIUS,
-      label: 'Low Impact',
+      labelKey: 'helperLabelLowImpact',
       color: RADAR_COLORS.IMPACT_LINES.LOW,
     },
     {
       x: MAX_RADIUS,
-      label: 'High Impact',
+      labelKey: 'helperLabelHighImpact',
       color: RADAR_COLORS.IMPACT_LINES.HIGH,
     },
   ]
@@ -68,7 +68,7 @@ export function XAxis() {
             style={{ pointerEvents: 'none', zIndex: 10 }}
           >
             <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
-              {line.label}
+              {t(`grid.${line.labelKey}`)}
             </div>
           </Html>
         </Billboard>
