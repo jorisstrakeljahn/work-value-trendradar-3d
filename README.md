@@ -1,11 +1,6 @@
 # Work Value Trend Radar 3D
 
-> Interactive 3D trend radar for mapping weak signals of AI/robotics and their impact on the value of work across industries. Built with TypeScript, React, and Three.js.
-
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18-blue)](https://react.dev/)
-[![Three.js](https://img.shields.io/badge/Three.js-0.160-black)](https://threejs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.0-purple)](https://vitejs.dev/)
+Interactive 3D trend radar for mapping weak signals of AI/robotics and their impact on the value of work across industries. Built with TypeScript, React, and Three.js.
 
 ## 🚀 Tech Stack
 
@@ -29,7 +24,7 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/work-value-trendradar-3d.git
+git clone https://github.com/jorisstrakeljahn/work-value-trendradar-3d.git
 cd work-value-trendradar-3d
 ```
 
@@ -208,33 +203,3 @@ Make sure to set all Firebase environment variables in your hosting platform:
 - `VITE_FIREBASE_MESSAGING_SENDER_ID`
 - `VITE_FIREBASE_APP_ID`
 - `VITE_FIREBASE_MEASUREMENT_ID`
-
-## 🏗️ Architecture Highlights
-
-### Performance Optimizations
-- **Code Splitting**: Lazy loading for RadarSection and ExplanationSection
-- **Memoization**: React.memo for expensive components, useMemo for calculations
-- **Bundle Optimization**: Manual chunks for vendor libraries (Three.js, Firebase, etc.)
-- **Image Preloading**: Images preloaded on hover for instant display
-
-### Error Handling
-- Centralized error logging with context
-- User-friendly error messages with i18n support
-- Error boundaries for graceful error recovery
-- Type guards for runtime type safety
-
-### State Management
-- Zustand for lightweight state management
-- Domain-specific stores (auth, radar, modals, windows, theme)
-- Optimized re-renders with selective subscriptions
-
-## 📚 Additional Resources
-
-- [Three.js Documentation](https://threejs.org/docs/)
-- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
-- [Firebase Documentation](https://firebase.google.com/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-
-## 📄 License
-
-MIT License - see LICENSE file for details
