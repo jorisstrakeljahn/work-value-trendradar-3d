@@ -21,7 +21,7 @@ export default function HoverTooltip() {
     .join(', ')
 
   return (
-    <div className="hidden md:block absolute top-4 left-1/2 transform -translate-x-1/2 glass rounded-2xl px-5 py-3 pointer-events-none z-50 shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50">
+    <div className="hidden md:block absolute top-4 left-1/2 transform -translate-x-1/2 glass rounded-2xl px-5 py-3 pointer-events-none z-50 shadow-apple-lg border border-gray-200/50 dark:border-gray-600/50 no-select">
       <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
         {signal.title}
       </div>

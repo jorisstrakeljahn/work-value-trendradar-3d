@@ -46,7 +46,7 @@ export function XAxis() {
           zIndexRange={[0, 100]}
           style={{ pointerEvents: 'none', zIndex: 10 }}
         >
-          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold">
+          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold no-select">
             {t('legend.xAxisLabel')}
           </div>
         </Html>
@@ -62,7 +62,7 @@ export function XAxis() {
             zIndexRange={[0, 100]}
             style={{ pointerEvents: 'none', zIndex: 10 }}
           >
-            <div className="text-gray-600 dark:text-gray-400 text-xs">
+            <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
               {line.label}
             </div>
           </Html>
