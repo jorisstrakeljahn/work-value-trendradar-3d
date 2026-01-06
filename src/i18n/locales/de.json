@@ -210,7 +210,11 @@
     "xyGrid": "X-Y Raster",
     "xyGridDesc": "Raster in der X-Y-Ebene (z=0)",
     "xzGrid": "X-Z Raster",
-    "xzGridDesc": "Raster in der X-Z-Ebene (y=0)"
+    "xzGridDesc": "Raster in der X-Z-Ebene (y=0)",
+    "axisLabels": "Achsen-Beschriftungen",
+    "axisLabelsDesc": "Impact, Reifegrad, Work-Value-Index",
+    "helperLabels": "Hilfsbeschriftungen",
+    "helperLabelsDesc": "Low Impact, High Impact, Next, Far, Medium Value, High Value"
   },
   "weights": {
     "title": "Gewichtungen",

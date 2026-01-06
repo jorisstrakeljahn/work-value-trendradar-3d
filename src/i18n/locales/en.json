@@ -210,7 +210,11 @@
     "xyGrid": "X-Y Grid",
     "xyGridDesc": "Grid in the X-Y plane (z=0)",
     "xzGrid": "X-Z Grid",
-    "xzGridDesc": "Grid in the X-Z plane (y=0)"
+    "xzGridDesc": "Grid in the X-Z plane (y=0)",
+    "axisLabels": "Axis Labels",
+    "axisLabelsDesc": "Impact, Time Horizon, Work-Value-Index",
+    "helperLabels": "Helper Labels",
+    "helperLabelsDesc": "Low Impact, High Impact, Next, Far, Medium Value, High Value"
   },
   "weights": {
     "title": "Weights",

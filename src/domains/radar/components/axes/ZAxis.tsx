@@ -1,6 +1,7 @@
 import { Html, Billboard } from '@react-three/drei'
 import { useTranslation } from 'react-i18next'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
+import { useRadarStore } from '../../../../store/useRadarStore'
 
 /**
  * Z-axis: Work-Value-Index (Height)
@@ -8,6 +9,7 @@ import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
 export function ZAxis() {
   const { t } = useTranslation()
   const { MAX_HEIGHT } = RADAR_CONFIG
+  const { showAxisLabels, showHelperLabels } = useRadarStore()
 
   const markers = [
     { z: MAX_HEIGHT / 2, label: 'Medium Value' },
@@ -30,22 +32,25 @@ export function ZAxis() {
       </line>
 
       {/* Z-axis label at the end */}
-      <Billboard position={[0.3, -1.2, MAX_HEIGHT + 0.5]}>
-        <Html
-          center
-          transform
-          distanceFactor={10}
-          zIndexRange={[0, 100]}
-          style={{ pointerEvents: 'none', zIndex: 10 }}
-        >
-          <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold no-select">
-            {t('legend.zAxisLabel')}
-          </div>
-        </Html>
-      </Billboard>
+      {showAxisLabels && (
+        <Billboard position={[0.3, -1.2, MAX_HEIGHT + 0.5]}>
+          <Html
+            center
+            transform
+            distanceFactor={10}
+            zIndexRange={[0, 100]}
+            style={{ pointerEvents: 'none', zIndex: 10 }}
+          >
+            <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold no-select">
+              {t('legend.zAxisLabel')}
+            </div>
+          </Html>
+        </Billboard>
+      )}
 
-      {/* Z-axis markers */}
-      {markers.map((marker, i) => (
+      {/* Z-axis helper labels */}
+      {showHelperLabels &&
+        markers.map((marker, i) => (
         <group key={i}>
           <Billboard position={[0.5, 0, marker.z]}>
             <Html
@@ -57,11 +62,11 @@ export function ZAxis() {
             >
               <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
                 {marker.label}
-              </div>
-            </Html>
-          </Billboard>
+            </div>
+          </Html>
+        </Billboard>
         </group>
-      ))}
+        ))}
     </group>
   )
 }
