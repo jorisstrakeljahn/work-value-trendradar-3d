@@ -1,4 +1,11 @@
-import { doc, collection, onSnapshot, query, orderBy, type Unsubscribe } from 'firebase/firestore'
+import {
+  doc,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  type Unsubscribe,
+} from 'firebase/firestore'
 import { db } from '../../config'
 import type { SignalDocument } from '../../../types/signal'
 import { logErrorWithContext } from '../../../shared/utils/errorLogger'
@@ -85,4 +92,3 @@ export function subscribeToSignal(
     }
   )
 }
-

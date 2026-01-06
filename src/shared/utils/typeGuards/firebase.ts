@@ -27,4 +27,3 @@ export function isFirebaseError(error: unknown): error is {
     ('code' in error || 'message' in error)
   )
 }
-

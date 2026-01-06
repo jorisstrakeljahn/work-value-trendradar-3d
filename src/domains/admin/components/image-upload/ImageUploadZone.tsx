@@ -69,4 +69,3 @@ export function ImageUploadZone({
     </div>
   )
 }
-

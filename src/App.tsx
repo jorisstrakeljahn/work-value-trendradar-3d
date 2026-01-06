@@ -4,8 +4,12 @@ import { ErrorBoundary } from './shared/components/ErrorBoundary'
 import { LoadingSpinner } from './shared/components/ui'
 
 // Lazy load heavy components for better code splitting
-const RadarSection = lazy(() => import('./domains/radar/components/RadarSection'))
-const ExplanationSection = lazy(() => import('./domains/explanation/components/ExplanationSection'))
+const RadarSection = lazy(
+  () => import('./domains/radar/components/RadarSection')
+)
+const ExplanationSection = lazy(
+  () => import('./domains/explanation/components/ExplanationSection')
+)
 
 // Loading fallback component
 const LoadingFallback = () => (

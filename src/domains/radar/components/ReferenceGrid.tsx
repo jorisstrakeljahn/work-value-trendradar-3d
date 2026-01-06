@@ -38,14 +38,7 @@ export function ReferenceGrid() {
         // Line from -maxX to +maxX at this Y position (within semicircle)
         lines.push({
           key: `xy-x-line-${y}`,
-          positions: new Float32Array([
-            -maxX,
-            y,
-            0,
-            maxX,
-            y,
-            0,
-          ]),
+          positions: new Float32Array([-maxX, y, 0, maxX, y, 0]),
         })
       }
     }
@@ -81,14 +74,7 @@ export function ReferenceGrid() {
       // Line from -MAX_RADIUS to +MAX_RADIUS at this Z position
       lines.push({
         key: `xz-x-line-${z}`,
-        positions: new Float32Array([
-          -MAX_RADIUS,
-          0,
-          z,
-          MAX_RADIUS,
-          0,
-          z,
-        ]),
+        positions: new Float32Array([-MAX_RADIUS, 0, z, MAX_RADIUS, 0, z]),
       })
     }
 

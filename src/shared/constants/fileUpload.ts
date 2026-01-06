@@ -6,4 +6,3 @@ export const FILE_UPLOAD_CONFIG = {
   MAX_FILE_SIZE_MB: 5,
   ALLOWED_IMAGE_TYPES: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
 } as const
-

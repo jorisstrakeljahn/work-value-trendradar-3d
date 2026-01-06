@@ -20,4 +20,3 @@ export function isMultilingualText(value: unknown): value is MultilingualText {
     typeof (value as MultilingualText).en === 'string'
   )
 }
-

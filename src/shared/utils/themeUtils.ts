@@ -72,4 +72,3 @@ export function setTheme(theme: Theme): void {
   storeTheme(theme)
   applyThemeToDocument(theme)
 }
-

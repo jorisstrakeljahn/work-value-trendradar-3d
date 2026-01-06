@@ -1,7 +1,4 @@
-import type {
-  Industry,
-  IndustryDocument,
-} from '../../../types/signal'
+import type { Industry, IndustryDocument } from '../../../types/signal'
 
 /**
  * Convert Firestore document to Industry
@@ -17,4 +14,3 @@ export function firestoreToIndustry(
     color: data.color,
   }
 }
-

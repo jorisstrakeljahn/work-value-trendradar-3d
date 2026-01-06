@@ -4,16 +4,10 @@
  */
 
 // Firebase-specific guards
-export {
-  isFirestoreTimestamp,
-  isFirebaseError,
-} from './firebase'
+export { isFirestoreTimestamp, isFirebaseError } from './firebase'
 
 // Common/shared guards
-export {
-  isLanguage,
-  isMultilingualText,
-} from './common'
+export { isLanguage, isMultilingualText } from './common'
 
 // Signal-specific guards
 export {
@@ -23,4 +17,3 @@ export {
   isSource,
   isValueDimensionsJustification,
 } from './signal'
-

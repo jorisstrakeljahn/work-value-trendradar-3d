@@ -1,4 +1,11 @@
-import { doc, getDoc, getDocs, collection, query, orderBy } from 'firebase/firestore'
+import {
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  orderBy,
+} from 'firebase/firestore'
 import { db } from '../../config'
 import type { SignalDocument } from '../../../types/signal'
 import { logErrorWithContext } from '../../../shared/utils/errorLogger'
@@ -40,9 +47,7 @@ export async function getSignal(
       'getSignal',
       { signalId }
     )
-    throw new Error(
-      `Failed to get signal: ${getFirebaseErrorMessage(error)}`
-    )
+    throw new Error(`Failed to get signal: ${getFirebaseErrorMessage(error)}`)
   }
 }
 
@@ -77,9 +82,6 @@ export async function getAllSignals(): Promise<SignalDocument[]> {
       'signalsService',
       'getAllSignals'
     )
-    throw new Error(
-      `Failed to get signals: ${getFirebaseErrorMessage(error)}`
-    )
+    throw new Error(`Failed to get signals: ${getFirebaseErrorMessage(error)}`)
   }
 }
-

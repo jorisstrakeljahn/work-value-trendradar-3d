@@ -1,7 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { MultilingualTextarea } from '../MultilingualTextarea'
 import { SourcesInput } from '../SourcesInput'
-import type { DimensionKey, DimensionJustification } from '../../../../types/signal'
+import type {
+  DimensionKey,
+  DimensionJustification,
+} from '../../../../types/signal'
 
 interface DimensionJustificationItemProps {
   dimension: DimensionKey
@@ -44,12 +47,8 @@ export function DimensionJustificationItem({
         labelEn={t('admin.form.dimensionJustification')}
         valueDe={justification.text.de}
         valueEn={justification.text.en}
-        onChangeDe={textDe =>
-          onTextChange(textDe, justification.text.en)
-        }
-        onChangeEn={textEn =>
-          onTextChange(justification.text.de, textEn)
-        }
+        onChangeDe={textDe => onTextChange(textDe, justification.text.en)}
+        onChangeEn={textEn => onTextChange(justification.text.de, textEn)}
         rows={3}
         disabled={disabled}
       />
@@ -62,4 +61,3 @@ export function DimensionJustificationItem({
     </div>
   )
 }
-

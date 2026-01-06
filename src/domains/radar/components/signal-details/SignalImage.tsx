@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Loader2 } from 'lucide-react'
-import { preloadImage, isImagePreloaded } from '../../../../shared/utils/imagePreloader'
+import {
+  preloadImage,
+  isImagePreloaded,
+} from '../../../../shared/utils/imagePreloader'
 import { logWarning } from '../../../../shared/utils/errorLogger'
 
 interface SignalImageProps {

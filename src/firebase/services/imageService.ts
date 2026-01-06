@@ -52,9 +52,7 @@ export async function uploadSignalImage(
       'uploadSignalImage',
       { signalId, fileName: file.name }
     )
-    throw new Error(
-      `Failed to upload image: ${getFirebaseErrorMessage(error)}`
-    )
+    throw new Error(`Failed to upload image: ${getFirebaseErrorMessage(error)}`)
   }
 }
 

@@ -59,19 +59,19 @@ export function XAxis() {
       {/* X-axis helper labels */}
       {showHelperLabels &&
         impactLines.map((line, i) => (
-        <Billboard key={i} position={[line.x, -0.5, 0]}>
-          <Html
-            center
-            transform
-            distanceFactor={10}
-            zIndexRange={[0, 100]}
-            style={{ pointerEvents: 'none', zIndex: 10 }}
-          >
-            <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
-              {t(`grid.${line.labelKey}`)}
-            </div>
-          </Html>
-        </Billboard>
+          <Billboard key={i} position={[line.x, -0.5, 0]}>
+            <Html
+              center
+              transform
+              distanceFactor={10}
+              zIndexRange={[0, 100]}
+              style={{ pointerEvents: 'none', zIndex: 10 }}
+            >
+              <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
+                {t(`grid.${line.labelKey}`)}
+              </div>
+            </Html>
+          </Billboard>
         ))}
     </group>
   )

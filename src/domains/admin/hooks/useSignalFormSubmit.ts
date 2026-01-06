@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { createSignal, updateSignal } from '../../../firebase/services/signalsService'
+import {
+  createSignal,
+  updateSignal,
+} from '../../../firebase/services/signalsService'
 import { uploadSignalImage } from '../../../firebase/services/imageService'
 import type { Signal } from '../../../types/signal'
 import type { SignalFormData } from '../../../types/forms'
@@ -97,9 +100,7 @@ export function useSignalFormSubmit({
       }
     } catch (err) {
       const errorMessage =
-        err instanceof Error
-          ? err.message
-          : t('admin.messages.saveError')
+        err instanceof Error ? err.message : t('admin.messages.saveError')
       setError(errorMessage)
       throw err // Re-throw to allow caller to handle
     } finally {
@@ -118,4 +119,3 @@ export function useSignalFormSubmit({
     clearError,
   }
 }
-

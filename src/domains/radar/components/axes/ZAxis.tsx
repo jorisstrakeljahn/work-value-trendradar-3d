@@ -51,21 +51,21 @@ export function ZAxis() {
       {/* Z-axis helper labels */}
       {showHelperLabels &&
         markers.map((marker, i) => (
-        <group key={i}>
-          <Billboard position={[0.5, 0, marker.z]}>
-            <Html
-              center
-              transform
-              distanceFactor={10}
-              zIndexRange={[0, 100]}
-              style={{ pointerEvents: 'none', zIndex: 10 }}
-            >
-              <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
-                {t(`grid.${marker.labelKey}`)}
-            </div>
-          </Html>
-        </Billboard>
-        </group>
+          <group key={i}>
+            <Billboard position={[0.5, 0, marker.z]}>
+              <Html
+                center
+                transform
+                distanceFactor={10}
+                zIndexRange={[0, 100]}
+                style={{ pointerEvents: 'none', zIndex: 10 }}
+              >
+                <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
+                  {t(`grid.${marker.labelKey}`)}
+                </div>
+              </Html>
+            </Billboard>
+          </group>
         ))}
     </group>
   )

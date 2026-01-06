@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { uploadSignalImage, deleteSignalImage } from '../../../firebase/services/imageService'
+import {
+  uploadSignalImage,
+  deleteSignalImage,
+} from '../../../firebase/services/imageService'
 import { logWarning } from '../../../shared/utils/errorLogger'
 import { FILE_UPLOAD_CONFIG } from '../../../shared/constants/fileUpload'
 
@@ -137,4 +140,3 @@ export function useImageUpload({
     clearError,
   }
 }
-

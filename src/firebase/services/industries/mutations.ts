@@ -1,4 +1,11 @@
-import { doc, collection, setDoc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore'
+import {
+  doc,
+  collection,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  Timestamp,
+} from 'firebase/firestore'
 import { db } from '../../config'
 import type { IndustryDocument, MultilingualText } from '../../../types/signal'
 import { logErrorWithContext } from '../../../shared/utils/errorLogger'
@@ -120,4 +127,3 @@ export async function deleteIndustry(industryId: string): Promise<void> {
     )
   }
 }
-

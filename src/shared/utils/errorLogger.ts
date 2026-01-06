@@ -77,7 +77,10 @@ export function logError(
       }
       break
     case 'warn':
-      console.warn(logMessage, isDevelopment ? { error: errorObj, context } : undefined)
+      console.warn(
+        logMessage,
+        isDevelopment ? { error: errorObj, context } : undefined
+      )
       break
     case 'info':
       if (isDevelopment) {
@@ -109,10 +112,7 @@ export function logErrorWithContext(
 /**
  * Convenience function for logging warnings
  */
-export function logWarning(
-  message: string,
-  context?: ErrorLogContext
-): void {
+export function logWarning(message: string, context?: ErrorLogContext): void {
   logError(message, context, 'warn')
 }
 
@@ -122,4 +122,3 @@ export function logWarning(
 export function logInfo(message: string, context?: ErrorLogContext): void {
   logError(message, context, 'info')
 }
-

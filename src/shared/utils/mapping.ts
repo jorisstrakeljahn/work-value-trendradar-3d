@@ -60,7 +60,8 @@ export function calculateWorkValueIndex(
   // Normalize from 0..5 to 0..100
   const normalizedEconomic = (economic / DIMENSION_MAX) * NORMALIZATION_FACTOR
   const normalizedSocial = (social / DIMENSION_MAX) * NORMALIZATION_FACTOR
-  const normalizedSubjective = (subjective / DIMENSION_MAX) * NORMALIZATION_FACTOR
+  const normalizedSubjective =
+    (subjective / DIMENSION_MAX) * NORMALIZATION_FACTOR
   const normalizedPolitical = (political / DIMENSION_MAX) * NORMALIZATION_FACTOR
 
   const workValueIndex =
@@ -69,7 +70,10 @@ export function calculateWorkValueIndex(
     normalizedSubjective * normalizedWeights.subjective +
     normalizedPolitical * normalizedWeights.political
 
-  return Math.max(MIN_WORK_VALUE_INDEX, Math.min(MAX_WORK_VALUE_INDEX, workValueIndex))
+  return Math.max(
+    MIN_WORK_VALUE_INDEX,
+    Math.min(MAX_WORK_VALUE_INDEX, workValueIndex)
+  )
 }
 
 /**
@@ -108,7 +112,10 @@ export function mapSignalToPosition(
 ): { x: number; y: number; z: number } {
   // X: Impact / Relevance (0..100) → -maxRadius to +maxRadius
   // Normalize to -1..1, then scale
-  const x = (signal.xImpact / NORMALIZATION_FACTOR - IMPACT_CENTER_OFFSET) * IMPACT_SCALE_FACTOR * maxRadius
+  const x =
+    (signal.xImpact / NORMALIZATION_FACTOR - IMPACT_CENTER_OFFSET) *
+    IMPACT_SCALE_FACTOR *
+    maxRadius
 
   // Y: Time Horizon / Maturity (0..100) → 0 to +maxRadius (semicircle)
   // 0 = now/short-term, 100 = long-term

@@ -73,7 +73,10 @@ export function calculateAdjustedWeights(
   }
 
   // Calculate new value for changed dimension (clamped to available budget)
-  const changedValue = Math.max(0, Math.min(availableBudget, result[changedDimension]))
+  const changedValue = Math.max(
+    0,
+    Math.min(availableBudget, result[changedDimension])
+  )
   result[changedDimension] = changedValue
 
   // Remaining budget for other non-locked dimensions
@@ -119,10 +122,10 @@ export function calculateAdjustedWeights(
       : nonLockedDimensions[0]
 
     if (adjustKey) {
-      result[adjustKey] = Math.round((result[adjustKey] + difference) * 100) / 100
+      result[adjustKey] =
+        Math.round((result[adjustKey] + difference) * 100) / 100
     }
   }
 
   return result
 }
-

@@ -1,8 +1,5 @@
 import { Timestamp } from 'firebase/firestore'
-import type {
-  Signal,
-  SignalDocument,
-} from '../../../types/signal'
+import type { Signal, SignalDocument } from '../../../types/signal'
 import { isMultilingualText } from '../../../shared/utils/typeGuards'
 
 /**
@@ -101,4 +98,3 @@ export function signalToFirestore(
 
   return baseData
 }
-

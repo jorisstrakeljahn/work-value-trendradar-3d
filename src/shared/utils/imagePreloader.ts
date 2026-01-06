@@ -18,16 +18,16 @@ export function preloadImage(imageUrl: string): Promise<void> {
 
   return new Promise((resolve, reject) => {
     const img = new Image()
-    
+
     img.onload = () => {
       preloadedImages.set(imageUrl, img)
       resolve()
     }
-    
+
     img.onerror = () => {
       reject(new Error(`Failed to load image: ${imageUrl}`))
     }
-    
+
     // Start loading
     img.src = imageUrl
   })
@@ -68,4 +68,3 @@ export function getPreloadedImage(imageUrl: string): HTMLImageElement | null {
 export function clearImageCache(): void {
   preloadedImages.clear()
 }
-

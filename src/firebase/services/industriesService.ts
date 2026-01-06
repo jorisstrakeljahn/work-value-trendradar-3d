@@ -7,7 +7,11 @@
 export { firestoreToIndustry } from './industries/converters'
 
 // Queries
-export { getIndustry, getAllIndustries, isIndustryInUse } from './industries/queries'
+export {
+  getIndustry,
+  getAllIndustries,
+  isIndustryInUse,
+} from './industries/queries'
 
 // Mutations
 export {

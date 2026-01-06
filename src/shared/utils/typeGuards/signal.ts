@@ -58,7 +58,10 @@ export function isValueDimensionsJustification(
 
   const justification = value as Record<string, unknown>
 
-  if (justification.mode !== 'freetext' && justification.mode !== 'perDimension') {
+  if (
+    justification.mode !== 'freetext' &&
+    justification.mode !== 'perDimension'
+  ) {
     return false
   }
 
@@ -70,7 +73,10 @@ export function isValueDimensionsJustification(
   }
 
   // perDimension mode
-  if (!justification.perDimension || typeof justification.perDimension !== 'object') {
+  if (
+    !justification.perDimension ||
+    typeof justification.perDimension !== 'object'
+  ) {
     return false
   }
 
@@ -136,4 +142,3 @@ export function isIndustryDocument(value: unknown): value is IndustryDocument {
     typeof doc.createdBy === 'string'
   )
 }
-

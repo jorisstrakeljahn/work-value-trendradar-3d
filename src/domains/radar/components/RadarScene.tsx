@@ -21,9 +21,7 @@ export default function RadarScene() {
   // Only re-render when signals array changes
   const signalPoints = useMemo(
     () =>
-      signals.map(signal => (
-        <SignalPoint key={signal.id} signal={signal} />
-      )),
+      signals.map(signal => <SignalPoint key={signal.id} signal={signal} />),
     [signals]
   )
 

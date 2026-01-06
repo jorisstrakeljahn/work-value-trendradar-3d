@@ -1,4 +1,11 @@
-import { doc, getDoc, getDocs, collection, query, orderBy } from 'firebase/firestore'
+import {
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  orderBy,
+} from 'firebase/firestore'
 import { db } from '../../config'
 import type { Industry, IndustryDocument } from '../../../types/signal'
 import { logErrorWithContext } from '../../../shared/utils/errorLogger'
@@ -41,9 +48,7 @@ export async function getIndustry(
       'getIndustry',
       { industryId }
     )
-    throw new Error(
-      `Failed to get industry: ${getFirebaseErrorMessage(error)}`
-    )
+    throw new Error(`Failed to get industry: ${getFirebaseErrorMessage(error)}`)
   }
 }
 
@@ -115,4 +120,3 @@ export async function isIndustryInUse(industryId: string): Promise<boolean> {
     )
   }
 }
-

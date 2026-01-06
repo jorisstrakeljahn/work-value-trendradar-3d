@@ -67,9 +67,7 @@ export default function RadarSection() {
           />
           <GridControlPanel
             isCollapsed={openPanel !== 'grid'}
-            onToggle={() =>
-              setOpenPanel(openPanel === 'grid' ? null : 'grid')
-            }
+            onToggle={() => setOpenPanel(openPanel === 'grid' ? null : 'grid')}
           />
           <Legend
             isCollapsed={openPanel !== 'legend'}

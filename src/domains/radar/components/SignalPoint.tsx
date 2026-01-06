@@ -88,7 +88,15 @@ function SignalPoint({ signal }: SignalPointProps) {
         openWindow(signal.id)
       }
     },
-    [isAnyModalOpen, hasOpenWindow, windows, signal, closeWindow, setSelectedSignal, openWindow]
+    [
+      isAnyModalOpen,
+      hasOpenWindow,
+      windows,
+      signal,
+      closeWindow,
+      setSelectedSignal,
+      openWindow,
+    ]
   )
 
   const handlePointerOver = useCallback(
@@ -140,7 +148,8 @@ export default React.memo(SignalPoint, (prevProps, nextProps) => {
     prevProps.signal.position?.x === nextProps.signal.position?.x &&
     prevProps.signal.position?.y === nextProps.signal.position?.y &&
     prevProps.signal.position?.z === nextProps.signal.position?.z &&
-    prevProps.signal.industryTags.length === nextProps.signal.industryTags.length &&
+    prevProps.signal.industryTags.length ===
+      nextProps.signal.industryTags.length &&
     prevProps.signal.industryTags.every(
       (tag, i) => tag === nextProps.signal.industryTags[i]
     )

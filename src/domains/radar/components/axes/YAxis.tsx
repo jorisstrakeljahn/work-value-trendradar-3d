@@ -12,8 +12,16 @@ export function YAxis() {
   const { showAxisLabels, showHelperLabels } = useRadarStore()
 
   const timeLines = [
-    { y: MAX_RADIUS * 0.5, labelKey: 'helperLabelNext', color: RADAR_COLORS.TIME_LINES.NEXT },
-    { y: MAX_RADIUS, labelKey: 'helperLabelFar', color: RADAR_COLORS.TIME_LINES.FAR },
+    {
+      y: MAX_RADIUS * 0.5,
+      labelKey: 'helperLabelNext',
+      color: RADAR_COLORS.TIME_LINES.NEXT,
+    },
+    {
+      y: MAX_RADIUS,
+      labelKey: 'helperLabelFar',
+      color: RADAR_COLORS.TIME_LINES.FAR,
+    },
   ]
 
   return (

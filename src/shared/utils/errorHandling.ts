@@ -36,11 +36,12 @@ export function getFirebaseErrorMessage(error: unknown): string {
     'auth/too-many-requests': 'Too many requests. Please try again later.',
     'storage/unauthorized': 'Storage permission denied',
     'storage/permission-denied': 'Storage permission denied',
-    'storage/unauthenticated': 'Unauthorized. Please make sure you are logged in.',
+    'storage/unauthenticated':
+      'Unauthorized. Please make sure you are logged in.',
     'storage/object-not-found': 'File not found',
     'storage/quota-exceeded': 'Storage quota exceeded',
     'permission-denied': 'Permission denied',
-    'unavailable': 'Service temporarily unavailable',
+    unavailable: 'Service temporarily unavailable',
     'deadline-exceeded': 'Request timeout',
   }
 
@@ -59,10 +60,9 @@ export function getFirebaseErrorMessage(error: unknown): string {
  * @param context - Context for error logging
  * @returns Wrapped function that handles errors
  */
-export function handleAsyncError<T extends (...args: unknown[]) => Promise<unknown>>(
-  fn: T,
-  context: { component: string; function?: string }
-): T {
+export function handleAsyncError<
+  T extends (...args: unknown[]) => Promise<unknown>,
+>(fn: T, context: { component: string; function?: string }): T {
   return (async (...args: Parameters<T>) => {
     try {
       return await fn(...args)
@@ -82,7 +82,10 @@ export function handleAsyncError<T extends (...args: unknown[]) => Promise<unkno
  * @param context - Context information
  * @returns Error handler function
  */
-export function createErrorHandler(context: { component: string; function?: string }) {
+export function createErrorHandler(context: {
+  component: string
+  function?: string
+}) {
   return (error: unknown, severity: 'error' | 'warn' = 'error') => {
     const errorObj = error instanceof Error ? error : new Error(String(error))
     logError(errorObj, context, severity)
@@ -115,4 +118,3 @@ export async function safeExecute<T>(
     }
   }
 }
-
