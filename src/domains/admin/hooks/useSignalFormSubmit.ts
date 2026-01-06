@@ -49,8 +49,8 @@ export function useSignalFormSubmit({
     }
 
     const signalData = {
-      title: multilingualTitle,
-      summary: multilingualSummary,
+      title: multilingualTitle as { de: string; en: string } | string,
+      summary: multilingualSummary as { de: string; en: string } | string,
       industryTags: formData.industryTags,
       xImpact: formData.xImpact,
       yHorizon: formData.yHorizon,
@@ -58,7 +58,12 @@ export function useSignalFormSubmit({
       valueDimensionsJustification: formData.valueDimensionsJustification,
       sources: formData.sources,
       imageUrl: formData.imageUrl || undefined,
-    }
+    } as Partial<
+      Signal & {
+        title?: { de: string; en: string } | string
+        summary?: { de: string; en: string } | string
+      }
+    >
 
     setLoading(true)
 

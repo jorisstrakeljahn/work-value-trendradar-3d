@@ -48,7 +48,7 @@ export function logError(
   const logEntry: ErrorLogEntry = {
     timestamp,
     severity,
-    message: errorObj.message || error,
+    message: errorObj.message || String(error),
     error: errorObj,
     context,
     stack: errorObj.stack,
