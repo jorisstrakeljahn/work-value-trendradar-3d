@@ -30,19 +30,24 @@ export function ReferenceGrid() {
 
     // X-direction lines (parallel to X-axis, varying Y)
     // Only positive Y values (0 to MAX_RADIUS) due to semicircle
+    // Lines stop at semicircle boundary: x = ±√(MAX_RADIUS² - y²)
     for (let y = 0; y <= MAX_RADIUS; y += GRID_SPACING_XY) {
-      // Line from -MAX_RADIUS to +MAX_RADIUS at this Y position
-      lines.push({
-        key: `xy-x-line-${y}`,
-        positions: new Float32Array([
-          -MAX_RADIUS,
-          y,
-          0,
-          MAX_RADIUS,
-          y,
-          0,
-        ]),
-      })
+      // Calculate where the line intersects the semicircle
+      const maxX = Math.sqrt(Math.max(0, MAX_RADIUS * MAX_RADIUS - y * y))
+      if (maxX > 0) {
+        // Line from -maxX to +maxX at this Y position (within semicircle)
+        lines.push({
+          key: `xy-x-line-${y}`,
+          positions: new Float32Array([
+            -maxX,
+            y,
+            0,
+            maxX,
+            y,
+            0,
+          ]),
+        })
+      }
     }
 
     // Y-direction lines (parallel to Y-axis, varying X)
