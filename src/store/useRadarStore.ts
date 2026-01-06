@@ -26,6 +26,8 @@ interface RadarState {
   }
   valueWeights: ValueWeights
   lockedDimensions: DimensionKey[]
+  showXYGrid: boolean
+  showXZGrid: boolean
   setSelectedSignal: (signal: Signal | null) => void
   setHoveredSignal: (signal: Signal | null) => void
   setFilters: (filters: Partial<RadarState['filters']>) => void
@@ -33,6 +35,8 @@ interface RadarState {
   setValueWeights: (weights: Partial<ValueWeights>) => void
   setLockedDimensions: (dimensions: DimensionKey[]) => void
   resetWeights: () => void
+  setShowXYGrid: (show: boolean) => void
+  setShowXZGrid: (show: boolean) => void
 }
 
 const defaultFilters = {
@@ -52,6 +56,8 @@ export const useRadarStore = create<RadarState>(set => ({
   filters: defaultFilters,
   valueWeights: defaultWeights,
   lockedDimensions: [],
+  showXYGrid: false,
+  showXZGrid: false,
   setSelectedSignal: signal => set({ selectedSignal: signal }),
   setHoveredSignal: signal => set({ hoveredSignal: signal }),
   setFilters: newFilters =>
@@ -79,4 +85,6 @@ export const useRadarStore = create<RadarState>(set => ({
       valueWeights: defaultWeights,
       lockedDimensions: [],
     }),
+  setShowXYGrid: show => set({ showXYGrid: show }),
+  setShowXZGrid: show => set({ showXZGrid: show }),
 }))

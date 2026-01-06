@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import RadarScene from './RadarScene'
 import FiltersPanel from './FiltersPanel'
 import WeightDimensionsPanel from './WeightDimensionsPanel'
+import GridControlPanel from './GridControlPanel'
 import Legend from './Legend'
 import HoverTooltip from './HoverTooltip'
 import ResetViewButtonOverlay from './ResetViewButtonOverlay'
@@ -12,7 +13,7 @@ import { useModalStore } from '../../../store/useModalStore'
 import { useRadarStore } from '../../../store/useRadarStore'
 import { useSignalWindowsStore } from '../../../store/useSignalWindowsStore'
 
-type PanelId = 'filters' | 'weights' | 'legend' | null
+type PanelId = 'filters' | 'weights' | 'grid' | 'legend' | null
 
 export default function RadarSection() {
   const { isAnyModalOpen } = useModalStore()
@@ -62,6 +63,12 @@ export default function RadarSection() {
             isCollapsed={openPanel !== 'weights'}
             onToggle={() =>
               setOpenPanel(openPanel === 'weights' ? null : 'weights')
+            }
+          />
+          <GridControlPanel
+            isCollapsed={openPanel !== 'grid'}
+            onToggle={() =>
+              setOpenPanel(openPanel === 'grid' ? null : 'grid')
             }
           />
           <Legend

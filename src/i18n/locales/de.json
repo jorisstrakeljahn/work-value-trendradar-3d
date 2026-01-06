@@ -205,6 +205,13 @@
   "resetView": {
     "button": "Ansicht zurücksetzen"
   },
+  "grid": {
+    "title": "Raster",
+    "xyGrid": "X-Y Raster",
+    "xyGridDesc": "Raster in der X-Y-Ebene (z=0)",
+    "xzGrid": "X-Z Raster",
+    "xzGridDesc": "Raster in der X-Z-Ebene (y=0)"
+  },
   "weights": {
     "title": "Gewichtungen",
     "economic": "Ökonomisch",

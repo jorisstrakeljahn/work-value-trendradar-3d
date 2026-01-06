@@ -6,6 +6,7 @@ import { SceneLighting } from './lighting/SceneLighting'
 import { CameraControls } from './controls/CameraControls'
 import { ResetViewButton } from './controls/ResetViewButton'
 import { XAxis, YAxis, ZAxis, Semicircle } from './axes'
+import { ReferenceGrid } from './ReferenceGrid'
 
 /**
  * Main 3D radar scene component
@@ -35,6 +36,9 @@ export default function RadarScene() {
       <YAxis />
       <ZAxis />
       <Semicircle />
+
+      {/* Reference grid for spatial orientation */}
+      <ReferenceGrid />
 
       {/* Render signals as points - memoized for performance */}
       {signalPoints}

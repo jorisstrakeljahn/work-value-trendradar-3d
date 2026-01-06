@@ -205,6 +205,13 @@
   "resetView": {
     "button": "Reset View"
   },
+  "grid": {
+    "title": "Grid",
+    "xyGrid": "X-Y Grid",
+    "xyGridDesc": "Grid in the X-Y plane (z=0)",
+    "xzGrid": "X-Z Grid",
+    "xzGridDesc": "Grid in the X-Z plane (y=0)"
+  },
   "weights": {
     "title": "Weights",
     "economic": "Economic",

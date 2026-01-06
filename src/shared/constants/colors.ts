@@ -22,4 +22,7 @@ export const RADAR_COLORS = {
     HOVER: '#FFFFFF', // White
     DEFAULT: '#94A3B8', // Gray fallback
   },
+  GRID: {
+    LINE: '#9CA3AF', // Similar to AXIS.SECONDARY for consistency
+  },
 } as const
