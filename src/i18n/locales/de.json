@@ -206,7 +206,7 @@
     "button": "Ansicht zurücksetzen"
   },
   "grid": {
-    "title": "Raster",
+    "title": "Ansicht",
     "xyGrid": "X-Y Raster",
     "xyGridDesc": "Raster in der X-Y-Ebene (z=0)",
     "xzGrid": "X-Z Raster",

@@ -36,7 +36,7 @@ export default function GridControlPanel({
     >
       <div className="space-y-4">
         {/* XY Grid Toggle */}
-        <div className="space-y-2">
+        <div>
           <label className="flex items-center justify-between cursor-pointer">
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('grid.xyGrid')}
@@ -59,13 +59,10 @@ export default function GridControlPanel({
               />
             </button>
           </label>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            {t('grid.xyGridDesc')}
-          </p>
         </div>
 
         {/* XZ Grid Toggle */}
-        <div className="space-y-2">
+        <div>
           <label className="flex items-center justify-between cursor-pointer">
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('grid.xzGrid')}
@@ -88,16 +85,13 @@ export default function GridControlPanel({
               />
             </button>
           </label>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            {t('grid.xzGridDesc')}
-          </p>
         </div>
 
         {/* Divider */}
         <div className="pt-2 border-t border-gray-200/50 dark:border-gray-600/50"></div>
 
         {/* Axis Labels Toggle */}
-        <div className="space-y-2">
+        <div>
           <label className="flex items-center justify-between cursor-pointer">
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('grid.axisLabels')}
@@ -120,13 +114,10 @@ export default function GridControlPanel({
               />
             </button>
           </label>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            {t('grid.axisLabelsDesc')}
-          </p>
         </div>
 
         {/* Helper Labels Toggle */}
-        <div className="space-y-2">
+        <div>
           <label className="flex items-center justify-between cursor-pointer">
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               {t('grid.helperLabels')}
@@ -149,9 +140,6 @@ export default function GridControlPanel({
               />
             </button>
           </label>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            {t('grid.helperLabelsDesc')}
-          </p>
         </div>
       </div>
     </CollapsiblePanel>

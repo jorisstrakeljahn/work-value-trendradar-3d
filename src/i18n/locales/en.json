@@ -206,7 +206,7 @@
     "button": "Reset View"
   },
   "grid": {
-    "title": "Grid",
+    "title": "Display",
     "xyGrid": "X-Y Grid",
     "xyGridDesc": "Grid in the X-Y plane (z=0)",
     "xzGrid": "X-Z Grid",
