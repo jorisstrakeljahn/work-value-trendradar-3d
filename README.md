@@ -43,8 +43,7 @@ cp .env.example .env
 ```
 
 4. **Configure Firebase**
-   - Set up Firestore Security Rules (see [Firebase Setup](#-firebase-setup))
-   - Set up Storage Rules (see [Firebase Setup](#-firebase-setup))
+   - See [Firebase Setup Documentation](docs/firebase/README.md) for detailed instructions
 
 5. **Start development server**
 ```bash
@@ -146,40 +145,12 @@ npm run preview         # Preview production build
 
 ## 🔥 Firebase Setup
 
-### Firestore Security Rules
+For detailed Firebase setup instructions, including security rules configuration, see the [Firebase Documentation](docs/firebase/README.md).
 
-The Firestore Security Rules must be configured in the Firebase Console. The `firestore.rules` file contains the necessary rules.
-
-**How to set up the Rules:**
-
-1. Open the [Firebase Console](https://console.firebase.google.com/)
-2. Select your project
-3. Go to **Firestore Database** > **Rules**
-4. Copy the content from the `firestore.rules` file
-5. Paste the rules into the console
-6. Click **Publish**
-
-**The rules allow:**
-- **Read**: Anyone can read signals (public viewing)
-- **Create**: Only authenticated users can create signals
-- **Update/Delete**: Only the creator of a signal can edit/delete it
-
-### Firebase Storage Rules
-
-If you want to upload images, Storage Rules must also be configured. The `storage.rules` file contains the necessary rules.
-
-**How to set up the Rules:**
-
-1. Open the [Firebase Console](https://console.firebase.google.com/)
-2. Select your project
-3. Go to **Storage** > **Rules**
-4. Copy the content from the `storage.rules` file
-5. Paste the rules into the console
-6. Click **Publish**
-
-**The rules allow:**
-- **Write**: Only authenticated users can upload images
-- **Read**: Anyone can view images (public access)
+**Quick Setup:**
+1. Copy environment variables from Firebase Console
+2. Configure Firestore Security Rules (see `docs/firebase/firestore.rules`)
+3. Configure Storage Rules (see `docs/firebase/storage.rules`)
 
 ## 🚢 Deployment
 
@@ -195,11 +166,4 @@ The project can be deployed on any static hosting service:
 
 ### Environment Variables
 
-Make sure to set all Firebase environment variables in your hosting platform:
-- `VITE_FIREBASE_API_KEY`
-- `VITE_FIREBASE_AUTH_DOMAIN`
-- `VITE_FIREBASE_PROJECT_ID`
-- `VITE_FIREBASE_STORAGE_BUCKET`
-- `VITE_FIREBASE_MESSAGING_SENDER_ID`
-- `VITE_FIREBASE_APP_ID`
-- `VITE_FIREBASE_MEASUREMENT_ID`
+See [Firebase Documentation](docs/firebase/README.md) for a complete list of required environment variables.
