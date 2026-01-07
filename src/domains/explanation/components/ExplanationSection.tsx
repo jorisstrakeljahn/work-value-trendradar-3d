@@ -142,43 +142,6 @@ export default function ExplanationSection() {
 
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              {t('explanation.controlPanels')}
-            </h3>
-            <div className="bg-gray-50 dark:bg-[#252525] rounded-xl p-6 space-y-4">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                {t('explanation.controlPanelsDesc')}
-              </p>
-              <div className="space-y-3 text-sm">
-                <p className="text-gray-700 dark:text-gray-300">
-                  <strong className="text-gray-900 dark:text-gray-100 font-semibold">
-                    {t('explanation.controlPanelsFilterLabel')}:
-                  </strong>{' '}
-                  {t('explanation.controlPanelsFilterDesc')}
-                </p>
-                <p className="text-gray-700 dark:text-gray-300">
-                  <strong className="text-gray-900 dark:text-gray-100 font-semibold">
-                    {t('explanation.controlPanelsWeightsLabel')}:
-                  </strong>{' '}
-                  {t('explanation.controlPanelsWeightsDesc')}
-                </p>
-                <p className="text-gray-700 dark:text-gray-300">
-                  <strong className="text-gray-900 dark:text-gray-100 font-semibold">
-                    {t('explanation.controlPanelsDisplayLabel')}:
-                  </strong>{' '}
-                  {t('explanation.controlPanelsDisplayDesc')}
-                </p>
-                <p className="text-gray-700 dark:text-gray-300">
-                  <strong className="text-gray-900 dark:text-gray-100 font-semibold">
-                    {t('explanation.controlPanelsLegendLabel')}:
-                  </strong>{' '}
-                  {t('explanation.controlPanelsLegendDesc')}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
               {t('explanation.visualElements')}
             </h3>
             <div className="space-y-4 text-gray-700 dark:text-gray-300">
