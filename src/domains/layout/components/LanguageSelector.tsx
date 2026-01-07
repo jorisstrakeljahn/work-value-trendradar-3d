@@ -27,12 +27,14 @@ export default function LanguageSelector() {
       {languages.map(language => (
         <button
           key={language.code}
+          type="button"
           onClick={() => changeLanguage(language.code)}
           className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/50 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-200 ${
             i18n.language === language.code
               ? 'bg-white/70 dark:bg-[#2a2a2a]/70'
               : ''
           }`}
+          aria-current={i18n.language === language.code ? 'true' : undefined}
         >
           <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
             {language.name}

@@ -48,6 +48,7 @@ export function IndustryItem({
           disabled={isDeleting}
           className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-red-500 hover:text-red-700 dark:hover:text-red-400 disabled:opacity-50"
           title={t('admin.industries.deleteTitle')}
+          aria-label={t('admin.industries.deleteTitle')}
         >
           <Trash2 className="w-4 h-4" />
         </button>

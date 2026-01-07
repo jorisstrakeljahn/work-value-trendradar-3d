@@ -1,4 +1,4 @@
-import { useState, ReactNode, useEffect } from 'react'
+import { useState, ReactNode, useEffect, useId } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { Panel } from './Panel'
 
@@ -25,6 +25,9 @@ export function CollapsiblePanel({
   onToggle,
 }: CollapsiblePanelProps) {
   const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed)
+  const baseId = useId()
+  const headerId = `${baseId}-header`
+  const contentId = `${baseId}-content`
 
   // Use controlled state if provided, otherwise use internal state
   const isCollapsed =
@@ -50,10 +53,16 @@ export function CollapsiblePanel({
   return (
     <Panel className={className}>
       <button
+        type="button"
         onClick={handleToggle}
         className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/50 dark:hover:bg-[#2a2a2a]/50 transition-colors duration-200"
+        aria-expanded={!isCollapsed}
+        aria-controls={contentId}
       >
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+        <h3
+          id={headerId}
+          className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+        >
           {title}
         </h3>
         <ChevronDown
@@ -62,7 +71,16 @@ export function CollapsiblePanel({
           }`}
         />
       </button>
-      {!isCollapsed && <div className="px-5 pb-5">{children}</div>}
+      {!isCollapsed && (
+        <div
+          id={contentId}
+          role="region"
+          aria-labelledby={headerId}
+          className="px-5 pb-5"
+        >
+          {children}
+        </div>
+      )}
     </Panel>
   )
 }

@@ -40,6 +40,7 @@ export default function FiltersPanel({
           />
           {filters.industries && filters.industries.length > 0 && (
             <button
+              type="button"
               onClick={() => setFilters({ industries: [] })}
               className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors duration-150"
             >

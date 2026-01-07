@@ -51,6 +51,7 @@ export default function GridControlPanel({
               }`}
               role="switch"
               aria-checked={showXYGrid}
+              aria-label={t('grid.xyGrid')}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
@@ -77,6 +78,7 @@ export default function GridControlPanel({
               }`}
               role="switch"
               aria-checked={showXZGrid}
+              aria-label={t('grid.xzGrid')}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
@@ -106,6 +108,7 @@ export default function GridControlPanel({
               }`}
               role="switch"
               aria-checked={showAxisLabels}
+              aria-label={t('grid.axisLabels')}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
@@ -132,6 +135,7 @@ export default function GridControlPanel({
               }`}
               role="switch"
               aria-checked={showHelperLabels}
+              aria-label={t('grid.helperLabels')}
             >
               <span
                 className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${

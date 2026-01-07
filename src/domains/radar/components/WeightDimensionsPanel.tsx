@@ -93,6 +93,13 @@ export default function WeightDimensionsPanel({
                       ? t('weights.lock')
                       : t('weights.lockLimit')
                 }
+                aria-label={
+                  isLocked(key)
+                    ? t('weights.unlock')
+                    : canLock(key)
+                      ? t('weights.lock')
+                      : t('weights.lockLimit')
+                }
               >
                 {isLocked(key) ? (
                   <Lock className="w-4 h-4" />

@@ -42,7 +42,7 @@ export default function ScrollIndicator() {
       <button
         onClick={scrollToExplanation}
         className="flex flex-col items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200 group"
-        aria-label="Scroll to explanation"
+        aria-label={t('scrollIndicator.learnMore')}
       >
         <span className="text-xs font-medium">
           {t('scrollIndicator.learnMore')}
