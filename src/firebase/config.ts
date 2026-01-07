@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 
 // Your web app's Firebase configuration
 // Environment variables are prefixed with VITE_ to be available in the browser
@@ -17,6 +18,23 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
+
+// Initialize Firebase App Check (optional, for production abuse prevention)
+// Only initialize if the environment variable is set
+// This helps prevent automated abuse/bot traffic without breaking local development
+if (import.meta.env.VITE_FIREBASE_APPCHECK_SITE_KEY) {
+  try {
+    initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider(
+        import.meta.env.VITE_FIREBASE_APPCHECK_SITE_KEY
+      ),
+      isTokenAutoRefreshEnabled: true,
+    })
+    console.info('✅ Firebase App Check initialized (abuse protection active)')
+  } catch (error) {
+    console.warn('⚠️ Firebase App Check initialization failed:', error)
+  }
+}
 
 // Initialize Firebase services
 export const auth = getAuth(app)

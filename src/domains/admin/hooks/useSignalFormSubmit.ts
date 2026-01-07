@@ -7,6 +7,10 @@ import {
 import { uploadSignalImage } from '../../../firebase/services/imageService'
 import type { Signal } from '../../../types/signal'
 import type { SignalFormData } from '../../../types/forms'
+import {
+  validateSignalFormData,
+  ValidationError,
+} from '../../../shared/utils/validation'
 
 interface UseSignalFormSubmitOptions {
   signal?: Signal | null
@@ -65,12 +69,33 @@ export function useSignalFormSubmit({
       }
     >
 
+    // Client-side validation (OWASP A03: Input Validation - Defense in Depth)
+    // Note: Firebase Security Rules are the authoritative validation layer
+    try {
+      validateSignalFormData({
+        title: multilingualTitle,
+        summary: multilingualSummary,
+        industryTags: formData.industryTags,
+        xImpact: formData.xImpact,
+        yHorizon: formData.yHorizon,
+        valueDimensions: formData.valueDimensions,
+        sources: formData.sources,
+        imageUrl: formData.imageUrl ?? undefined,
+      })
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        setError(err.message)
+        throw err
+      }
+      throw err
+    }
+
     setLoading(true)
 
     try {
       if (isEditMode && signal?.id) {
         // Handle image upload if we have a new image (data URL)
-        let finalImageUrl: string | undefined = formData.imageUrl || undefined
+        let finalImageUrl: string | undefined = formData.imageUrl ?? undefined
         if (formData.imageUrl && formData.imageUrl.startsWith('data:')) {
           const response = await fetch(formData.imageUrl)
           const blob = await response.blob()

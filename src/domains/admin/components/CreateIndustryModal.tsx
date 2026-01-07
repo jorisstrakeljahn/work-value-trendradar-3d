@@ -9,6 +9,10 @@ import {
 import { FormActions } from './signal-form/FormActions'
 import { useAuthStore } from '../../../store/useAuthStore'
 import { createIndustry } from '../../../firebase/services/industriesService'
+import {
+  validateIndustryFormData,
+  ValidationError,
+} from '../../../shared/utils/validation'
 
 interface CreateIndustryModalProps {
   isOpen: boolean
@@ -50,17 +54,27 @@ export default function CreateIndustryModal({
     setLoading(true)
     setError(null)
 
+    // Client-side validation (OWASP A03: Input Validation - Defense in Depth)
+    const industryData = {
+      name: {
+        de: nameDe.trim(),
+        en: nameEn.trim() || nameDe.trim(),
+      },
+      color,
+    }
+
     try {
-      await createIndustry(
-        {
-          name: {
-            de: nameDe.trim(),
-            en: nameEn.trim() || nameDe.trim(),
-          },
-          color,
-        },
-        user.uid
-      )
+      validateIndustryFormData(industryData)
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        setError(err.message)
+        setLoading(false)
+        return
+      }
+    }
+
+    try {
+      await createIndustry(industryData, user.uid)
 
       onSuccess?.()
       handleClose()

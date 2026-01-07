@@ -1,38 +1,186 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Signals collection
+    
+    // ===================================================================
+    // HELPER FUNCTIONS
+    // ===================================================================
+    
+    // Check if a value is a valid multilingual text object
+    function isValidMultilingualText(text) {
+      return text is map 
+        && text.keys().hasOnly(['de', 'en'])
+        && text.de is string 
+        && text.en is string
+        && text.de.size() <= 200
+        && text.en.size() <= 200;
+    }
+    
+    // Check if a value is a valid multilingual text object (long form for summaries)
+    function isValidMultilingualTextLong(text) {
+      return text is map 
+        && text.keys().hasOnly(['de', 'en'])
+        && text.de is string 
+        && text.en is string
+        && text.de.size() <= 4000
+        && text.en.size() <= 4000;
+    }
+    
+    // Check if value dimensions are valid (OWASP A03: Input Validation)
+    function isValidValueDimensions(dims) {
+      return dims is map
+        && dims.keys().hasOnly(['economic', 'social', 'subjective', 'political'])
+        && dims.economic is number && dims.economic >= 0 && dims.economic <= 5
+        && dims.social is number && dims.social >= 0 && dims.social <= 5
+        && dims.subjective is number && dims.subjective >= 0 && dims.subjective <= 5
+        && dims.political is number && dims.political >= 0 && dims.political <= 5;
+    }
+    
+    // Check if a source is valid
+    function isValidSource(source) {
+      return source is map
+        && source.keys().hasOnly(['url', 'name'])
+        && source.url is string && source.url.size() > 0 && source.url.size() <= 2048
+        && source.name is string && source.name.size() > 0 && source.name.size() <= 200;
+    }
+    
+    // Check if sources array is valid
+    function isValidSources(sources) {
+      return sources is list
+        && sources.size() <= 20;
+    }
+    
+    // Check if justification is valid (OWASP A03: Input Validation)
+    function isValidJustification(just) {
+      return just is map
+        && just.keys().hasOnly(['mode', 'freetext', 'perDimension'])
+        && just.mode is string
+        && (just.mode == 'freetext' || just.mode == 'perDimension')
+        && (
+          // If freetext mode, must have freetext field
+          (just.mode == 'freetext' && isValidMultilingualTextLong(just.freetext))
+          // If perDimension mode, must have perDimension with all 4 dimensions
+          || (just.mode == 'perDimension' 
+              && just.perDimension is map
+              && just.perDimension.keys().hasOnly(['economic', 'social', 'subjective', 'political']))
+        );
+    }
+    
+    // ===================================================================
+    // SIGNALS COLLECTION
+    // ===================================================================
+    
     match /signals/{signalId} {
       // Anyone can read signals (public viewing)
       allow read: if true;
       
-      // Only authenticated users can create signals
+      // OWASP A01: Broken Access Control - Only authenticated users can create
+      // OWASP A03: Injection - Strict schema validation
       allow create: if request.auth != null 
-                    && request.resource.data.createdBy == request.auth.uid;
+                    && request.resource.data.createdBy == request.auth.uid
+                    // Schema validation: only allow expected fields
+                    && request.resource.data.keys().hasOnly([
+                      'title', 'summary', 'industryTags', 'xImpact', 'yHorizon',
+                      'valueDimensions', 'valueDimensionsJustification', 'sources', 
+                      'imageUrl', 'createdAt', 'updatedAt', 'createdBy'
+                    ])
+                    // Type and bounds validation
+                    && isValidMultilingualText(request.resource.data.title)
+                    && isValidMultilingualTextLong(request.resource.data.summary)
+                    && request.resource.data.industryTags is list
+                    && request.resource.data.industryTags.size() > 0
+                    && request.resource.data.industryTags.size() <= 20
+                    && request.resource.data.xImpact is number
+                    && request.resource.data.xImpact >= 0
+                    && request.resource.data.xImpact <= 100
+                    && request.resource.data.yHorizon is number
+                    && request.resource.data.yHorizon >= 0
+                    && request.resource.data.yHorizon <= 100
+                    && isValidValueDimensions(request.resource.data.valueDimensions)
+                    && isValidSources(request.resource.data.sources)
+                    // Optional fields
+                    && (!('imageUrl' in request.resource.data) || (request.resource.data.imageUrl is string && request.resource.data.imageUrl.size() <= 2048))
+                    && (!('valueDimensionsJustification' in request.resource.data) || isValidJustification(request.resource.data.valueDimensionsJustification))
+                    // Timestamps must be set to now
+                    && request.resource.data.createdAt == request.time
+                    && request.resource.data.updatedAt == request.time;
       
-      // Only the creator can update their signals
+      // OWASP A01: Object-level authorization - Only creator can update
+      // OWASP A03: Prevent field injection
       allow update: if request.auth != null 
-                    && resource.data.createdBy == request.auth.uid;
+                    && resource.data.createdBy == request.auth.uid
+                    // Immutable fields (OWASP A01: Prevent privilege escalation)
+                    && request.resource.data.createdBy == resource.data.createdBy
+                    && request.resource.data.createdAt == resource.data.createdAt
+                    // Schema validation (same as create, except createdAt/createdBy are immutable)
+                    && request.resource.data.keys().hasOnly([
+                      'title', 'summary', 'industryTags', 'xImpact', 'yHorizon',
+                      'valueDimensions', 'valueDimensionsJustification', 'sources', 
+                      'imageUrl', 'createdAt', 'updatedAt', 'createdBy'
+                    ])
+                    && isValidMultilingualText(request.resource.data.title)
+                    && isValidMultilingualTextLong(request.resource.data.summary)
+                    && request.resource.data.industryTags is list
+                    && request.resource.data.industryTags.size() > 0
+                    && request.resource.data.industryTags.size() <= 20
+                    && request.resource.data.xImpact is number
+                    && request.resource.data.xImpact >= 0
+                    && request.resource.data.xImpact <= 100
+                    && request.resource.data.yHorizon is number
+                    && request.resource.data.yHorizon >= 0
+                    && request.resource.data.yHorizon <= 100
+                    && isValidValueDimensions(request.resource.data.valueDimensions)
+                    && isValidSources(request.resource.data.sources)
+                    && (!('imageUrl' in request.resource.data) || (request.resource.data.imageUrl is string && request.resource.data.imageUrl.size() <= 2048))
+                    && (!('valueDimensionsJustification' in request.resource.data) || isValidJustification(request.resource.data.valueDimensionsJustification))
+                    // Updated timestamp must be set to now
+                    && request.resource.data.updatedAt == request.time;
       
-      // Only the creator can delete their signals
+      // OWASP A01: Object-level authorization - Only creator can delete
       allow delete: if request.auth != null 
                     && resource.data.createdBy == request.auth.uid;
     }
     
-    // Industries collection
+    // ===================================================================
+    // INDUSTRIES COLLECTION
+    // ===================================================================
+    
     match /industries/{industryId} {
       // Anyone can read industries (public viewing)
       allow read: if true;
       
-      // Only authenticated users can create industries
+      // OWASP A01: Broken Access Control - Only authenticated users can create
+      // OWASP A03: Injection - Strict schema validation
       allow create: if request.auth != null 
-                    && request.resource.data.createdBy == request.auth.uid;
+                    && request.resource.data.createdBy == request.auth.uid
+                    // Schema validation
+                    && request.resource.data.keys().hasOnly([
+                      'name', 'color', 'createdAt', 'updatedAt', 'createdBy'
+                    ])
+                    && isValidMultilingualText(request.resource.data.name)
+                    // Color must be valid hex code (3 or 6 digits)
+                    && request.resource.data.color is string
+                    && request.resource.data.color.matches('^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$')
+                    // Timestamps must be set to now
+                    && request.resource.data.createdAt == request.time
+                    && request.resource.data.updatedAt == request.time;
       
-      // Only the creator can update their industry
+      // OWASP A01: Object-level authorization - Only creator can update
       allow update: if request.auth != null 
-                    && resource.data.createdBy == request.auth.uid;
+                    && resource.data.createdBy == request.auth.uid
+                    // Immutable fields
+                    && request.resource.data.createdBy == resource.data.createdBy
+                    && request.resource.data.createdAt == resource.data.createdAt
+                    // Schema validation
+                    && request.resource.data.keys().hasOnly([
+                      'name', 'color', 'createdAt', 'updatedAt', 'createdBy'
+                    ])
+                    && isValidMultilingualText(request.resource.data.name)
+                    && request.resource.data.color is string
+                    && request.resource.data.color.matches('^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$')
+                    && request.resource.data.updatedAt == request.time;
       
-      // Only the creator can delete their industry
+      // OWASP A01: Object-level authorization - Only creator can delete
       allow delete: if request.auth != null 
                     && resource.data.createdBy == request.auth.uid;
     }

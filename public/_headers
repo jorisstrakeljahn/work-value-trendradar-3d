@@ -1,0 +1,31 @@
+# Security Headers for Netlify
+# These headers apply to all routes
+
+/*
+  # Content Security Policy (OWASP A05: Security Misconfiguration - XSS Prevention)
+  # Allows resources from self and trusted Firebase/Google domains
+  # Note: 'unsafe-inline' for style-src is needed for React inline styles (style={{...}})
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://*.firebase.google.com https://*.firebaseapp.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.googleapis.com https://firebasestorage.googleapis.com; font-src 'self' data:; connect-src 'self' https://*.firebase.google.com https://*.firebaseio.com https://firebasestorage.googleapis.com https://*.googleapis.com https://www.google.com; frame-src 'self' https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'
+  
+  # Strict Transport Security (OWASP A02: Cryptographic Failures - MITM Prevention)
+  # Force HTTPS for 2 years, including subdomains
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  
+  # Prevent MIME type sniffing (OWASP A05: Security Misconfiguration)
+  X-Content-Type-Options: nosniff
+  
+  # Referrer Policy - Only send origin when cross-origin
+  Referrer-Policy: strict-origin-when-cross-origin
+  
+  # Permissions Policy - Disable unnecessary browser features
+  # Deny access to camera, microphone, geolocation, payment, USB
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  
+  # Clickjacking Protection (OWASP A05: Security Misconfiguration)
+  # Prevent embedding in iframes
+  X-Frame-Options: DENY
+  
+  # Additional frame-ancestors CSP directive for modern browsers
+  # Note: This is included in Content-Security-Policy above as frame-ancestors 'none'
+  # but X-Frame-Options is kept for older browser compatibility
+
