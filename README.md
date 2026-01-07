@@ -69,31 +69,6 @@ npm run format
 npm run format:check
 ```
 
-## 🎯 Features
-
-### Core Functionality
-- ✅ **3D Radar Visualization** - Interactive 3D trend radar with classic design
-- ✅ **Real-time Updates** - Firebase Firestore subscriptions for live data
-- ✅ **Signal Management** - Create, edit, and delete signals with rich metadata
-- ✅ **Industry Filtering** - Filter signals by industry with multi-select
-- ✅ **Work Value Index** - Calculated from 4 value dimensions (economic, social, subjective, political)
-- ✅ **Dynamic Weighting** - Adjustable weights for value dimensions with auto-equalization
-
-### User Experience
-- ✅ **Interactive 3D Scene** - Orbit controls, zoom, and smooth camera movements
-- ✅ **Signal Windows** - Draggable and resizable detail windows
-- ✅ **Hover Tooltips** - Quick information on signal hover
-- ✅ **Responsive Design** - Works on desktop and mobile devices
-- ✅ **Dark Mode** - Full dark mode support with theme persistence
-- ✅ **Internationalization** - German and English language support
-
-### Technical Features
-- ✅ **Performance Optimized** - Code splitting, lazy loading, React.memo, useMemo
-- ✅ **Type Safety** - Comprehensive TypeScript with type guards
-- ✅ **Error Handling** - Centralized error logging and user-friendly error messages
-- ✅ **Image Management** - Upload, preview, and delete signal images
-- ✅ **Form Validation** - Comprehensive form validation with error messages
-
 ## 📝 Development
 
 ### Project Structure
