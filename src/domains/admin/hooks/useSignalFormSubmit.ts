@@ -5,7 +5,7 @@ import {
   updateSignal,
 } from '../../../firebase/services/signalsService'
 import { uploadSignalImage } from '../../../firebase/services/imageService'
-import type { Signal } from '../../../types/signal'
+import type { Signal, ImpactHorizonJustification } from '../../../types/signal'
 import type { SignalFormData } from '../../../types/forms'
 import {
   validateSignalFormData,
@@ -52,6 +52,34 @@ export function useSignalFormSubmit({
       en: formData.summaryEn.trim() || formData.summaryDe.trim(),
     }
 
+    // Build Impact justification (only if at least one text field is filled)
+    const xImpactJustificationTextDe = formData.xImpactJustificationDe.trim()
+    const xImpactJustificationTextEn = formData.xImpactJustificationEn.trim()
+    const xImpactJustification: ImpactHorizonJustification | undefined =
+      xImpactJustificationTextDe || xImpactJustificationTextEn
+        ? {
+            text: {
+              de: xImpactJustificationTextDe,
+              en: xImpactJustificationTextEn || xImpactJustificationTextDe,
+            },
+            sources: formData.xImpactJustificationSources,
+          }
+        : undefined
+
+    // Build Horizon justification (only if at least one text field is filled)
+    const yHorizonJustificationTextDe = formData.yHorizonJustificationDe.trim()
+    const yHorizonJustificationTextEn = formData.yHorizonJustificationEn.trim()
+    const yHorizonJustification: ImpactHorizonJustification | undefined =
+      yHorizonJustificationTextDe || yHorizonJustificationTextEn
+        ? {
+            text: {
+              de: yHorizonJustificationTextDe,
+              en: yHorizonJustificationTextEn || yHorizonJustificationTextDe,
+            },
+            sources: formData.yHorizonJustificationSources,
+          }
+        : undefined
+
     const signalData = {
       title: multilingualTitle as { de: string; en: string } | string,
       summary: multilingualSummary as { de: string; en: string } | string,
@@ -60,6 +88,8 @@ export function useSignalFormSubmit({
       yHorizon: formData.yHorizon,
       valueDimensions: formData.valueDimensions,
       valueDimensionsJustification: formData.valueDimensionsJustification,
+      xImpactJustification,
+      yHorizonJustification,
       sources: formData.sources,
       imageUrl: formData.imageUrl || undefined,
     } as Partial<
@@ -81,6 +111,8 @@ export function useSignalFormSubmit({
         valueDimensions: formData.valueDimensions,
         sources: formData.sources,
         imageUrl: formData.imageUrl ?? undefined,
+        xImpactJustification,
+        yHorizonJustification,
       })
     } catch (err) {
       if (err instanceof ValidationError) {

@@ -15,7 +15,7 @@ import {
   SourcesSection,
   ImageSection,
 } from './signal-form'
-import type { Signal } from '../../../types/signal'
+import type { Signal, ImpactHorizonJustification } from '../../../types/signal'
 
 interface SignalFormModalProps {
   isOpen: boolean
@@ -120,87 +120,153 @@ export default function SignalFormModal({
     setShowCloseWarning(false)
   }
 
+  // Helper to build ImpactHorizonJustification from form data
+  const buildImpactJustification = (
+    textDe: string,
+    textEn: string,
+    sources: Signal['sources']
+  ): ImpactHorizonJustification | undefined => {
+    const trimmedDe = textDe.trim()
+    const trimmedEn = textEn.trim()
+    if (!trimmedDe && !trimmedEn) return undefined
+    return {
+      text: {
+        de: trimmedDe,
+        en: trimmedEn || trimmedDe,
+      },
+      sources,
+    }
+  }
+
+  // Get current Impact justification from form data
+  const getXImpactJustification = ():
+    | ImpactHorizonJustification
+    | undefined => {
+    return buildImpactJustification(
+      formData.xImpactJustificationDe,
+      formData.xImpactJustificationEn,
+      formData.xImpactJustificationSources
+    )
+  }
+
+  // Get current Horizon justification from form data
+  const getYHorizonJustification = ():
+    | ImpactHorizonJustification
+    | undefined => {
+    return buildImpactJustification(
+      formData.yHorizonJustificationDe,
+      formData.yHorizonJustificationEn,
+      formData.yHorizonJustificationSources
+    )
+  }
+
+  // Handler for Impact justification changes
+  const handleXImpactJustificationChange = (
+    justification: ImpactHorizonJustification
+  ) => {
+    updateFormData('xImpactJustificationDe', justification.text.de)
+    updateFormData('xImpactJustificationEn', justification.text.en)
+    updateFormData('xImpactJustificationSources', justification.sources)
+  }
+
+  // Handler for Horizon justification changes
+  const handleYHorizonJustificationChange = (
+    justification: ImpactHorizonJustification
+  ) => {
+    updateFormData('yHorizonJustificationDe', justification.text.de)
+    updateFormData('yHorizonJustificationEn', justification.text.en)
+    updateFormData('yHorizonJustificationSources', justification.sources)
+  }
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={handleClose}
-      title={isEditMode ? t('admin.editSignal') : t('admin.createSignal')}
-      className="max-w-5xl"
-    >
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {error && <ErrorAlert message={error} />}
+    <>
+      <Modal
+        isOpen={isOpen}
+        onClose={handleClose}
+        title={isEditMode ? t('admin.editSignal') : t('admin.createSignal')}
+        className="max-w-5xl"
+      >
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {error && <ErrorAlert message={error} />}
 
-        {/* Basic Information */}
-        <FormSection title={t('admin.form.categories.basicInfo')}>
-          <TitleSection
-            titleDe={formData.titleDe}
-            titleEn={formData.titleEn}
-            onTitleDeChange={value => updateFormData('titleDe', value)}
-            onTitleEnChange={value => updateFormData('titleEn', value)}
-            disabled={loading}
+          {/* Basic Information */}
+          <FormSection title={t('admin.form.categories.basicInfo')}>
+            <TitleSection
+              titleDe={formData.titleDe}
+              titleEn={formData.titleEn}
+              onTitleDeChange={value => updateFormData('titleDe', value)}
+              onTitleEnChange={value => updateFormData('titleEn', value)}
+              disabled={loading}
+            />
+
+            <SummarySection
+              summaryDe={formData.summaryDe}
+              summaryEn={formData.summaryEn}
+              onSummaryDeChange={value => updateFormData('summaryDe', value)}
+              onSummaryEnChange={value => updateFormData('summaryEn', value)}
+              disabled={loading}
+            />
+          </FormSection>
+
+          {/* Classification */}
+          <FormSection title={t('admin.form.categories.classification')}>
+            <IndustrySection
+              selectedIndustryIds={formData.industryTags}
+              onSelectionChange={value => updateFormData('industryTags', value)}
+              disabled={loading}
+            />
+
+            <ImpactHorizonSection
+              xImpact={formData.xImpact}
+              yHorizon={formData.yHorizon}
+              onXImpactChange={value => updateFormData('xImpact', value)}
+              onYHorizonChange={value => updateFormData('yHorizon', value)}
+              xImpactJustification={getXImpactJustification()}
+              yHorizonJustification={getYHorizonJustification()}
+              onXImpactJustificationChange={handleXImpactJustificationChange}
+              onYHorizonJustificationChange={handleYHorizonJustificationChange}
+              disabled={loading}
+            />
+          </FormSection>
+
+          {/* Value Dimensions */}
+          <FormSection title={t('admin.form.categories.valueDimensions')}>
+            <ValueDimensionsSection
+              valueDimensions={formData.valueDimensions}
+              onValueDimensionsChange={updateValueDimensions}
+              valueDimensionsJustification={
+                formData.valueDimensionsJustification
+              }
+              onValueDimensionsJustificationChange={value =>
+                updateFormData('valueDimensionsJustification', value)
+              }
+              disabled={loading}
+            />
+          </FormSection>
+
+          {/* Sources & Media */}
+          <FormSection title={t('admin.form.categories.sources')}>
+            <SourcesSection
+              sources={formData.sources}
+              onSourcesChange={value => updateFormData('sources', value)}
+              disabled={loading}
+            />
+
+            <ImageSection
+              imageUrl={formData.imageUrl}
+              onImageChange={value => updateFormData('imageUrl', value)}
+              signalId={signal?.id}
+              disabled={loading}
+            />
+          </FormSection>
+
+          <FormActions
+            onCancel={handleClose}
+            loading={loading}
+            submitLabel={isEditMode ? t('admin.save') : t('admin.create')}
           />
-
-          <SummarySection
-            summaryDe={formData.summaryDe}
-            summaryEn={formData.summaryEn}
-            onSummaryDeChange={value => updateFormData('summaryDe', value)}
-            onSummaryEnChange={value => updateFormData('summaryEn', value)}
-            disabled={loading}
-          />
-        </FormSection>
-
-        {/* Classification */}
-        <FormSection title={t('admin.form.categories.classification')}>
-          <IndustrySection
-            selectedIndustryIds={formData.industryTags}
-            onSelectionChange={value => updateFormData('industryTags', value)}
-            disabled={loading}
-          />
-
-          <ImpactHorizonSection
-            xImpact={formData.xImpact}
-            yHorizon={formData.yHorizon}
-            onXImpactChange={value => updateFormData('xImpact', value)}
-            onYHorizonChange={value => updateFormData('yHorizon', value)}
-            disabled={loading}
-          />
-        </FormSection>
-
-        {/* Value Dimensions */}
-        <FormSection title={t('admin.form.categories.valueDimensions')}>
-          <ValueDimensionsSection
-            valueDimensions={formData.valueDimensions}
-            onValueDimensionsChange={updateValueDimensions}
-            valueDimensionsJustification={formData.valueDimensionsJustification}
-            onValueDimensionsJustificationChange={value =>
-              updateFormData('valueDimensionsJustification', value)
-            }
-            disabled={loading}
-          />
-        </FormSection>
-
-        {/* Sources & Media */}
-        <FormSection title={t('admin.form.categories.sources')}>
-          <SourcesSection
-            sources={formData.sources}
-            onSourcesChange={value => updateFormData('sources', value)}
-            disabled={loading}
-          />
-
-          <ImageSection
-            imageUrl={formData.imageUrl}
-            onImageChange={value => updateFormData('imageUrl', value)}
-            signalId={signal?.id}
-            disabled={loading}
-          />
-        </FormSection>
-
-        <FormActions
-          onCancel={handleClose}
-          loading={loading}
-          submitLabel={isEditMode ? t('admin.save') : t('admin.create')}
-        />
-      </form>
+        </form>
+      </Modal>
 
       {/* Unsaved Changes Warning Modal */}
       <ConfirmModal
@@ -213,6 +279,6 @@ export default function SignalFormModal({
         cancelText={t('admin.messages.unsavedChangesCancel')}
         variant="default"
       />
-    </Modal>
+    </>
   )
 }

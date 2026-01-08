@@ -10,7 +10,10 @@
  * OWASP A03: Injection Prevention (client-side layer)
  */
 
-import { MultilingualText } from '../../types/signal'
+import type {
+  MultilingualText,
+  ImpactHorizonJustification,
+} from '../../types/signal'
 
 /**
  * Validation error class
@@ -252,6 +255,37 @@ export function validateHexColor(color: string, fieldName: string): void {
 }
 
 /**
+ * Validates Impact or Horizon justification
+ */
+export function validateImpactHorizonJustification(
+  justification: ImpactHorizonJustification | undefined,
+  fieldName: string
+): void {
+  if (!justification) return // Optional
+
+  // Text muss ausgefüllt sein (mindestens DE oder EN)
+  if (!justification.text?.de?.trim() && !justification.text?.en?.trim()) {
+    throw new ValidationError(
+      `${fieldName}: Text (DE oder EN) ist erforderlich`,
+      fieldName
+    )
+  }
+
+  // Text-Länge prüfen (max 4000 Zeichen pro Sprache, wie Summary)
+  if (justification.text.de && justification.text.de.length > 4000) {
+    throw new ValidationError(`${fieldName} (DE): Max 4000 Zeichen`, fieldName)
+  }
+  if (justification.text.en && justification.text.en.length > 4000) {
+    throw new ValidationError(`${fieldName} (EN): Max 4000 Zeichen`, fieldName)
+  }
+
+  // Quellen validieren (falls vorhanden)
+  if (justification.sources && justification.sources.length > 0) {
+    validateSources(justification.sources)
+  }
+}
+
+/**
  * Validates signal form data
  */
 export function validateSignalFormData(data: {
@@ -268,6 +302,8 @@ export function validateSignalFormData(data: {
   }
   sources: Array<{ url: string; name: string }>
   imageUrl?: string
+  xImpactJustification?: ImpactHorizonJustification
+  yHorizonJustification?: ImpactHorizonJustification
 }): void {
   // Validate title
   validateMultilingualText(data.title, 'Titel', 200)
@@ -293,6 +329,22 @@ export function validateSignalFormData(data: {
   // Validate image URL (optional)
   if (data.imageUrl && data.imageUrl.length > 0) {
     validateUrl(data.imageUrl, 'Bild-URL')
+  }
+
+  // Validate impact justification (optional)
+  if (data.xImpactJustification) {
+    validateImpactHorizonJustification(
+      data.xImpactJustification,
+      'Impact Begründung'
+    )
+  }
+
+  // Validate horizon justification (optional)
+  if (data.yHorizonJustification) {
+    validateImpactHorizonJustification(
+      data.yHorizonJustification,
+      'Reifegrad Begründung'
+    )
   }
 }
 

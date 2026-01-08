@@ -21,6 +21,8 @@ export function firestoreToSignal(
     zWorkValue: 0, // Will be calculated from valueDimensions
     valueDimensions: docData.valueDimensions,
     valueDimensionsJustification: docData.valueDimensionsJustification,
+    xImpactJustification: docData.xImpactJustification,
+    yHorizonJustification: docData.yHorizonJustification,
     sources: docData.sources,
     imageUrl: docData.imageUrl,
   }
@@ -62,6 +64,16 @@ export function signalToFirestore(
   // Include valueDimensionsJustification if defined
   if (signal.valueDimensionsJustification !== undefined) {
     baseData.valueDimensionsJustification = signal.valueDimensionsJustification
+  }
+
+  // Include xImpactJustification if defined
+  if (signal.xImpactJustification !== undefined) {
+    baseData.xImpactJustification = signal.xImpactJustification
+  }
+
+  // Include yHorizonJustification if defined
+  if (signal.yHorizonJustification !== undefined) {
+    baseData.yHorizonJustification = signal.yHorizonJustification
   }
 
   // Handle multilingual fields

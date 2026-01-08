@@ -66,6 +66,14 @@ service cloud.firestore {
         );
     }
     
+    // Check if Impact/Horizon justification is valid (OWASP A03: Input Validation)
+    function isValidImpactHorizonJustification(just) {
+      return just is map
+        && just.keys().hasOnly(['text', 'sources'])
+        && isValidMultilingualTextLong(just.text)
+        && isValidSources(just.sources);
+    }
+    
     // ===================================================================
     // SIGNALS COLLECTION
     // ===================================================================
@@ -81,8 +89,8 @@ service cloud.firestore {
                     // Schema validation: only allow expected fields
                     && request.resource.data.keys().hasOnly([
                       'title', 'summary', 'industryTags', 'xImpact', 'yHorizon',
-                      'valueDimensions', 'valueDimensionsJustification', 'sources', 
-                      'imageUrl', 'createdAt', 'updatedAt', 'createdBy'
+                      'valueDimensions', 'valueDimensionsJustification', 'xImpactJustification',
+                      'yHorizonJustification', 'sources', 'imageUrl', 'createdAt', 'updatedAt', 'createdBy'
                     ])
                     // Type and bounds validation
                     && isValidMultilingualText(request.resource.data.title)
@@ -101,6 +109,8 @@ service cloud.firestore {
                     // Optional fields
                     && (!('imageUrl' in request.resource.data) || (request.resource.data.imageUrl is string && request.resource.data.imageUrl.size() <= 2048))
                     && (!('valueDimensionsJustification' in request.resource.data) || isValidJustification(request.resource.data.valueDimensionsJustification))
+                    && (!('xImpactJustification' in request.resource.data) || isValidImpactHorizonJustification(request.resource.data.xImpactJustification))
+                    && (!('yHorizonJustification' in request.resource.data) || isValidImpactHorizonJustification(request.resource.data.yHorizonJustification))
                     // Timestamps must be set to now
                     && request.resource.data.createdAt == request.time
                     && request.resource.data.updatedAt == request.time;
@@ -115,8 +125,8 @@ service cloud.firestore {
                     // Schema validation (same as create, except createdAt/createdBy are immutable)
                     && request.resource.data.keys().hasOnly([
                       'title', 'summary', 'industryTags', 'xImpact', 'yHorizon',
-                      'valueDimensions', 'valueDimensionsJustification', 'sources', 
-                      'imageUrl', 'createdAt', 'updatedAt', 'createdBy'
+                      'valueDimensions', 'valueDimensionsJustification', 'xImpactJustification',
+                      'yHorizonJustification', 'sources', 'imageUrl', 'createdAt', 'updatedAt', 'createdBy'
                     ])
                     && isValidMultilingualText(request.resource.data.title)
                     && isValidMultilingualTextLong(request.resource.data.summary)
@@ -133,6 +143,8 @@ service cloud.firestore {
                     && isValidSources(request.resource.data.sources)
                     && (!('imageUrl' in request.resource.data) || (request.resource.data.imageUrl is string && request.resource.data.imageUrl.size() <= 2048))
                     && (!('valueDimensionsJustification' in request.resource.data) || isValidJustification(request.resource.data.valueDimensionsJustification))
+                    && (!('xImpactJustification' in request.resource.data) || isValidImpactHorizonJustification(request.resource.data.xImpactJustification))
+                    && (!('yHorizonJustification' in request.resource.data) || isValidImpactHorizonJustification(request.resource.data.yHorizonJustification))
                     // Updated timestamp must be set to now
                     && request.resource.data.updatedAt == request.time;
       

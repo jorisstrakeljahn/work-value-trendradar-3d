@@ -43,6 +43,14 @@ export interface DimensionJustification {
 }
 
 /**
+ * Justification for Impact or Horizon with optional sources
+ */
+export interface ImpactHorizonJustification {
+  text: MultilingualText
+  sources: Source[]
+}
+
+/**
  * Justification for value dimensions
  * Supports two modes: freetext (single multilingual text) or perDimension (one justification per dimension with sources)
  */
@@ -70,6 +78,8 @@ export interface Signal {
   zWorkValue: number // 0..100 (0 = no value change, 100 = maximum value gain)
   valueDimensions: ValueDimensions
   valueDimensionsJustification?: ValueDimensionsJustification
+  xImpactJustification?: ImpactHorizonJustification
+  yHorizonJustification?: ImpactHorizonJustification
   sources: Source[]
   imageUrl?: string
   position?: {
@@ -99,6 +109,8 @@ export interface SignalDocument {
   yHorizon: number
   valueDimensions: ValueDimensions
   valueDimensionsJustification?: ValueDimensionsJustification
+  xImpactJustification?: ImpactHorizonJustification
+  yHorizonJustification?: ImpactHorizonJustification
   sources: Source[]
   imageUrl?: string
   createdAt: Timestamp

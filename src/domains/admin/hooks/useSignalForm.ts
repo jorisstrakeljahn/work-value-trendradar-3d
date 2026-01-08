@@ -26,6 +26,12 @@ const defaultFormData: SignalFormData = {
       political: { text: { de: '', en: '' }, sources: [] },
     },
   },
+  xImpactJustificationDe: '',
+  xImpactJustificationEn: '',
+  xImpactJustificationSources: [],
+  yHorizonJustificationDe: '',
+  yHorizonJustificationEn: '',
+  yHorizonJustificationSources: [],
   sources: [],
   imageUrl: null,
 }
@@ -60,6 +66,18 @@ export function useSignalForm(
               yHorizon: signal.yHorizon,
               valueDimensions: signal.valueDimensions,
               valueDimensionsJustification: signal.valueDimensionsJustification,
+              xImpactJustificationDe:
+                signal.xImpactJustification?.text.de || '',
+              xImpactJustificationEn:
+                signal.xImpactJustification?.text.en || '',
+              xImpactJustificationSources:
+                signal.xImpactJustification?.sources || [],
+              yHorizonJustificationDe:
+                signal.yHorizonJustification?.text.de || '',
+              yHorizonJustificationEn:
+                signal.yHorizonJustification?.text.en || '',
+              yHorizonJustificationSources:
+                signal.yHorizonJustification?.sources || [],
               sources: signal.sources || [],
               imageUrl: signal.imageUrl || null,
             })
@@ -74,6 +92,18 @@ export function useSignalForm(
               xImpact: signal.xImpact,
               yHorizon: signal.yHorizon,
               valueDimensions: signal.valueDimensions,
+              xImpactJustificationDe:
+                signal.xImpactJustification?.text.de || '',
+              xImpactJustificationEn:
+                signal.xImpactJustification?.text.en || '',
+              xImpactJustificationSources:
+                signal.xImpactJustification?.sources || [],
+              yHorizonJustificationDe:
+                signal.yHorizonJustification?.text.de || '',
+              yHorizonJustificationEn:
+                signal.yHorizonJustification?.text.en || '',
+              yHorizonJustificationSources:
+                signal.yHorizonJustification?.sources || [],
               sources: signal.sources || [],
               imageUrl: signal.imageUrl || null,
             })
@@ -92,6 +122,16 @@ export function useSignalForm(
             yHorizon: signal.yHorizon,
             valueDimensions: signal.valueDimensions,
             valueDimensionsJustification: signal.valueDimensionsJustification,
+            xImpactJustificationDe: signal.xImpactJustification?.text.de || '',
+            xImpactJustificationEn: signal.xImpactJustification?.text.en || '',
+            xImpactJustificationSources:
+              signal.xImpactJustification?.sources || [],
+            yHorizonJustificationDe:
+              signal.yHorizonJustification?.text.de || '',
+            yHorizonJustificationEn:
+              signal.yHorizonJustification?.text.en || '',
+            yHorizonJustificationSources:
+              signal.yHorizonJustification?.sources || [],
             sources: signal.sources || [],
             imageUrl: signal.imageUrl || null,
           })

@@ -21,6 +21,12 @@ export interface SignalFormData {
   yHorizon: number
   valueDimensions: ValueDimensions
   valueDimensionsJustification?: ValueDimensionsJustification
+  xImpactJustificationDe: string
+  xImpactJustificationEn: string
+  xImpactJustificationSources: Source[]
+  yHorizonJustificationDe: string
+  yHorizonJustificationEn: string
+  yHorizonJustificationSources: Source[]
   sources: Source[]
   imageUrl: string | null
 }
