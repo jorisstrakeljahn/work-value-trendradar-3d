@@ -48,10 +48,7 @@ export function validateMultilingualText(
   }
 
   if (!text || typeof text !== 'object') {
-    throw new ValidationError(
-      `${fieldName} must be a text object`,
-      fieldName
-    )
+    throw new ValidationError(`${fieldName} must be a text object`, fieldName)
   }
 
   if (!text.de || text.de.trim().length === 0) {

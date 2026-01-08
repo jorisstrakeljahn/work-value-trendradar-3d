@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
 import { getSignal } from '../../../firebase/services/signalsService'
-import type { Signal, SignalDocument, ValueDimensions } from '../../../types/signal'
+import type {
+  Signal,
+  SignalDocument,
+  ValueDimensions,
+} from '../../../types/signal'
 import type { SignalFormData } from '../../../types/forms'
 
 const defaultFormData: SignalFormData = {

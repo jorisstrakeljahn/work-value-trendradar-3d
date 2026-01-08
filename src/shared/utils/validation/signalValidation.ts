@@ -34,7 +34,10 @@ export function validateValueDimensions(dimensions: {
   // Check for missing dimensions
   for (const dim of requiredDimensions) {
     if (!(dim in dimensions)) {
-      throw new ValidationError(`Dimension "${dim}" is missing`, 'valueDimensions')
+      throw new ValidationError(
+        `Dimension "${dim}" is missing`,
+        'valueDimensions'
+      )
     }
   }
 
@@ -106,10 +109,16 @@ export function validateImpactHorizonJustification(
 
   // Check text length (max 4000 characters per language, like Summary)
   if (justification.text.de && justification.text.de.length > 4000) {
-    throw new ValidationError(`${fieldName} (DE): Max 4000 characters`, fieldName)
+    throw new ValidationError(
+      `${fieldName} (DE): Max 4000 characters`,
+      fieldName
+    )
   }
   if (justification.text.en && justification.text.en.length > 4000) {
-    throw new ValidationError(`${fieldName} (EN): Max 4000 characters`, fieldName)
+    throw new ValidationError(
+      `${fieldName} (EN): Max 4000 characters`,
+      fieldName
+    )
   }
 
   // Validate sources (if present)
