@@ -12,7 +12,6 @@ import { SIGNAL_WINDOW_CONFIG } from '../../../shared/constants/radar'
 import type { Signal } from '../../../types/signal'
 
 interface DraggableSignalWindowProps {
-  windowId: string
   signalId: string
   position: { x: number; y: number }
   size: { width: number; height: number }

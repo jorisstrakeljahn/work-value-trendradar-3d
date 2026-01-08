@@ -70,7 +70,6 @@ export function PerDimensionJustificationInput({
         return (
           <DimensionJustificationItem
             key={dimension}
-            dimension={dimension}
             justification={dimJustification}
             label={label}
             onTextChange={(textDe, textEn) =>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getSignal } from '../../../firebase/services/signalsService'
-import type { Signal, ValueDimensions } from '../../../types/signal'
+import type { Signal, SignalDocument, ValueDimensions } from '../../../types/signal'
 import type { SignalFormData } from '../../../types/forms'
 
 const defaultFormData: SignalFormData = {
@@ -37,6 +37,34 @@ const defaultFormData: SignalFormData = {
 }
 
 /**
+ * Creates form data from signal, optionally using document data for multilingual fields
+ */
+function createFormDataFromSignal(
+  signal: Signal,
+  doc?: SignalDocument | null
+): SignalFormData {
+  return {
+    titleDe: doc?.title.de ?? signal.title,
+    titleEn: doc?.title.en ?? signal.title,
+    summaryDe: doc?.summary.de ?? signal.summary,
+    summaryEn: doc?.summary.en ?? signal.summary,
+    industryTags: signal.industryTags || [],
+    xImpact: signal.xImpact,
+    yHorizon: signal.yHorizon,
+    valueDimensions: signal.valueDimensions,
+    valueDimensionsJustification: signal.valueDimensionsJustification,
+    xImpactJustificationDe: signal.xImpactJustification?.text.de || '',
+    xImpactJustificationEn: signal.xImpactJustification?.text.en || '',
+    xImpactJustificationSources: signal.xImpactJustification?.sources || [],
+    yHorizonJustificationDe: signal.yHorizonJustification?.text.de || '',
+    yHorizonJustificationEn: signal.yHorizonJustification?.text.en || '',
+    yHorizonJustificationSources: signal.yHorizonJustification?.sources || [],
+    sources: signal.sources || [],
+    imageUrl: signal.imageUrl || null,
+  }
+}
+
+/**
  * Custom hook for signal form state management
  * Initializes form state from signal data
  * Handles reset logic
@@ -55,86 +83,12 @@ export function useSignalForm(
       // Load full document from Firestore to get multilingual fields
       getSignal(signal.id)
         .then(doc => {
-          if (doc) {
-            setFormData({
-              titleDe: doc.title.de,
-              titleEn: doc.title.en,
-              summaryDe: doc.summary.de,
-              summaryEn: doc.summary.en,
-              industryTags: signal.industryTags || [],
-              xImpact: signal.xImpact,
-              yHorizon: signal.yHorizon,
-              valueDimensions: signal.valueDimensions,
-              valueDimensionsJustification: signal.valueDimensionsJustification,
-              xImpactJustificationDe:
-                signal.xImpactJustification?.text.de || '',
-              xImpactJustificationEn:
-                signal.xImpactJustification?.text.en || '',
-              xImpactJustificationSources:
-                signal.xImpactJustification?.sources || [],
-              yHorizonJustificationDe:
-                signal.yHorizonJustification?.text.de || '',
-              yHorizonJustificationEn:
-                signal.yHorizonJustification?.text.en || '',
-              yHorizonJustificationSources:
-                signal.yHorizonJustification?.sources || [],
-              sources: signal.sources || [],
-              imageUrl: signal.imageUrl || null,
-            })
-          } else {
-            // Fallback to signal data
-            setFormData({
-              titleDe: signal.title,
-              titleEn: signal.title,
-              summaryDe: signal.summary,
-              summaryEn: signal.summary,
-              industryTags: signal.industryTags || [],
-              xImpact: signal.xImpact,
-              yHorizon: signal.yHorizon,
-              valueDimensions: signal.valueDimensions,
-              xImpactJustificationDe:
-                signal.xImpactJustification?.text.de || '',
-              xImpactJustificationEn:
-                signal.xImpactJustification?.text.en || '',
-              xImpactJustificationSources:
-                signal.xImpactJustification?.sources || [],
-              yHorizonJustificationDe:
-                signal.yHorizonJustification?.text.de || '',
-              yHorizonJustificationEn:
-                signal.yHorizonJustification?.text.en || '',
-              yHorizonJustificationSources:
-                signal.yHorizonJustification?.sources || [],
-              sources: signal.sources || [],
-              imageUrl: signal.imageUrl || null,
-            })
-          }
+          setFormData(createFormDataFromSignal(signal, doc))
           setIsInitialized(true)
         })
         .catch(() => {
           // Error loading, use signal data as fallback
-          setFormData({
-            titleDe: signal.title,
-            titleEn: signal.title,
-            summaryDe: signal.summary,
-            summaryEn: signal.summary,
-            industryTags: signal.industryTags || [],
-            xImpact: signal.xImpact,
-            yHorizon: signal.yHorizon,
-            valueDimensions: signal.valueDimensions,
-            valueDimensionsJustification: signal.valueDimensionsJustification,
-            xImpactJustificationDe: signal.xImpactJustification?.text.de || '',
-            xImpactJustificationEn: signal.xImpactJustification?.text.en || '',
-            xImpactJustificationSources:
-              signal.xImpactJustification?.sources || [],
-            yHorizonJustificationDe:
-              signal.yHorizonJustification?.text.de || '',
-            yHorizonJustificationEn:
-              signal.yHorizonJustification?.text.en || '',
-            yHorizonJustificationSources:
-              signal.yHorizonJustification?.sources || [],
-            sources: signal.sources || [],
-            imageUrl: signal.imageUrl || null,
-          })
+          setFormData(createFormDataFromSignal(signal))
           setIsInitialized(true)
         })
     } else if (!signal && isOpen) {

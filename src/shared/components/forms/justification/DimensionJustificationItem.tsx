@@ -1,13 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { MultilingualTextarea } from '../MultilingualTextarea'
 import { SourcesInput } from '../SourcesInput'
-import type {
-  DimensionKey,
-  DimensionJustification,
-} from '../../../../types/signal'
+import type { DimensionJustification } from '../../../../types/signal'
 
 interface DimensionJustificationItemProps {
-  dimension: DimensionKey
   justification: DimensionJustification
   label: { de: string; en: string }
   onTextChange: (textDe: string, textEn: string) => void
@@ -21,7 +17,6 @@ interface DimensionJustificationItemProps {
  * Displays text input and sources for one dimension
  */
 export function DimensionJustificationItem({
-  dimension: _dimension,
   justification,
   label,
   onTextChange,

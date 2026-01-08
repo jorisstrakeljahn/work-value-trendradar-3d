@@ -108,7 +108,6 @@ export default function RadarSection() {
         {windows.map(window => (
           <div key={window.id} className="pointer-events-auto">
             <DraggableSignalWindow
-              windowId={window.id}
               signalId={window.signalId}
               position={window.position}
               size={window.size}
