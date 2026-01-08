@@ -25,7 +25,7 @@ export function validateValueDimensions(dimensions: {
   political: number
 }): void {
   if (!dimensions || typeof dimensions !== 'object') {
-    throw new ValidationError('Wertedimensionen müssen ein Objekt sein')
+    throw new ValidationError('Value dimensions must be an object')
   }
 
   const requiredDimensions = ['economic', 'social', 'subjective', 'political']
@@ -34,7 +34,7 @@ export function validateValueDimensions(dimensions: {
   // Check for missing dimensions
   for (const dim of requiredDimensions) {
     if (!(dim in dimensions)) {
-      throw new ValidationError(`Dimension "${dim}" fehlt`, 'valueDimensions')
+      throw new ValidationError(`Dimension "${dim}" is missing`, 'valueDimensions')
     }
   }
 
@@ -42,7 +42,7 @@ export function validateValueDimensions(dimensions: {
   for (const dim of actualDimensions) {
     if (!requiredDimensions.includes(dim)) {
       throw new ValidationError(
-        `Unerwartete Dimension "${dim}"`,
+        `Unexpected dimension "${dim}"`,
         'valueDimensions'
       )
     }
@@ -60,27 +60,27 @@ export function validateValueDimensions(dimensions: {
 export function validateSources(
   sources: Array<{ url: string; name: string }>
 ): void {
-  validateArrayLength(sources, 'Quellen', 0, 20)
+  validateArrayLength(sources, 'Sources', 0, 20)
 
   for (let i = 0; i < sources.length; i++) {
     const source = sources[i]
 
     if (!source || typeof source !== 'object') {
-      throw new ValidationError(`Quelle ${i + 1} ist ungültig`, 'sources')
+      throw new ValidationError(`Source ${i + 1} is invalid`, 'sources')
     }
 
-    validateUrl(source.url, `Quelle ${i + 1} (URL)`)
+    validateUrl(source.url, `Source ${i + 1} (URL)`)
 
     if (!source.name || source.name.trim().length === 0) {
       throw new ValidationError(
-        `Quelle ${i + 1} (Name) darf nicht leer sein`,
+        `Source ${i + 1} (Name) must not be empty`,
         'sources'
       )
     }
 
     if (source.name.length > 200) {
       throw new ValidationError(
-        `Quelle ${i + 1} (Name) darf maximal 200 Zeichen lang sein`,
+        `Source ${i + 1} (Name) must not exceed 200 characters`,
         'sources'
       )
     }
@@ -96,23 +96,23 @@ export function validateImpactHorizonJustification(
 ): void {
   if (!justification) return // Optional
 
-  // Text muss ausgefüllt sein (mindestens DE oder EN)
+  // Text must be filled (at least DE or EN)
   if (!justification.text?.de?.trim() && !justification.text?.en?.trim()) {
     throw new ValidationError(
-      `${fieldName}: Text (DE oder EN) ist erforderlich`,
+      `${fieldName}: Text (DE or EN) is required`,
       fieldName
     )
   }
 
-  // Text-Länge prüfen (max 4000 Zeichen pro Sprache, wie Summary)
+  // Check text length (max 4000 characters per language, like Summary)
   if (justification.text.de && justification.text.de.length > 4000) {
-    throw new ValidationError(`${fieldName} (DE): Max 4000 Zeichen`, fieldName)
+    throw new ValidationError(`${fieldName} (DE): Max 4000 characters`, fieldName)
   }
   if (justification.text.en && justification.text.en.length > 4000) {
-    throw new ValidationError(`${fieldName} (EN): Max 4000 Zeichen`, fieldName)
+    throw new ValidationError(`${fieldName} (EN): Max 4000 characters`, fieldName)
   }
 
-  // Quellen validieren (falls vorhanden)
+  // Validate sources (if present)
   if (justification.sources && justification.sources.length > 0) {
     validateSources(justification.sources)
   }
@@ -139,19 +139,19 @@ export function validateSignalFormData(data: {
   yHorizonJustification?: ImpactHorizonJustification
 }): void {
   // Validate title
-  validateMultilingualText(data.title, 'Titel', 200)
+  validateMultilingualText(data.title, 'Title', 200)
 
   // Validate summary
-  validateMultilingualTextLong(data.summary, 'Zusammenfassung', 4000)
+  validateMultilingualTextLong(data.summary, 'Summary', 4000)
 
   // Validate industry tags
-  validateArrayLength(data.industryTags, 'Branchen', 1, 20)
+  validateArrayLength(data.industryTags, 'Industries', 1, 20)
 
   // Validate impact (0-100)
   validateNumberInRange(data.xImpact, 'Impact', 0, 100)
 
   // Validate horizon (0-100)
-  validateNumberInRange(data.yHorizon, 'Zeithorizont', 0, 100)
+  validateNumberInRange(data.yHorizon, 'Time horizon', 0, 100)
 
   // Validate value dimensions
   validateValueDimensions(data.valueDimensions)
@@ -161,14 +161,14 @@ export function validateSignalFormData(data: {
 
   // Validate image URL (optional)
   if (data.imageUrl && data.imageUrl.length > 0) {
-    validateUrl(data.imageUrl, 'Bild-URL')
+    validateUrl(data.imageUrl, 'Image URL')
   }
 
   // Validate impact justification (optional)
   if (data.xImpactJustification) {
     validateImpactHorizonJustification(
       data.xImpactJustification,
-      'Impact Begründung'
+      'Impact justification'
     )
   }
 
@@ -176,7 +176,7 @@ export function validateSignalFormData(data: {
   if (data.yHorizonJustification) {
     validateImpactHorizonJustification(
       data.yHorizonJustification,
-      'Reifegrad Begründung'
+      'Maturity justification'
     )
   }
 }

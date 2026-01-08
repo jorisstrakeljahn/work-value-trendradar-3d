@@ -36,11 +36,11 @@ export function validateMultilingualText(
 ): void {
   if (typeof text === 'string') {
     if (text.length === 0) {
-      throw new ValidationError(`${fieldName} darf nicht leer sein`, fieldName)
+      throw new ValidationError(`${fieldName} must not be empty`, fieldName)
     }
     if (text.length > maxLength) {
       throw new ValidationError(
-        `${fieldName} darf maximal ${maxLength} Zeichen lang sein`,
+        `${fieldName} must not exceed ${maxLength} characters`,
         fieldName
       )
     }
@@ -49,35 +49,35 @@ export function validateMultilingualText(
 
   if (!text || typeof text !== 'object') {
     throw new ValidationError(
-      `${fieldName} muss ein Textobjekt sein`,
+      `${fieldName} must be a text object`,
       fieldName
     )
   }
 
   if (!text.de || text.de.trim().length === 0) {
     throw new ValidationError(
-      `${fieldName} (Deutsch) darf nicht leer sein`,
+      `${fieldName} (German) must not be empty`,
       fieldName
     )
   }
 
   if (!text.en || text.en.trim().length === 0) {
     throw new ValidationError(
-      `${fieldName} (Englisch) darf nicht leer sein`,
+      `${fieldName} (English) must not be empty`,
       fieldName
     )
   }
 
   if (text.de.length > maxLength) {
     throw new ValidationError(
-      `${fieldName} (Deutsch) darf maximal ${maxLength} Zeichen lang sein`,
+      `${fieldName} (German) must not exceed ${maxLength} characters`,
       fieldName
     )
   }
 
   if (text.en.length > maxLength) {
     throw new ValidationError(
-      `${fieldName} (Englisch) darf maximal ${maxLength} Zeichen lang sein`,
+      `${fieldName} (English) must not exceed ${maxLength} characters`,
       fieldName
     )
   }
@@ -105,12 +105,12 @@ export function validateNumberInRange(
   max: number
 ): void {
   if (typeof value !== 'number' || isNaN(value)) {
-    throw new ValidationError(`${fieldName} muss eine Zahl sein`, fieldName)
+    throw new ValidationError(`${fieldName} must be a number`, fieldName)
   }
 
   if (value < min || value > max) {
     throw new ValidationError(
-      `${fieldName} muss zwischen ${min} und ${max} liegen`,
+      `${fieldName} must be between ${min} and ${max}`,
       fieldName
     )
   }
@@ -126,19 +126,19 @@ export function validateArrayLength(
   maxLength: number
 ): void {
   if (!Array.isArray(array)) {
-    throw new ValidationError(`${fieldName} muss ein Array sein`, fieldName)
+    throw new ValidationError(`${fieldName} must be an array`, fieldName)
   }
 
   if (array.length < minLength) {
     throw new ValidationError(
-      `${fieldName} muss mindestens ${minLength} Element(e) enthalten`,
+      `${fieldName} must contain at least ${minLength} element(s)`,
       fieldName
     )
   }
 
   if (array.length > maxLength) {
     throw new ValidationError(
-      `${fieldName} darf maximal ${maxLength} Element(e) enthalten`,
+      `${fieldName} must not contain more than ${maxLength} element(s)`,
       fieldName
     )
   }
@@ -149,12 +149,12 @@ export function validateArrayLength(
  */
 export function validateUrl(url: string, fieldName: string): void {
   if (!url || url.trim().length === 0) {
-    throw new ValidationError(`${fieldName} darf nicht leer sein`, fieldName)
+    throw new ValidationError(`${fieldName} must not be empty`, fieldName)
   }
 
   if (url.length > 2048) {
     throw new ValidationError(
-      `${fieldName} darf maximal 2048 Zeichen lang sein`,
+      `${fieldName} must not exceed 2048 characters`,
       fieldName
     )
   }
@@ -163,7 +163,7 @@ export function validateUrl(url: string, fieldName: string): void {
   try {
     new URL(url)
   } catch {
-    throw new ValidationError(`${fieldName} ist keine gültige URL`, fieldName)
+    throw new ValidationError(`${fieldName} is not a valid URL`, fieldName)
   }
 }
 
@@ -173,7 +173,7 @@ export function validateUrl(url: string, fieldName: string): void {
 export function validateHexColor(color: string, fieldName: string): void {
   if (!color || !color.match(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/)) {
     throw new ValidationError(
-      `${fieldName} muss ein gültiger Hex-Farbcode sein (z.B. #FF0000 oder #F00)`,
+      `${fieldName} must be a valid hex color code (e.g. #FF0000 or #F00)`,
       fieldName
     )
   }
