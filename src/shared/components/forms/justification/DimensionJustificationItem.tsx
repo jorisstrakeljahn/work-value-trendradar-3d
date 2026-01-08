@@ -43,8 +43,16 @@ export function DimensionJustificationItem({
       </h5>
 
       <MultilingualTextarea
-        labelDe={t('admin.form.dimensionJustification')}
-        labelEn={t('admin.form.dimensionJustification')}
+        labelDe={
+          currentLanguage === 'de'
+            ? t('admin.form.justificationTextDe')
+            : t('admin.form.justificationTextDeEn')
+        }
+        labelEn={
+          currentLanguage === 'de'
+            ? t('admin.form.justificationTextEn')
+            : t('admin.form.justificationTextEnEn')
+        }
         valueDe={justification.text.de}
         valueEn={justification.text.en}
         onChangeDe={textDe => onTextChange(textDe, justification.text.en)}
