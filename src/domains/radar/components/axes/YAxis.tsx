@@ -2,6 +2,7 @@ import { Html, Billboard } from '@react-three/drei'
 import { useTranslation } from 'react-i18next'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
 import { useRadarStore } from '../../../../store/useRadarStore'
+import { useThemeStore } from '../../../../store/useThemeStore'
 
 /**
  * Y-axis: Time Horizon / Maturity
@@ -10,6 +11,10 @@ export function YAxis() {
   const { t } = useTranslation()
   const { MAX_RADIUS } = RADAR_CONFIG
   const { showAxisLabels, showHelperLabels } = useRadarStore()
+  const theme = useThemeStore(state => state.theme)
+  
+  // Use higher contrast colors in light mode
+  const axisColors = theme === 'light' ? RADAR_COLORS.AXIS_LIGHT : RADAR_COLORS.AXIS
 
   const timeLines = [
     {
@@ -36,7 +41,7 @@ export function YAxis() {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={4} />
+        <lineBasicMaterial color={axisColors.PRIMARY} linewidth={4} />
       </line>
 
       {/* Y-axis label at the end */}
@@ -49,7 +54,7 @@ export function YAxis() {
             zIndexRange={[0, 100]}
             style={{ pointerEvents: 'none', zIndex: 10 }}
           >
-            <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold no-select">
+            <div className="text-gray-900 dark:text-gray-300 text-sm font-semibold no-select">
               {t('legend.yAxisLabel')}
             </div>
           </Html>
@@ -69,8 +74,8 @@ export function YAxis() {
               />
             </bufferGeometry>
             <lineBasicMaterial
-              color={RADAR_COLORS.AXIS.SECONDARY}
-              opacity={0.4}
+              color={axisColors.SECONDARY}
+              opacity={theme === 'light' ? 0.7 : 0.4}
               transparent
             />
           </line>
@@ -85,7 +90,7 @@ export function YAxis() {
                 zIndexRange={[0, 100]}
                 style={{ pointerEvents: 'none', zIndex: 10 }}
               >
-                <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
+                <div className="text-gray-800 dark:text-gray-400 text-xs no-select">
                   {t(`grid.${line.labelKey}`)}
                 </div>
               </Html>

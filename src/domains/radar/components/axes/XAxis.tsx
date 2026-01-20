@@ -2,6 +2,7 @@ import { Html, Billboard } from '@react-three/drei'
 import { useTranslation } from 'react-i18next'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
 import { useRadarStore } from '../../../../store/useRadarStore'
+import { useThemeStore } from '../../../../store/useThemeStore'
 
 /**
  * X-axis: Impact / Relevance
@@ -10,6 +11,10 @@ export function XAxis() {
   const { t } = useTranslation()
   const { MAX_RADIUS } = RADAR_CONFIG
   const { showAxisLabels, showHelperLabels } = useRadarStore()
+  const theme = useThemeStore(state => state.theme)
+  
+  // Use higher contrast colors in light mode
+  const axisColors = theme === 'light' ? RADAR_COLORS.AXIS_LIGHT : RADAR_COLORS.AXIS
 
   const impactLines = [
     {
@@ -36,7 +41,7 @@ export function XAxis() {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={4} />
+        <lineBasicMaterial color={axisColors.PRIMARY} linewidth={4} />
       </line>
 
       {/* X-axis label at the end */}
@@ -49,7 +54,7 @@ export function XAxis() {
             zIndexRange={[0, 100]}
             style={{ pointerEvents: 'none', zIndex: 10 }}
           >
-            <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold no-select">
+            <div className="text-gray-900 dark:text-gray-300 text-sm font-semibold no-select">
               {t('legend.xAxisLabel')}
             </div>
           </Html>
@@ -67,7 +72,7 @@ export function XAxis() {
               zIndexRange={[0, 100]}
               style={{ pointerEvents: 'none', zIndex: 10 }}
             >
-              <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
+              <div className="text-gray-800 dark:text-gray-400 text-xs no-select">
                 {t(`grid.${line.labelKey}`)}
               </div>
             </Html>

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../shared/constants'
 import { useRadarStore } from '../../../store/useRadarStore'
+import { useThemeStore } from '../../../store/useThemeStore'
 
 /**
  * Reference grid component for 3D radar visualization
@@ -12,6 +13,11 @@ import { useRadarStore } from '../../../store/useRadarStore'
 export function ReferenceGrid() {
   const { showXYGrid, showXZGrid } = useRadarStore()
   const { MAX_RADIUS, MAX_HEIGHT } = RADAR_CONFIG
+  const theme = useThemeStore(state => state.theme)
+  
+  // Use higher contrast colors and opacity in light mode
+  const gridColor = theme === 'light' ? RADAR_COLORS.GRID_LIGHT.LINE : RADAR_COLORS.GRID.LINE
+  const gridOpacity = theme === 'light' ? 0.35 : 0.13
 
   // Grid spacing: separate spacing for XY and XZ grids
   // XY Grid: 6 fields (7 lines) for finer grid
@@ -107,8 +113,8 @@ export function ReferenceGrid() {
             />
           </bufferGeometry>
           <lineBasicMaterial
-            color={RADAR_COLORS.GRID.LINE}
-            opacity={0.13}
+            color={gridColor}
+            opacity={gridOpacity}
             transparent
             linewidth={1}
           />
@@ -127,8 +133,8 @@ export function ReferenceGrid() {
             />
           </bufferGeometry>
           <lineBasicMaterial
-            color={RADAR_COLORS.GRID.LINE}
-            opacity={0.13}
+            color={gridColor}
+            opacity={gridOpacity}
             transparent
             linewidth={1}
           />

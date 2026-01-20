@@ -2,6 +2,7 @@ import { Html, Billboard } from '@react-three/drei'
 import { useTranslation } from 'react-i18next'
 import { RADAR_CONFIG, RADAR_COLORS } from '../../../../shared/constants'
 import { useRadarStore } from '../../../../store/useRadarStore'
+import { useThemeStore } from '../../../../store/useThemeStore'
 
 /**
  * Z-axis: Work-Value-Index (Height)
@@ -10,6 +11,10 @@ export function ZAxis() {
   const { t } = useTranslation()
   const { MAX_HEIGHT } = RADAR_CONFIG
   const { showAxisLabels, showHelperLabels } = useRadarStore()
+  const theme = useThemeStore(state => state.theme)
+  
+  // Use higher contrast colors in light mode
+  const axisColors = theme === 'light' ? RADAR_COLORS.AXIS_LIGHT : RADAR_COLORS.AXIS
 
   const markers = [
     { z: MAX_HEIGHT / 2, labelKey: 'helperLabelMediumValue' },
@@ -28,7 +33,7 @@ export function ZAxis() {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color={RADAR_COLORS.AXIS.PRIMARY} linewidth={4} />
+        <lineBasicMaterial color={axisColors.PRIMARY} linewidth={4} />
       </line>
 
       {/* Z-axis label at the end */}
@@ -41,7 +46,7 @@ export function ZAxis() {
             zIndexRange={[0, 100]}
             style={{ pointerEvents: 'none', zIndex: 10 }}
           >
-            <div className="text-gray-700 dark:text-gray-300 text-sm font-semibold no-select">
+            <div className="text-gray-900 dark:text-gray-300 text-sm font-semibold no-select">
               {t('legend.zAxisLabel')}
             </div>
           </Html>
@@ -60,7 +65,7 @@ export function ZAxis() {
                 zIndexRange={[0, 100]}
                 style={{ pointerEvents: 'none', zIndex: 10 }}
               >
-                <div className="text-gray-600 dark:text-gray-400 text-xs no-select">
+                <div className="text-gray-800 dark:text-gray-400 text-xs no-select">
                   {t(`grid.${marker.labelKey}`)}
                 </div>
               </Html>
