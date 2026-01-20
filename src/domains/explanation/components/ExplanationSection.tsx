@@ -3,6 +3,8 @@ import { DimensionCard } from './DimensionCard'
 import { StepCard } from './StepCard'
 import { CollapsiblePanel } from '../../../shared/components/ui'
 import RatingScaleTable from './RatingScaleTable'
+import RelevanceScaleTable from './RelevanceScaleTable'
+import MaturityScaleTable from './MaturityScaleTable'
 
 export default function ExplanationSection() {
   const { t } = useTranslation()
@@ -110,14 +112,31 @@ export default function ExplanationSection() {
 
           <div>
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              {t('explanation.ratingScale')}
+              {t('explanation.ratingScalesSection')}
             </h3>
             <div className="bg-gray-50 dark:bg-[#252525] rounded-xl p-6 space-y-4">
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                {t('explanation.ratingScaleIntro')}
+                {t('explanation.ratingScalesIntro')}
               </p>
               <CollapsiblePanel
-                title={t('explanation.ratingScaleTitle')}
+                title={t('explanation.relevanceScaleTitle')}
+                defaultCollapsed={true}
+                className="bg-white dark:bg-[#1a1a1a]"
+              >
+                <RelevanceScaleTable />
+              </CollapsiblePanel>
+              <CollapsiblePanel
+                title={t('explanation.maturityScaleTitle')}
+                defaultCollapsed={true}
+                className="bg-white dark:bg-[#1a1a1a]"
+              >
+                <MaturityScaleTable />
+              </CollapsiblePanel>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed pt-2">
+                {t('explanation.workValueIndexScaleIntro')}
+              </p>
+              <CollapsiblePanel
+                title={t('explanation.workValueIndexScaleTitle')}
                 defaultCollapsed={true}
                 className="bg-white dark:bg-[#1a1a1a]"
               >
